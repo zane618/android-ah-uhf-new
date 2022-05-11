@@ -1,13 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="red">#FC011A</color>
-    <color name="blue">#CCE4F7</color>
+    <color name="colorPrimary">#097570</color>
+    <color name="colorPrimaryDark">#097570</color>
+    <color name="colorAccent">#097570</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="white1">#eeeeee</color>
+    <color name="black">#000000</color>
+    <color name="black1">#313a4d</color>
+    <color name="gray">#808080</color>
+    <color name="gray1">#dbdbdb</color>
+    <color name="gray2">#ababab</color>
+    <color name="gray3">#ededed</color>
+    <color name="red">#FF0000</color>
+    <color name="red1">#db2627</color>
+    <color name="red2">#db2829</color>
+    <color name="red3">#22FF0000</color>
+    <color name="red4">#88FF0000</color>
+    <color name="red5">#aaFF0000</color>
+    <color name="gold">#FFD700</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#008000</color>
+    <color name="green1">#22008000</color>
+    <color name="green2">#88008000</color>
+    <color name="green3">#aa008000</color>
+    <color name="blue">#0000FF</color>
+    <color name="blue1">#2095ac</color>
+    <color name="blue2">#2398bc</color>
+    <color name="purple">#800080</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="orange">#FFA500</color>
+    <color name="lemonyellow">#FFFACD</color>
+    <color name="graywhite">#F5F5F5</color>
+    <color name="grayslate">#708090</color>
+    <color name="lightblue">#0083FF</color>
+    <color name="lightblue2">#CCCCCC</color>
+    <color name="full_transparent">#00000000</color>
+    <color name="half_transparent">#aa000000</color>
+
+    <color name="listitem_black">#ff000000</color>
+    <color name="listitem_gray">#ff9da19e</color>
+
+    <color name="deep_gray">#ff3f3f3f</color>
+    <color name="text_gray">#ff999999</color>
+
+
+    <color name="sliding_menu_back">#ff2c2c2e</color>
+    <color name="sliding_menu_title_text_color">#ff999999</color>
+    <color name="sliding_menu_item_text_color">#ffb1b1b1</color>
+    <color name="sliding_menu_item_text_color_pressed">#ffffffff</color>
+    <color name="sliding_menu_item_pressed">#ff39393b</color>
+    <color name="sliding_menu_item">#00000000</color>
+
+    <!--zxing start-->
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="help_button_view">#ffcccccc</color>
+    <color name="help_view">#ff404040</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_image_border">#ffffffff</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c000ff00</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="sbc_header_text">#ff808080</color>
+    <color name="sbc_header_view">#ffffffff</color>
+    <color name="sbc_list_item">#fffff0e0</color>
+    <color name="sbc_layout_view">#ffffffff</color>
+    <color name="sbc_page_number_text">#ff000000</color>
+    <color name="sbc_snippet_text">#ff4b4b4b</color>
+    <color name="share_text">#ff000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+
+    <!--zxing end-->
+
+    <string-array name="colors" translatable="false">
+        <item>#99cc00</item>
+        <item>#33b5e5</item>
+        <item>#0099cc</item>
+        <item>#547bca</item>
+        <item>#aa66cc</item>
+        <item>#9933cc</item>
+        <item>#669900</item>
+        <item>#aeb857</item>
+        <item>#cc0000</item>
+        <item>#df5948</item>
+        <item>#ff4444</item>
+        <item>#ae6b23</item>
+        <item>#ff8800</item>
+        <item>#e5ae4f</item>
+        <item>#ffbb33</item>
+        <item>#cccccc</item>
+        <item>#888888</item>
+    </string-array>
+
+    <color name="gray_f8f8f8">#F8F8F8</color>
+    <color name="gray_666">#666666</color>
+    <color name="green_0b7671">#0B7671</color>
+    <color name="gray_333">#333333</color>
+    <color name="bg_floder_press">#bdbdbd</color>
+    <color name="green_117974">#117974</color>
+    <color name="btn_normal">#01A89E</color>
+    <color name="main_green_color">#097570</color>
+
+    <color name="fbfbfb">#fbfbfb</color>
+    <!--<color name="btn_normal">#00ACFF</color>-->
+    <color name="green_01A89E">#01A89E</color>
+    <color name="btn_pressed">#00A1DB</color>
+    <color name="inActive">#ABADBB</color>
+
+    <color name="burlywood">#deb887</color>
+    <color name="btn_bottom_normal">#f2d05c</color>
+    <color name="tv_login">#5677fc</color>
+    <color name="tv_1">#333333</color>
+    <color name="tv_search">#5BCB73</color>
+    <color name="tv_searched">#5BCB9B</color>
+    <color name="tv_login_tittle">#ffffff</color>
+    <color name="gray_999">#999999</color>
+    <!--白色透明度-->
+    <color name="translucent_white_20">#ccffffff</color>
+    <color name="translucent_white_login_bg">#ffffff</color>
+    <color name="translucent_white_80">#33ffffff</color>
+
+    <color name="main_bg_gray">#f6f9ff</color>
+
+    <color name="blue_00a0e9">#00a0e9</color>
+    <color name="gray_e4e4e4">#e4e4e4</color>
+    <color name="blue_26b0b2">#26b0b2</color>
+    <color name="blue_2b61ad">#2b61ad</color>
+    <color name="blue_5f8dc6">#5f8dc6</color>
+    <color name="blue_009944">#009944</color>
+    <color name="translucent">#00000000</color>
+    <color name="dark">#88888888</color>
+
+    <color name="progress_bg">#fff3d3</color>
+    <color name="progress_pb">#fec223</color>
+
+    <color name="progress_task_info_bg">#e4e4e4</color>
+    <color name="progress_task_info_pb">#bcbcbc</color>
+
+    <color name="progress_task_info_bg_seclect">#cfe4cf</color>
+    <color name="progress_task_info_pb_seclect">#3cc827</color>
+
+    <!--黑色透明度-->
+    <color name="translucent_black_35">#a6000000</color>
+    <color name="translucent_black_80">#33000000</color>
+    <color name="translucent_black_95">#0d000000</color>
+
+    <color name="task_item_textview_normal">#999999</color>
+
+    <color name="task_item_line_normal">#e0e5e9</color>
+    <color name="gray_797979">#078758</color>
+    <color name="gray_ebebeb">#ebebeb</color>
+    <color name="gray_dcdcdc">#dcdcdc</color>
+    <color name="gray_1b1b23">#1b1b23</color>
+    <color name="gray_797e85">#797e85</color>
+    <color name="gray_ccc">#cccccc</color>
+    <color name="gray_text_content">#fa333333</color>
+    <color name="gray_text_uploaded">#fabdbdbd</color>
 </resources>
