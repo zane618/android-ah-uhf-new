@@ -5,9 +5,11 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,13 +20,20 @@ import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.UHFMainActivity;
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.bean.LoginBean;
+import com.beiming.uhf_test.bean.UserBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.LoginBeanDao;
 import com.beiming.uhf_test.utils.DialogUtils;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.utils.ToastUtils;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -37,6 +46,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private String pwd;
     private LoginBeanDao loginBeanDao;
     private ProgressDialog progressDialog;
+    /**
+     * unimp小程序实例缓存
+     **/
+//    HashMap<String, IUniMP> mUniMPCaches = new HashMap<>();
 
     @Override
     protected int onCreateView() {
@@ -94,9 +107,38 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         progressDialog.setCanceledOnTouchOutside(false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void initData() {
+        initTest();
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void initTest() {
+        HashMap<Integer, UserBean> users = new HashMap<>();
+        users.put(1, new UserBean("张三", 25));
+        users.put(3, new UserBean("李四", 22));
+        users.put(2, new UserBean("王五", 28));
+        System.out.println(users);
+        HashMap<Integer, UserBean> sortHashMap = sortHashMap(users);
+        Log.i("CMCC", sortHashMap.toString());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private HashMap<Integer, UserBean> sortHashMap(HashMap<Integer, UserBean> users) {
+        Set<Map.Entry<Integer, UserBean>> entries = users.entrySet();
+        ArrayList<Map.Entry<Integer, UserBean>> list = new ArrayList<>(entries);
+        list.sort(new Comparator<Map.Entry<Integer, UserBean>>() {
+            @Override
+            public int compare(Map.Entry<Integer, UserBean> integerUserBeanEntry, Map.Entry<Integer, UserBean> t1) {
+                return t1.getValue().getAge() - integerUserBeanEntry.getValue().getAge();
+            }
+        });
+        HashMap<Integer, UserBean> returnMap = new LinkedHashMap<>();
+        for (Map.Entry<Integer, UserBean> userBeanEntry : list) {
+            returnMap.put(userBeanEntry.getKey(), userBeanEntry.getValue());
+        }
+        return returnMap;
     }
 
     @Override
@@ -130,9 +172,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
                 break;
             case R.id.tv_register://注册按钮
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startUniSdk();
                 break;
         }
+    }
+
+    /**
+     * 打开uni小程序
+     */
+    private void startUniSdk() {
+       /* //判断uni-sdk是否初始化成功
+        if (DCUniMPSDK.getInstance().isInitialize()) {
+            try {
+                UniMPOpenConfiguration uniMPOpenConfiguration = new UniMPOpenConfiguration();
+//            uniMPOpenConfiguration.splashClass = MySplashView.class;
+                IUniMP uniMP = DCUniMPSDK.getInstance().openUniMP(this, "__UNI__04E3A11");
+                mUniMPCaches.put(uniMP.getAppid(), uniMP);
+                showToast("uni-sdk完成初始化");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showToast("异常" + e.toString());
+            }
+        } else {
+            showToast("uni-sdk未完成初始化");
+        }
+*/
     }
 
 

@@ -88,6 +88,22 @@
 
     <string name="title_decode_time">解码时间</string>
 
+    <string name="setFilter">指定标签</string>
+    <string name="tag_data">标签数据:</string>
+    <string name="module">工作频段：</string>
+    <string name="getBank">获取频段</string>
+    <string name="setBank">设置频段</string>
+    <string name="getPower">获取功率</string>
+    <string name="setPower">设置功率</string>
+    <string name="power">读写功率：</string>
+    <string name="epc_module">盘存EPC</string>
+    <string name="tid_module">盘存TID</string>
+    <string name="setInventoryModule">设置盘存模式</string>
+    <string name="temperature">模块温度：</string>
+    <string name="getT">获取</string>
+    <string name="filter">过滤</string>
+    <string name="filter_data">过滤数据：</string>
+
 
     <!-- BTPrinterDemo -->
     <string name="send">发送</string>

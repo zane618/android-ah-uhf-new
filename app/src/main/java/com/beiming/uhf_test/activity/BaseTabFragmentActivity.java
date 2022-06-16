@@ -3,6 +3,7 @@ package com.beiming.uhf_test.activity;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,11 +20,12 @@ import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.adapter.ViewPagerAdapter;
 import com.beiming.uhf_test.fragment.KeyDwonFragment;
-import com.beiming.uhf_test.tools.UIHelper;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.widget.NoScrollViewPager;
-import com.rscja.deviceapi.RFIDWithUHF;
-import com.rscja.utility.StringUtility;
+import com.hc.pda.HcPowerCtrl;
+import com.kongzue.baseframework.util.SettingsUtil;
+import com.pow.api.cls.RfidPower;
+import com.uhf.api.cls.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,6 @@ public abstract class BaseTabFragmentActivity extends FragmentActivity {
     protected List<String> lstTitles = new ArrayList<String>();
 
     // public Reader mReader;
-    public RFIDWithUHF mReader;
     private int index = 0;
 
     private ActionBar.Tab tab_kill, tab_lock, tab_set;
@@ -54,30 +55,24 @@ public abstract class BaseTabFragmentActivity extends FragmentActivity {
     private AlertDialog dialog;
     private long[] timeArr;
 
+    //合并新版本后添加的变量
+    HcPowerCtrl ctrl;
+    RfidPower power;
+    public Reader uhfReader;
+
+    public String TAG = "TAG";
+    public MutableLiveData<Boolean> initState = new MutableLiveData<>();
+    public boolean isR2000 = true;
+    public SettingsUtil settingsUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    public void initUHF() {
-
         mActionBar = getActionBar();
         mActionBar.setDisplayShowTitleEnabled(true);
         mActionBar.setDisplayShowHomeEnabled(true);
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        try {
-            mReader = RFIDWithUHF.getInstance();
-        } catch (Exception ex) {
-
-            toastMessage(ex.getMessage());
-
-            return;
-        }
-
-        if (mReader != null) {
-            new InitTask().execute();
-        }
     }
 
     protected void initViewPageData() {
@@ -190,21 +185,6 @@ public abstract class BaseTabFragmentActivity extends FragmentActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == 139 || keyCode == 280) {
-
-            if (event.getRepeatCount() == 0) {
-
-                if (mViewPager != null) {
-
-                    KeyDwonFragment sf = (KeyDwonFragment) mViewPagerAdapter.getItem(mViewPager.getCurrentItem());
-                    sf.myOnKeyDwon();
-
-                }
-            }
-            return true;
-        }
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -225,82 +205,9 @@ public abstract class BaseTabFragmentActivity extends FragmentActivity {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * @author liuruifeng
-     */
-    public class InitTask extends AsyncTask<String, Integer, Boolean> {
-        ProgressDialog mypDialog;
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            return mReader.init();
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-
-            mypDialog.cancel();
-
-            if (!result) {
-                Toast.makeText(BaseTabFragmentActivity.this, "init fail",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-
-            mypDialog = new ProgressDialog(BaseTabFragmentActivity.this);
-            mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mypDialog.setMessage("init...");
-            mypDialog.setCanceledOnTouchOutside(false);
-            mypDialog.show();
-        }
-    }
-
     @Override
     protected void onDestroy() {
-
-        if (mReader != null) {
-            mReader.free();
-        }
         super.onDestroy();
-    }
-
-    /**
-     * ��֤ʮ����������Ƿ���ȷ
-     *
-     * @param str
-     * @return
-     */
-    public boolean vailHexInput(String str) {
-
-        if (str == null || str.length() == 0) {
-            return false;
-        }
-
-        // ���ȱ�����ż��
-        if (str.length() % 2 == 0) {
-            return StringUtility.isHexNumberRex(str);
-        }
-
-        return false;
-    }
-
-    public void getUHFVersion() {
-
-
-        if (mReader != null) {
-
-            String rfidVer = mReader.getHardwareType();
-
-            UIHelper.alert(this, R.string.action_uhf_ver,
-                    rfidVer, R.drawable.webtext);
-        }
     }
 
     public void exitLogin() {

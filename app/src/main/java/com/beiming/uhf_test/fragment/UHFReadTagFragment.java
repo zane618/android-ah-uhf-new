@@ -2,10 +2,10 @@ package com.beiming.uhf_test.fragment;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,11 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -53,14 +49,16 @@ import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.DialogUtils;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.rscja.deviceapi.RFIDWithUHF;
+import com.uhf.api.cls.Reader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,7 +72,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     Unbinder unbinder;
     private boolean loopFlag = false;
     private int inventoryFlag = 1;
-    Handler handler;
     private List<BarCodeBean> barCodeBeanList;
     private List<MeasBoxBean> measBoxBeanList;
     private MeasBoxBean boxBean;//点击保存时维护的计量箱bean
@@ -89,13 +86,32 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     Button Btimport;
     Button BtInventory;
 
-    private Button btnFilter;//过滤
     private LinearLayout llContinuous;
     private UHFMainActivity mContext;
     PopupWindow popFilter;
     private ContrastBarCodeDialog contrastBarCodeDialog;
     private HintDialog hintDialog;
     private int MY_PERMISSIONS_REQUEST_FOR_EXCLE = 0x11;
+
+    boolean isReading = false;//是否正在扫描
+    private String Tag = "UHFReadTagFragment";
+    boolean isSetStop = false;//读取时长后停止
+
+    public String TAG = "UHFReadTagFragment";
+    Handler handler = new Handler(new android.os.Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    addEPCToList(msg.obj.toString());
+                    break;
+                case 3:
+                    break;
+                default:
+            }
+            return false;
+        }
+    });
 
     @Override
     public void onClick(View v) {
@@ -185,12 +201,11 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         return true;
     }
 
-    private String Tag = LoginActivity.class.getName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i("MY", "UHFReadTagFragment.onCreateView");
-        Log.i("CMCC", Tag+":"+System.currentTimeMillis());
+        Log.i("CMCC", Tag + ":" + System.currentTimeMillis());
         View view = inflater
                 .inflate(R.layout.uhf_readtag_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -236,139 +251,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         Btimport.setOnClickListener(this);
         RgInventory.setOnCheckedChangeListener(new RgInventoryCheckedListener());
         BtInventory.setOnClickListener(this);
-        btnFilter = (Button) getView().findViewById(R.id.btnFilter);
-
-        //过滤按钮的监听事件
-        btnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (popFilter == null) {
-                    View viewPop = LayoutInflater.from(mContext).inflate(R.layout.popwindow_filter, null);
-
-                    popFilter = new PopupWindow(viewPop, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
-
-                    popFilter.setTouchable(true);
-                    popFilter.setOutsideTouchable(true);
-                    popFilter.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                    popFilter.setBackgroundDrawable(new BitmapDrawable());
-
-                    final EditText etLen = (EditText) viewPop.findViewById(R.id.etLen);
-                    final EditText etPtr = (EditText) viewPop.findViewById(R.id.etPtr);
-                    final EditText etData = (EditText) viewPop.findViewById(R.id.etData);
-                    final RadioButton rbEPC = (RadioButton) viewPop.findViewById(R.id.rbEPC);
-                    final RadioButton rbTID = (RadioButton) viewPop.findViewById(R.id.rbTID);
-                    final RadioButton rbUser = (RadioButton) viewPop.findViewById(R.id.rbUser);
-                    final Button btSet = (Button) viewPop.findViewById(R.id.btSet);
-
-
-                    btSet.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String filterBank = "UII";
-                            if (rbEPC.isChecked()) {
-                                filterBank = "UII";
-                            } else if (rbTID.isChecked()) {
-                                filterBank = "TID";
-                            } else if (rbUser.isChecked()) {
-                                filterBank = "USER";
-                            }
-                            if (etLen.getText().toString() == null || etLen.getText().toString().isEmpty()) {
-                                UIHelper.ToastMessage(mContext, "数据长度不能为空");
-                                return;
-                            }
-                            if (etPtr.getText().toString() == null || etPtr.getText().toString().isEmpty()) {
-                                UIHelper.ToastMessage(mContext, "起始地址不能为空");
-                                return;
-                            }
-                            int ptr = StringUtils.toInt(etPtr.getText().toString(), 0);
-                            int len = StringUtils.toInt(etLen.getText().toString(), 0);
-                            String data = etData.getText().toString().trim();
-                            if (len > 0) {
-                                String rex = "[\\da-fA-F]*"; //匹配正则表达式，数据为十六进制格式
-                                if (data == null || data.isEmpty() || !data.matches(rex)) {
-                                    UIHelper.ToastMessage(mContext, "过滤的数据必须是十六进制数据");
-//									mContext.playSound(2);
-                                    return;
-                                }
-
-                                if (mContext.mReader.setFilter(RFIDWithUHF.BankEnum.valueOf(filterBank), ptr, len, data, false)) {
-                                    UIHelper.ToastMessage(mContext, R.string.uhf_msg_set_filter_succ);
-                                } else {
-                                    UIHelper.ToastMessage(mContext, R.string.uhf_msg_set_filter_fail);
-//									mContext.playSound(2);
-                                }
-                            } else {
-                                //禁用过滤
-                                String dataStr = "";
-                                if (mContext.mReader.setFilter(RFIDWithUHF.BankEnum.valueOf("UII"), 0, 0, dataStr, false)
-                                        && mContext.mReader.setFilter(RFIDWithUHF.BankEnum.valueOf("TID"), 0, 0, dataStr, false)
-                                        && mContext.mReader.setFilter(RFIDWithUHF.BankEnum.valueOf("USER"), 0, 0, dataStr, false)) {
-                                    UIHelper.ToastMessage(mContext, R.string.msg_disable_succ);
-                                } else {
-                                    UIHelper.ToastMessage(mContext, R.string.msg_disable_fail);
-                                }
-                            }
-
-
-                        }
-                    });
-                    CheckBox cb_filter = (CheckBox) viewPop.findViewById(R.id.cb_filter);
-                    rbEPC.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (rbEPC.isChecked()) {
-                                etPtr.setText("32");
-                            }
-                        }
-                    });
-                    rbTID.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (rbTID.isChecked()) {
-                                etPtr.setText("0");
-                            }
-                        }
-                    });
-                    rbUser.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (rbUser.isChecked()) {
-                                etPtr.setText("0");
-                            }
-                        }
-                    });
-
-                    cb_filter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked) { //启用过滤
-
-                            } else { //禁用过滤
-
-                            }
-                            popFilter.dismiss();
-                        }
-                    });
-                }
-                if (popFilter.isShowing()) {
-                    popFilter.dismiss();
-                    popFilter = null;
-                } else {
-                    popFilter.showAsDropDown(view);
-                }
-            }
-        });
-
-        Log.i("MY", "UHFReadTagFragment.EtCountOfTags=" + tv_count.getText());
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                String result = msg.obj + "";
-                String[] strs = result.split("@");
-                addEPCToList(strs[0], strs[1]);
-                mContext.playSound(1);
-            }
-        };
     }
 
     private int currentPosition = 0;
@@ -454,12 +336,24 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onPause() {
         Log.i("MY", "UHFReadTagFragment.onPause");
         super.onPause();
+        stopScan();
+    }
 
-        // 停止识别
-        stopInventory();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            System.out.println("当前UHFReadTagFragment不可见");
+            stopScan();
+        }
     }
 
     /**
@@ -467,13 +361,13 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
      *
      * @param epc
      */
-    private void addEPCToList(String epc, String rssi) {
+    private void addEPCToList(String epc) {
         if (!TextUtils.isEmpty(epc)) {
             int index = checkIsExist(epc);
             // mContext.getAppContext().uhfQueue.offer(epc + "\t 1");
             //不存在则新增
             if (index == -1) {
-                addTag(epc, rssi);
+                addTag(epc);
             }
             adapter.setBoxNumber(measBoxBeanList.size());
             adapter.setNewData(barCodeBeanList);
@@ -481,15 +375,15 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     }
 
     //新增标签对象
-    private void addTag(String epc, String rssi) {
+    private void addTag(String epc) {
         String barCode = "";
         String assetNo = "";
         String barCodeType = "-1";
         String scanTime = TimeUtils.getTime();
 
         //去除扫到表的后两位
-        if (epc.length() == 28) {
-            barCode = epc.substring(4, epc.length() - 2);
+        if (epc.length() == 24) {
+            barCode = epc.substring(0, epc.length() - 2);
             assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1);
             //todo 判断是表还是箱条形码
             if (assetNo.substring(0, 2).equals("18"))//表
@@ -500,7 +394,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                 barCodeType = "-1";
 
 
-            BarCodeBean barCodeBean = new BarCodeBean(epc, barCode, barCodeType, 1, rssi, scanTime);
+            BarCodeBean barCodeBean = new BarCodeBean(epc, barCode, barCodeType, 1, "无", scanTime);
             switch (barCodeType) {
                 case "-1":
 //                    errorCodeList.add(barCodeBean);
@@ -596,69 +490,79 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     }
 
     private void readTag() {
-        if (BtInventory.getText().equals(
-                mContext.getString(R.string.btInventory)))// 识别标签
-        {
-            switch (inventoryFlag) {
-                case 0:// 单步
-                {
-                    String strUII = mContext.mReader.inventorySingleTag();
-                    if (!TextUtils.isEmpty(strUII)) {
-                        String strEPC = mContext.mReader.convertUiiToEPC(strUII);
-                        addEPCToList(strEPC, "N/A");
-                        tv_count.setText(measBoxBeanList.size() + "个箱  " + meterBeanList.size() + "个表");
-                    } else {
-                        UIHelper.ToastMessage(mContext, R.string.uhf_msg_inventory_fail);
-//					mContext.playSound(2);
-                    }
-                }
-                break;
-                case 1:// 单标签循环  .startInventoryTag((byte) 0, (byte) 0))
-                {
-                    //  mContext.mReader.setEPCTIDMode(true);
-                    if (mContext.mReader.startInventoryTag(0, 0)) {
-                        BtInventory.setText(mContext
-                                .getString(R.string.title_stop_Inventory));
-                        loopFlag = true;
-                        setViewEnabled(false);
-                        new TagThread().start();
-                    } else {
-                        mContext.mReader.stopInventory();
-                        UIHelper.ToastMessage(mContext,
-                                R.string.uhf_msg_inventory_open_fail);
-//					mContext.playSound(2);
-                    }
-                }
-                break;
-                default:
-                    break;
+        if (BtInventory.getText().equals(mContext.getString(R.string.btInventory))) {// 识别标签
+            BtInventory.setText(mContext.getString(R.string.title_stop_Inventory));
+            if (mContext.isR2000) {
+                startScanToR2000();
+            } else {
+                startScanTo5300();
             }
         } else {// 停止识别
-            stopInventory();
+            stopScan();
+        }
+    }
+
+
+    private void startScanTo5300() {
+        isReading = true;
+        setViewEnabled(false);
+        new InventoryRawThread().start();
+    }
+
+
+    public void startScanToR2000() {
+        if (!isReading) {
+            int[] ants = new int[]{1};
+            int option = 0;
+            if (!mContext.inventoryEpc) {
+                option = 32768;
+            }
+            Reader.READER_ERR reader_err = mContext.uhfReader.AsyncStartReading(ants, 1, 16);
+            if (reader_err == Reader.READER_ERR.MT_OK_ERR) {
+                isReading = true;
+                setViewEnabled(false);
+                //获取定时的时间
+//                String time = et_stopTime.getText().toString().trim();
+                //设置按钮为停止扫描
+                BtInventory.setText(mContext
+                        .getString(R.string.title_stop_Inventory));
+                String time = "10";
+                //开启扫描线程
+                new InventoryThread().start();
+                //是否定时停止扫描
+                if (isSetStop) {
+                    handler.postDelayed(this::stopScan, Integer.parseInt(time) * 1000);
+                }
+            } else {
+                isReading = false;
+                showToast("错误码-->" + reader_err);
+            }
+        } else {
+            stopScan();
+        }
+    }
+
+    /**
+     * 停止识别
+     */
+    public void stopScan() {
+        if (isReading) {
+            isReading = false;
+            Reader.READER_ERR reader_err = mContext.uhfReader.AsyncStopReading();
+            if (reader_err == Reader.READER_ERR.MT_OK_ERR) {
+                BtInventory.setText(mContext.getString(R.string.btInventory));
+                setViewEnabled(true);
+            } else {
+                UIHelper.ToastMessage(mContext,
+                        R.string.uhf_msg_inventory_stop_fail);
+            }
         }
     }
 
     private void setViewEnabled(boolean enabled) {
         RbInventorySingle.setEnabled(enabled);
         RbInventoryLoop.setEnabled(enabled);
-        btnFilter.setEnabled(enabled);
         BtClear.setEnabled(enabled);
-    }
-
-    /**
-     * 停止识别
-     */
-    private void stopInventory() {
-        if (loopFlag) {
-            loopFlag = false;
-            setViewEnabled(true);
-            if (mContext.mReader.stopInventory()) {
-                BtInventory.setText(mContext.getString(R.string.btInventory));
-            } else {
-                UIHelper.ToastMessage(mContext,
-                        R.string.uhf_msg_inventory_stop_fail);
-            }
-        }
     }
 
     /**
@@ -684,28 +588,88 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         return existFlag;
     }
 
-    class TagThread extends Thread {
+    public class InventoryRawThread extends Thread {
+        @Override
         public void run() {
-            String strTid;
-            String strResult;
-            String[] res = null;
-            while (loopFlag) {
-                res = mContext.mReader.readTagFromBuffer();
-                if (res != null) {
-                    strTid = res[0];
-                    if (strTid.length() != 0 && !strTid.equals("0000000" +
-                            "000000000") && !strTid.equals("000000000000000000000000")) {
-                        strResult = "TID:" + strTid + "\n";
-                    } else {
-                        strResult = "";
-                    }
-                    Log.i("data", "EPC:" + res[1] + "|" + strResult);
-                    Message msg = handler.obtainMessage();
-                    msg.obj = strResult + "EPC:" + mContext.mReader.convertUiiToEPC(res[1]) + "@" + res[2];
+            synchronized (this) {
+                while (isReading) {
+                    int[] tagcnt = new int[1];
+                    tagcnt[0] = 0;
+                    int ants[] = {1};
+                    Reader.READER_ERR reader_err = mContext.uhfReader.TagInventory_Raw(ants, 1, (short) 100, tagcnt);
 
-                    handler.sendMessage(msg);
+                    if (reader_err == Reader.READER_ERR.MT_OK_ERR) {
+                        Log.e(TAG, "5300 一次标签返回个数: " + tagcnt[0]);
+                        for (int i = 0; i < tagcnt[0]; i++) {
+                            Reader.TAGINFO taginfo = mContext.uhfReader.new TAGINFO();
+                            Reader.READER_ERR reader_err1 = mContext.uhfReader.GetNextTag(taginfo);
+
+                            if (reader_err1 == Reader.READER_ERR.MT_OK_ERR) {
+                                String epc = Reader.bytes_Hexstr(taginfo.EpcId);
+                                sendMsg(1, epc);
+                                mContext.playSound(4);
+                            } else {
+                                Log.e(TAG, "5300 获取标签失败: " + reader_err1);
+                            }
+                        }
+
+                    } else {
+                        handler.sendEmptyMessage(3);
+                        isReading = false;
+                        showToast("开启失败 " + reader_err);
+                        Log.e(TAG, "5300 开启失败: " + reader_err);
+                    }
                 }
             }
+        }
+    }
+
+
+    private void sendMsg(int what, String epc) {
+        Message msg = handler.obtainMessage();
+        msg.what = what;
+        msg.obj = epc;
+        handler.sendMessage(msg);
+    }
+
+
+    //开启扫码线程
+    public class InventoryThread extends Thread {
+        @Override
+        public void run() {
+            int[] tagcnt = new int[1];
+            synchronized (this) {
+                while (isReading) {
+                    Reader.READER_ERR er;
+                    er = mContext.uhfReader.AsyncGetTagCount(tagcnt);
+                    if (er == Reader.READER_ERR.MT_OK_ERR) {
+                        if (tagcnt[0] > 0) {
+                            for (int i = 0; i < tagcnt[0]; i++) {
+                                Reader.TAGINFO taginfo = mContext.uhfReader.new TAGINFO();
+                                er = mContext.uhfReader.AsyncGetNextTag(taginfo);
+                                if (er == Reader.READER_ERR.MT_OK_ERR) {
+//                                    if (mContext.inventoryEpc) {
+//                                        //盘存模式 EPC
+                                    String epc = Reader.bytes_Hexstr(taginfo.EpcId);
+                                    sendMsg(1, epc);
+//                                    } else {
+                                    //盘存TID模式
+//                                        if (taginfo.EmbededDatalen > 0) {
+//                                            char[] out = new char[taginfo.EmbededDatalen * 2];
+//                                            me.uhfReader.Hex2Str(taginfo.EmbededData, taginfo.EmbededDatalen, out);
+//                                            String tid = String.valueOf(out);
+//                                            addEPCToList(tid);
+//                                        }
+//                                    }
+                                    mContext.playSound(4);
+//                                    SystemClock.sleep(30);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 
@@ -740,7 +704,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         EventBus.getDefault().register(this);
 
     }
-
 
     @Override
     public void onDestroy() {

@@ -8,6 +8,11 @@ configurations {
     all*.exclude group: 'com.google.android', module: 'support-v4'
     //或者粗暴点，就没有上面的坑了  all*.exclude module: 'support-v4'
 }
+//uni-sdk必须配置
+def mfph = [
+        //宿主包名
+        "apk.applicationId" : "com.beiming.uhf_test",
+]
 android {
     signingConfigs {
         Myconfig {
@@ -18,11 +23,12 @@ android {
         }
     }
 
-    compileSdkVersion 27
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.beiming.uhf_test"
-        minSdkVersion 18
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -66,15 +72,29 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
     }
+
+    //此处配置必须添加 否则无法正确运行
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        //noCompress 'foo', 'bar'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
 
-    buildToolsVersion = '28.0.3'
 
     lintOptions {
         abortOnError false
+    }
+
+}
+
+//导入aar需要的配置
+repositories {
+    flatDir {
+        dirs 'libs'
     }
 }
 
@@ -82,21 +102,35 @@ dependencies {
     androidTestImplementation('com.android.support:support-annotations:26.1.0') {
         force = true
     }
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+
+    //uni-sdk引入------------------------------
+    //导入SDK相关依赖jar、aar
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation fileTree(include: ['*.aar'], dir: 'libs')
+    //必须添加的依赖
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.alibaba:fastjson:1.1.46.android'
+    implementation 'com.facebook.fresco:fresco:1.13.0'
+    implementation 'com.facebook.fresco:animated-gif:1.13.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    //uni-sdk引入------------------------------
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     implementation files('libs/xUtils-2.5.5.jar')
     implementation files('libs/jxl.jar')
-    implementation files('libs/deviceapi20190214.jar')
+    implementation files('libs/classes.jar')
+    implementation files('libs/Module_Android_Power.jar')
+    implementation files('libs/ModuleAPI_J.jar')
 
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
     //Adapter基类
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
-    implementation 'org.greenrobot:greendao:3.2.0'
+    implementation 'org.greenrobot:greendao:3.3.0'
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.3.0'
     implementation 'com.android.support:multidex:1.0.1'
 
@@ -108,12 +142,13 @@ dependencies {
     implementation 'com.amap.api:location:5.4.0'
     //事件传递
     implementation 'org.greenrobot:eventbus:3.0.0'
-    //网络请求
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+
     //权限
     implementation 'pub.devrel:easypermissions:1.2.0'
 
     implementation 'com.android.support:cardview-v7:26.0.0-alpha1'
+
+    implementation 'com.github.kongzue:BaseFramework:6.8.0'
 }
 allprojects {
     repositories {
