@@ -77,7 +77,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <Button
             android:id="@+id/BtInventory"
@@ -147,11 +147,6 @@
     </LinearLayout>
     -->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/gray1" />
-
     <LinearLayout
         android:id="@+id/layout4"
         android:layout_width="fill_parent"
@@ -159,16 +154,18 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp"
         android:paddingRight="10dp"
-        android:paddingBottom="5dp">
+        >
 
         <TextView
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/tvTagUii"
+            android:textStyle="bold"
             android:textSize="15sp" />
 
         <TextView
@@ -194,6 +191,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="状态"
+            android:textStyle="bold"
             android:textSize="15sp" />
 
         <TextView
@@ -201,6 +199,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="管理"
             android:textSize="15sp" />
     </LinearLayout>
@@ -217,8 +216,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/blue2">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

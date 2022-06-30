@@ -33,6 +33,10 @@ public class BarCodeAdpater extends BaseQuickAdapter<BarCodeBean, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, BarCodeBean item) {
+        if (helper.getAdapterPosition() % 2 == 0)
+            helper.setBackgroundColor(R.id.ll_item, context.getResources().getColor(R.color.bg_gray));
+        else
+            helper.setBackgroundColor(R.id.ll_item, context.getResources().getColor(R.color.white));
         if (!TextUtils.isEmpty(item.getBarCode())) {
             switch (item.getBarCodeType()) {
                 case "0":

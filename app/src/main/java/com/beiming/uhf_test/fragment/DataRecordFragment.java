@@ -7,7 +7,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,14 +57,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     @BindView(R.id.rv_meter)
     RecyclerView rvMeter;
     Unbinder unbinder;
-    @BindView(R.id.et_box)
-    EditText etBox;
-    @BindView(R.id.tv_box_search)
-    TextView tvBoxSearch;
-    @BindView(R.id.et_meter)
-    EditText etMeter;
-    @BindView(R.id.tv_meter_search)
-    TextView tvMeterSearch;
+    @BindView(R.id.et_search)
+    EditText etSearch;
     @BindView(R.id.tv_meter_number)
     TextView tvMeterNumber;
     @BindView(R.id.tv_addr)
@@ -86,10 +82,11 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     private static final int CHOOSE_PIC_MAX = 10;
 
     private String Tag = LoginActivity.class.getName();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i("CMCC", Tag+":"+System.currentTimeMillis());
+        Log.i("CMCC", Tag + ":" + System.currentTimeMillis());
         View view = inflater.inflate(R.layout.activity_data_record, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -101,14 +98,28 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         mContext = (UHFMainActivity) getActivity();
         initAdapter();
         initListener();
+        getData();
     }
 
     private int creatOrDetails = 0;
 
     private void initListener() {
-        tvBoxSearch.setOnClickListener(this);
-        tvMeterSearch.setOnClickListener(this);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                queryMeterData(editable.toString());
+            }
+        });
         noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,7 +145,6 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
 
     @Override
     protected void initData() {
-        getData();
     }
 
     private void getData() {
@@ -228,56 +238,44 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_box_search:
-                queryBoxData();
-                break;
-            case R.id.tv_meter_search:
-                queryMeterData();
-                break;
+
         }
 
     }
 
     //查询箱列表
-    private void queryBoxData() {
-        String boxContent = etBox.getText().toString().trim();
+    private List<MeasBoxBean> queryBoxData(String content) {
+        List<MeasBoxBean> boxList;
         MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
-        if (TextUtils.isEmpty(boxContent)) {
-            boxBeanList = measBoxBeanDao.loadAll();
+        if (TextUtils.isEmpty(content)) {
+            boxList = measBoxBeanDao.loadAll();
         } else {
-            boxBeanList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + boxContent + "%")).build().list();
+            boxList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%")).build().list();
         }
-        changeRightData(0);
-//        boxListAdapter.setSelectedPosition(0);
-//        boxListAdapter.setNewData(boxBeanList);
+        return boxList;
     }
 
     //查询表
-    private void queryMeterData() {
-        String meterContent = etMeter.getText().toString().trim();
-        MeterBeanDao meterBeanDao = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao();
-        if (TextUtils.isEmpty(meterContent)) {
-            showToast("请输入电表条形码");
-            return;
-        }
-        //查询到的所有电表
-        List<MeterBean> queryMeterList = meterBeanDao.queryBuilder().where(MeterBeanDao.Properties.BarCode.like("%" + meterContent + "%")).build().list();
-        //遍历查询到的所有电表，获取表箱集合
-        //无匹配数据时，直接刷新数据
-        if (queryMeterList.size() == 0) {
-            boxBeanList.clear();
-            changeRightData(0);
-//            boxListAdapter.setSelectedPosition(0);
-//            boxListAdapter.setNewData(boxBeanList);
-            return;
-        }
-        //有匹配数据时，先清楚原有箱，再遍历添加箱，需要去重
-        MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
+    private void queryMeterData(String content) {
         boxBeanList.clear();
-        List<MeasBoxBean> boxList;
-        for (int i = 0; i < queryMeterList.size(); i++) {
-            boxList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.eq(queryMeterList.get(i).getMeasBarCode())).build().list();
-            boxBeanList.addAll(boxList);
+        MeterBeanDao meterBeanDao = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao();
+        //当输入框为空时，则不用查询电表的箱集合
+        if (!TextUtils.isEmpty(content)) {
+            //查询到的所有电表
+            List<MeterBean> queryMeterList = meterBeanDao.queryBuilder().where(MeterBeanDao.Properties.BarCode.like("%" + content + "%")).build().list();
+            //遍历查询到的所有电表，获取表箱集合
+            //有匹配数据时，先清楚原有箱，再遍历添加箱，需要去重
+            List<MeasBoxBean> boxList;
+            for (int i = 0; i < queryMeterList.size(); i++) {
+                boxList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%"),MeasBoxBeanDao.Properties.BarCode.eq(queryMeterList.get(i).getMeasBarCode())).build().list();
+                boxBeanList.addAll(boxList);
+            }
+            Log.i("CMCC",boxBeanList.toString());
+            //查询箱列表数据
+            boxBeanList.addAll(measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%")).build().list());
+        } else {
+            //查询箱列表数据
+            boxBeanList = measBoxBeanDao.loadAll();
         }
         //去重
         Set<MeasBoxBean> userSet = new HashSet<>(boxBeanList);
@@ -285,8 +283,6 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
 
         //刷新页面数据
         changeRightData(0);
-//        boxListAdapter.setSelectedPosition(0);
-//        boxListAdapter.setNewData(boxBeanList);
     }
 
     @Override
@@ -316,7 +312,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         if (ConstantUtil.CLEAR_READ_TAG_DATA.equals(attachmentUpdate.getTag())) {
             //todo 本地保存成功，此处清除数据数据
             boxListAdapter.setSelectedPosition(0);
-            initData();
+            queryMeterData(etSearch.getText().toString().trim());
         }
     }
 }

@@ -174,8 +174,6 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
                     public void onConfirm() {
                         //本地保存
                         saveData();
-                        finish();
-                        showToast("保存成功");
                     }
 
                     @Override
@@ -223,6 +221,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         AttachmentUpdate attachmentUpdate = new AttachmentUpdate();
         attachmentUpdate.setTag(ConstantUtil.CLEAR_READ_TAG_DATA);
         EventBus.getDefault().post(attachmentUpdate);
+        showToast("保存成功");
+        finish();
     }
 
     @Override

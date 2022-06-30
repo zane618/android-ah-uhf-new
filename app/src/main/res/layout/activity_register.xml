@@ -40,7 +40,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:text="注册信息"
-                    android:textColor="@color/blue_00a0e9"
+                    android:textColor="@color/blue1"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -149,7 +149,7 @@
                         android:background="@drawable/seclect_edittext_bg_question"
                         android:hint="请输入用户名"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/blue_00a0e9"
+                        android:textColor="@color/blue1"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -178,7 +178,7 @@
                         android:background="@drawable/seclect_edittext_bg_question"
                         android:hint="请输入密码"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/blue_00a0e9"
+                        android:textColor="@color/blue1"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -207,7 +207,7 @@
                         android:background="@drawable/seclect_edittext_bg_question"
                         android:hint="请输入所在项目组"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/blue_00a0e9"
+                        android:textColor="@color/blue1"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -238,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
                         android:text="请输入验证问题，用于找回密码"
-                        android:textColor="@color/blue_5f8dc6" />
+                        android:textColor="@color/blue1" />
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -268,7 +268,7 @@
                         android:background="@drawable/seclect_edittext_bg_question"
                         android:hint="请输入答案"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/blue_00a0e9"
+                        android:textColor="@color/blue1"
                         android:textSize="16sp" />
 
                     <TextView
@@ -291,7 +291,7 @@
                         android:background="@drawable/seclect_edittext_bg_question"
                         android:hint="请输入答案"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/blue_00a0e9"
+                        android:textColor="@color/blue1"
                         android:textSize="16sp" />
 
                     <TextView
@@ -314,7 +314,7 @@
                         android:background="@drawable/seclect_edittext_bg_question"
                         android:hint="请输入答案"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/blue_00a0e9"
+                        android:textColor="@color/blue1"
                         android:textSize="16sp" />
 
                     <TextView

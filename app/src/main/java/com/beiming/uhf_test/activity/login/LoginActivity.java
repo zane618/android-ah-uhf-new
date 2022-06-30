@@ -27,6 +27,7 @@ import com.beiming.uhf_test.utils.DialogUtils;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.utils.ToastUtils;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -35,6 +36,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.dcloud.feature.sdk.DCUniMPSDK;
+import io.dcloud.feature.sdk.Interface.IUniMP;
+import io.dcloud.feature.unimp.config.UniMPOpenConfiguration;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
@@ -46,11 +50,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private String pwd;
     private LoginBeanDao loginBeanDao;
     private ProgressDialog progressDialog;
+
     /**
      * unimp小程序实例缓存
      **/
 //    HashMap<String, IUniMP> mUniMPCaches = new HashMap<>();
-
     @Override
     protected int onCreateView() {
         return R.layout.activity_login;
@@ -182,22 +186,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
      * 打开uni小程序
      */
     private void startUniSdk() {
-       /* //判断uni-sdk是否初始化成功
+        //判断uni-sdk是否初始化成功
         if (DCUniMPSDK.getInstance().isInitialize()) {
+            // 启动小程序并传入参数 "Hello uni microprogram"
             try {
                 UniMPOpenConfiguration uniMPOpenConfiguration = new UniMPOpenConfiguration();
-//            uniMPOpenConfiguration.splashClass = MySplashView.class;
-                IUniMP uniMP = DCUniMPSDK.getInstance().openUniMP(this, "__UNI__04E3A11");
-                mUniMPCaches.put(uniMP.getAppid(), uniMP);
+                uniMPOpenConfiguration.extraData.put("MSG", "Hello DCUniMPConfiguration");
+                SoftReference<IUniMP> mallMP = new SoftReference<>(DCUniMPSDK.getInstance()
+                        .openUniMP(LoginActivity.this, "__UNI__04E3A11", uniMPOpenConfiguration));
                 showToast("uni-sdk完成初始化");
             } catch (Exception e) {
                 e.printStackTrace();
-                showToast("异常" + e.toString());
             }
         } else {
             showToast("uni-sdk未完成初始化");
         }
-*/
     }
 
 

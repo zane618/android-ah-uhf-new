@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#097570</color>
-    <color name="colorPrimaryDark">#097570</color>
-    <color name="colorAccent">#097570</color>
+    <color name="colorPrimary">#0B7671</color>
+    <color name="colorPrimaryDark">#0B7671</color>
+    <color name="colorAccent">#0B7671</color>
 
     <color name="white">#FFFFFF</color>
     <color name="white1">#eeeeee</color>
@@ -25,15 +25,15 @@
     <color name="green2">#88008000</color>
     <color name="green3">#aa008000</color>
     <color name="blue">#0000FF</color>
-    <color name="blue1">#2095ac</color>
-    <color name="blue2">#2398bc</color>
+    <color name="blue1">#01A89E</color>
+    <color name="blue2">#0B7671</color>
     <color name="purple">#800080</color>
     <color name="pink">#FFC0CB</color>
     <color name="orange">#FFA500</color>
     <color name="lemonyellow">#FFFACD</color>
     <color name="graywhite">#F5F5F5</color>
     <color name="grayslate">#708090</color>
-    <color name="lightblue">#0083FF</color>
+    <color name="lightblue">#01A89E</color>
     <color name="lightblue2">#CCCCCC</color>
     <color name="full_transparent">#00000000</color>
     <color name="half_transparent">#aa000000</color>
@@ -43,6 +43,7 @@
 
     <color name="deep_gray">#ff3f3f3f</color>
     <color name="text_gray">#ff999999</color>
+    <color name="bg_gray">#F7F7F7</color>
 
 
     <color name="sliding_menu_back">#ff2c2c2e</color>
@@ -78,27 +79,8 @@
 
     <!--zxing end-->
 
-    <string-array name="colors" translatable="false">
-        <item>#99cc00</item>
-        <item>#33b5e5</item>
-        <item>#0099cc</item>
-        <item>#547bca</item>
-        <item>#aa66cc</item>
-        <item>#9933cc</item>
-        <item>#669900</item>
-        <item>#aeb857</item>
-        <item>#cc0000</item>
-        <item>#df5948</item>
-        <item>#ff4444</item>
-        <item>#ae6b23</item>
-        <item>#ff8800</item>
-        <item>#e5ae4f</item>
-        <item>#ffbb33</item>
-        <item>#cccccc</item>
-        <item>#888888</item>
-    </string-array>
-
     <color name="gray_f8f8f8">#F8F8F8</color>
+    <color name="gray_f7f7f7">#F7F7F7</color>
     <color name="gray_666">#666666</color>
     <color name="green_0b7671">#0B7671</color>
     <color name="gray_333">#333333</color>
@@ -110,12 +92,10 @@
     <color name="fbfbfb">#fbfbfb</color>
     <!--<color name="btn_normal">#00ACFF</color>-->
     <color name="green_01A89E">#01A89E</color>
-    <color name="btn_pressed">#00A1DB</color>
     <color name="inActive">#ABADBB</color>
 
     <color name="burlywood">#deb887</color>
     <color name="btn_bottom_normal">#f2d05c</color>
-    <color name="tv_login">#5677fc</color>
     <color name="tv_1">#333333</color>
     <color name="tv_search">#5BCB73</color>
     <color name="tv_searched">#5BCB9B</color>
@@ -128,11 +108,9 @@
 
     <color name="main_bg_gray">#f6f9ff</color>
 
-    <color name="blue_00a0e9">#00a0e9</color>
+    <color name="blue_01A89E">#01A89E</color>
     <color name="gray_e4e4e4">#e4e4e4</color>
     <color name="blue_26b0b2">#26b0b2</color>
-    <color name="blue_2b61ad">#2b61ad</color>
-    <color name="blue_5f8dc6">#5f8dc6</color>
     <color name="blue_009944">#009944</color>
     <color name="translucent">#00000000</color>
     <color name="dark">#88888888</color>

@@ -191,7 +191,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private void setView(boolean step1IsVissble, boolean step2IsVissble, boolean step3IsVissble) {
         if (step1IsVissble) {
-            mTv1.setTextColor(getResources().getColor(R.color.blue_00a0e9));
+            mTv1.setTextColor(getResources().getColor(R.color.blue1));
             mIv1.setBackgroundResource(R.drawable.shape_circle_blue);
             mLlStep1.setVisibility(View.VISIBLE);
             mTv2.setTextColor(getResources().getColor(R.color.gray_666));
@@ -205,7 +205,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             mTv1.setTextColor(getResources().getColor(R.color.gray_666));
             mIv1.setBackgroundResource(R.drawable.shape_circle_gray);
             mLlStep1.setVisibility(View.GONE);
-            mTv2.setTextColor(getResources().getColor(R.color.blue_00a0e9));
+            mTv2.setTextColor(getResources().getColor(R.color.blue1));
             mIv2.setBackgroundResource(R.drawable.shape_circle_blue);
             mLlStep2.setVisibility(View.VISIBLE);
             mTv3.setTextColor(getResources().getColor(R.color.gray_666));
@@ -219,7 +219,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             mTv2.setTextColor(getResources().getColor(R.color.gray_666));
             mIv2.setBackgroundResource(R.drawable.shape_circle_gray);
             mLlStep2.setVisibility(View.GONE);
-            mTv3.setTextColor(getResources().getColor(R.color.blue_00a0e9));
+            mTv3.setTextColor(getResources().getColor(R.color.blue1));
             mIv3.setBackgroundResource(R.drawable.shape_circle_blue);
             mLlStep3.setVisibility(View.VISIBLE);
         }

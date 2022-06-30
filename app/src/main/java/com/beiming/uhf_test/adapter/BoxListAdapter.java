@@ -32,12 +32,12 @@ public class BoxListAdapter extends BaseQuickAdapter<MeasBoxBean, BaseViewHolder
         TextView textView = helper.getView(R.id.tv_zc_type);
         if (selectedPosition == helper.getAdapterPosition()) {
             helper.setVisible(R.id.iv_cb, true);
-            textView.setTextColor(context.getResources().getColor(R.color.green_0b7671));
-            textView.setBackgroundColor(context.getResources().getColor(R.color.gray_f8f8f8));
+            textView.setTextColor(context.getResources().getColor(R.color.blue1));
+            textView.setBackgroundColor(context.getResources().getColor(R.color.white));
         } else {
             helper.setVisible(R.id.iv_cb, false);
             textView.setTextColor(context.getResources().getColor(R.color.gray_666));
-            textView.setBackgroundColor(context.getResources().getColor(R.color.white));
+            textView.setBackgroundColor(context.getResources().getColor(R.color.gray_f7f7f7));
         }
     }
 

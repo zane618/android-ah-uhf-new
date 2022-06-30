@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_f7f7f7"
     android:orientation="vertical">
 
 
@@ -10,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:padding="16dp"
-        android:background="@drawable/read_bac"
         android:orientation="vertical">
 
 
@@ -19,19 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="16dp"
+            android:background="@drawable/border_top"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/module"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="#FF333333"
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/sp_setWorkBand"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:entries="@array/bank"
                 android:gravity="center_horizontal"
                 android:spinnerMode="dropdown"/>
@@ -40,22 +41,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:background="@drawable/border_bottom"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/bt_getFrequency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/button_bg"
                 android:text="@string/getBank" />
 
             <Button
                 android:id="@+id/bt_setFrequency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/button_bg"
                 android:layout_weight="1"
                 android:text="@string/setBank" />
 
@@ -66,27 +72,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:padding="16dp"
-        android:background="@drawable/read_bac"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="16dp"
+            android:background="@drawable/border_top"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/power"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="#FF333333"
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/sp_setPower"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:entries="@array/power"
                 android:spinnerMode="dropdown"/>
@@ -95,23 +101,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/bt_getPower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/button_bg"
                 android:text="@string/getPower" />
 
             <Button
                 android:id="@+id/bt_setPower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/button_bg"
                 android:layout_weight="1"
                 android:text="@string/setPower" />
+
         </LinearLayout>
     </LinearLayout>
 

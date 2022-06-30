@@ -2,7 +2,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!--设置背景色-->
-    <solid android:color="@color/blue" />
+    <solid android:color="@color/white" />
     <!--设置圆角-->
     <corners android:radius="20dp" />
+    <stroke
+        android:width="1dip"
+        android:color="#1A0B7671" />
 </shape>

@@ -4,71 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/et_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/et_box"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="请输入箱条形码"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_box_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:paddingBottom="6dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="6dp"
-                android:text="查询" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/et_meter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="请输入表条形码"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_meter_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:paddingBottom="6dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="6dp"
-                android:text="查询" />
-        </LinearLayout>
-
-    </LinearLayout>
+        android:background="@drawable/border_search"
+        android:gravity="center_vertical"
+        android:hint="请输入电能表或计量箱编号"
+        android:padding="10dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/green_01A89E"
+        android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,16 +28,14 @@
             android:id="@+id/rv_box"
             android:layout_width="125dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:background="@color/white">
+            android:background="@color/gray_f7f7f7">
 
         </android.support.v7.widget.RecyclerView>
 
         <com.beiming.uhf_test.widget.RecyclerScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:background="@color/gray_f8f8f8">
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,11 +45,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:paddingTop="10dp"
-                    android:background="@color/gray_f8f8f8"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="10dp"
                     android:text="位置信息："
                     android:textStyle="bold" />
 
@@ -117,10 +63,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:paddingTop="10dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="10dp"
                     android:text="备注："
                     android:textStyle="bold" />
 
@@ -136,10 +82,10 @@
                     android:id="@+id/tv_meter_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:paddingTop="10dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="10dp"
                     android:text="表数：12个"
                     android:textStyle="bold" />
 
@@ -153,10 +99,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:paddingTop="10dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="10dp"
                     android:text="图片信息："
                     android:textStyle="bold" />
 

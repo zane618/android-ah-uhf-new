@@ -2,11 +2,20 @@ package com.beiming.uhf_test;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.beiming.uhf_test.bean.LoginBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.kongzue.baseframework.BaseApp;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.dcloud.feature.sdk.DCSDKInitConfig;
+import io.dcloud.feature.sdk.DCUniMPSDK;
+import io.dcloud.feature.sdk.Interface.IDCUniMPPreInitCallback;
+import io.dcloud.feature.sdk.MenuActionSheetItem;
 
 /**
  * Created by htj on 2020/7/8.
@@ -39,7 +48,7 @@ public class MyApplication extends BaseApp<MyApplication> {
         SharedPreferencesUtil.setInstance(sharedPreferencesUtil);
 
         //初始化 uni小程序SDK ----start----------
-        /*MenuActionSheetItem item = new MenuActionSheetItem("关于", "gy");
+        MenuActionSheetItem item = new MenuActionSheetItem("关于", "gy");
         MenuActionSheetItem item1 = new MenuActionSheetItem("获取当前页面url", "hqdqym");
         MenuActionSheetItem item2 = new MenuActionSheetItem("跳转到宿主原生测试页面", "gotoTestPage");
         List<MenuActionSheetItem> sheetItems = new ArrayList<>();
@@ -60,7 +69,7 @@ public class MyApplication extends BaseApp<MyApplication> {
             public void onInitFinished(boolean b) {
                 Log.i("unimp","onInitFinished----"+b);
             }
-        });*/
+        });
         //初始化 uni小程序SDK ----end----------
 
     }

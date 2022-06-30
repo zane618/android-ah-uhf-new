@@ -32,24 +32,32 @@
      <!-- 将自定义的style取名为CustomTheme，父类为Theme.Holo.Light，也就是说默认背景是白底黑字（如果是Theme.Holo，则默认是黑底白字） -->  
      <style name="CustomTheme" parent="android:style/Theme.Holo.Light">  
          <!-- 这是item的背景修改，不按时透明，按时显示绿色  -->  
-         <!-- <item name="android:selectableItemBackground">@color/white1</item>  -->  
+<!--          <item name="android:selectableItemBackground">@color/white1</item>-->
          <!-- <item name="android:actionDropDownStyle">@style/MyDropDownNav</item>     
          <item name="android:dropDownListViewStyle">@style/MyDropDownListView</item>       
          <item name="android:actionBarTabStyle">@style/MyActionBarTabStyle</item> -->  
          <item name="android:actionBarTabTextStyle">@style/MyActionBarTabTextStyle</item>  
          <item name="android:actionBarStyle">@style/MyActionBarStyle</item>
-         <item name="android:homeAsUpIndicator">@drawable/actionbar_back</item> 
+         <item name="android:actionBarTabStyle">@style/MyActionBarTabStyle</item>
+         <item name="android:homeAsUpIndicator">@drawable/actionbar_back</item>
      </style>  
      
      <style name="MyActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
-        <!-- <item name="android:background">@color/white</item>
-        <item name="android:titleTextStyle">@style/MainActivityActionBarTitleTextStyle</item> -->
-      
+         <item name="android:background">@color/blue1</item>
+         <item name="android:titleTextStyle">@style/TextAppearance.Holo.Widget.ActionBar.Title.Own</item>
+
     </style>
-   
-     <!-- Tab选项标签背景的样式 -->  
+
+
+    <style name="TextAppearance.Holo.Widget.ActionBar.Title.Own"
+        parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
+    <!-- Tab选项标签背景的样式 -->
      <style name="MyActionBarTabStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabView">  
-          <!-- <item name="android:background">@color/white</item> -->  
+           <item name="android:background">@color/white</item>
      </style>  
    
      <!-- Tab选项标签字体的样式 -->  
