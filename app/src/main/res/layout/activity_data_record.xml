@@ -24,13 +24,13 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_box"
             android:layout_width="125dp"
             android:layout_height="match_parent"
             android:background="@color/gray_f7f7f7">
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <com.beiming.uhf_test.widget.RecyclerScrollView
             android:layout_width="match_parent"
@@ -89,12 +89,12 @@
                     android:text="表数：12个"
                     android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_meter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
                     android:layout_width="match_parent"

@@ -2,7 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'
+    resolutionStrategy {
+        force 'com.android.support:support-v4:27.1.0'
+    }
 }
 configurations {
     all*.exclude group: 'com.google.android', module: 'support-v4'
@@ -23,15 +25,14 @@ android {
         }
     }
 
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.beiming.uhf_test"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
@@ -99,10 +100,7 @@ repositories {
 }
 
 dependencies {
-    implementation files('libs\\utdid4all-1.5.2.1-proguard.jar')
-    implementation files('libs\\qq_open_sdk_3.5.2.152.jar')
-    implementation files('libs\\qq_mta-sdk-1.6.2.jar')
-    androidTestImplementation('com.android.support:support-annotations:26.1.0') {
+    androidTestImplementation('androidx.annotation:annotation:1.0.0') {
         force = true
     }
 
@@ -111,15 +109,15 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation fileTree(include: ['*.aar'], dir: 'libs')
     //必须添加的依赖
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.alibaba:fastjson:1.1.46.android'
-    implementation 'com.facebook.fresco:fresco:1.13.0'
-    implementation 'com.facebook.fresco:animated-gif:1.13.0'
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+//    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    implementation 'com.alibaba:fastjson:1.1.46.android'
+//    implementation 'com.facebook.fresco:fresco:1.13.0'
+//    implementation 'com.facebook.fresco:animated-gif:1.13.0'
+//    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-/*    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.appcompat:appcompat:1.0.0"
     implementation 'com.alibaba:fastjson:1.2.66'
@@ -128,23 +126,26 @@ dependencies {
     implementation 'com.facebook.fresco:webpsupport:2.5.0'
     implementation 'com.facebook.fresco:animated-webp:2.5.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'com.android.support:multidex:1.0.3'*/
+//    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
     //uni-sdk引入------------------------------
 
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:0.5'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+//    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     //Adapter基类
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     implementation 'org.greenrobot:greendao:3.3.0'
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.3.0'
-    implementation 'com.android.support:multidex:1.0.1'
+//    implementation 'androidx.multidex:multidex:2.0.0'
 
-    implementation 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+//    implementation 'com.jakewharton:butterknife:8.5.1'
+//    implementation 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'org.easybatch:easybatch-gson:5.1.0'
 
     //定位依赖
@@ -155,7 +156,7 @@ dependencies {
     //权限
     implementation 'pub.devrel:easypermissions:1.2.0'
 
-    implementation 'com.android.support:cardview-v7:26.0.0-alpha1'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'com.github.kongzue:BaseFramework:6.8.0'
 }

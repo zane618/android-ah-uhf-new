@@ -3,13 +3,17 @@
 buildscript {
 
     repositories {
-        maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
+        /*maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }*/
+        google()
+        jcenter()
+        maven{ url 'https://maven.aliyun.com/repository/google'}
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:7.0.1'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
+        classpath 'com.google.gms:google-services:4.0.1' //这行对谷歌服务库进行依赖
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -18,12 +22,15 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
+        /*maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
-//        maven { url 'https://dl.bintray.com/jetbrains/anko' }
+        maven { url 'https://dl.bintray.com/jetbrains/anko' }
         //这是你需要加入的，这个是解决这个问题的关键地方，我就是添加这个maven后不再报上面的错误了
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io' }*/
+        google()
+        jcenter()
+        maven{ url 'https://maven.aliyun.com/repository/google'}
     }
 }
 

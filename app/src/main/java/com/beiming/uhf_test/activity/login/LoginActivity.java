@@ -6,10 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.beiming.uhf_test.bean.LoginBean;
 import com.beiming.uhf_test.bean.UserBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.LoginBeanDao;
-import com.beiming.uhf_test.utils.DialogUtils;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.utils.ToastUtils;
 
@@ -193,7 +191,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 UniMPOpenConfiguration uniMPOpenConfiguration = new UniMPOpenConfiguration();
                 uniMPOpenConfiguration.extraData.put("MSG", "Hello DCUniMPConfiguration");
                 SoftReference<IUniMP> mallMP = new SoftReference<>(DCUniMPSDK.getInstance()
-                        .openUniMP(LoginActivity.this, "__UNI__04E3A11", uniMPOpenConfiguration));
+                        .openUniMP(LoginActivity.this, "__UNI__48FDC60", uniMPOpenConfiguration));
                 showToast("uni-sdk完成初始化");
             } catch (Exception e) {
                 e.printStackTrace();

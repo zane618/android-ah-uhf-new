@@ -71,7 +71,7 @@
             android:value="3105b802d651927993d26a48e4173546"></meta-data>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.beiming.uhf_test"
             android:exported="false"
             android:grantUriPermissions="true">

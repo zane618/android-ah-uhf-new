@@ -2,36 +2,22 @@ package com.beiming.uhf_test.fragment;
 
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.util.DisplayMetrics;
-import android.util.Log;
+
+import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.UHFMainActivity;
-import com.beiming.uhf_test.activity.login.LoginActivity;
-import com.beiming.uhf_test.tools.UIHelper;
 import com.kongzue.baseframework.interfaces.BindView;
 import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.uhf.api.cls.Reader;
 
 

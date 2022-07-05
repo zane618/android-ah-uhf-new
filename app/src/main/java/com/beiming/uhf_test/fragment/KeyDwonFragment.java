@@ -3,7 +3,7 @@ package com.beiming.uhf_test.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Looper;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
 

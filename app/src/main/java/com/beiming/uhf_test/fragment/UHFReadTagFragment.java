@@ -2,19 +2,18 @@ package com.beiming.uhf_test.fragment;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +30,6 @@ import android.widget.Toast;
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.RecordDataActivity;
 import com.beiming.uhf_test.activity.UHFMainActivity;
-import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.adapter.BarCodeAdpater;
 import com.beiming.uhf_test.bean.BarCodeBean;
 import com.beiming.uhf_test.bean.MeasBoxBean;
@@ -55,10 +53,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
