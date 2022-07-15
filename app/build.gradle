@@ -16,14 +16,14 @@ def mfph = [
         "apk.applicationId" : "com.beiming.uhf_test",
 ]
 android {
-    signingConfigs {
-        Myconfig {
-            keyAlias 'key0'
-            keyPassword '123456'
-            storeFile file('D:/work/workspace/ah/UHF/UHF_Test_old/uhf_test.jks')
-            storePassword '123456'
-        }
-    }
+//    signingConfigs {
+//        Myconfig {
+//            keyAlias 'key0'
+//            keyPassword '123456'
+//            storeFile file('D:/work/workspace/ah/UHF/UHF_Test_old/uhf_test.jks')
+//            storePassword '123456'
+//        }
+//    }
 
     compileSdkVersion 29
     defaultConfig {

@@ -174,8 +174,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
                 break;
             case R.id.tv_register://注册按钮
-//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-                startUniSdk();
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+//                startUniSdk();
                 break;
         }
     }
