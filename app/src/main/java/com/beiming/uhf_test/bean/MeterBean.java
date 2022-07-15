@@ -28,13 +28,12 @@ public class MeterBean implements Serializable {
     private String gpsLatitude;//GPS纬度
     private String gpsLongitude;//GPS经度
     private boolean isExsit;//本地是否存在
-
-
-    @Generated(hash = 625814679)
+    private String phase;//电表接入的相位信息，有四种值：a，b，c，空
+    @Generated(hash = 1903856073)
     public MeterBean(Long meterId, String barCode, String meterAssetNo,
             String measAssetNo, String measBarCode, String scanTime, String gps_X,
             String gps_Y, String gps_Z, String gpsLatitude, String gpsLongitude,
-            boolean isExsit) {
+            boolean isExsit, String phase) {
         this.meterId = meterId;
         this.barCode = barCode;
         this.meterAssetNo = meterAssetNo;
@@ -47,6 +46,7 @@ public class MeterBean implements Serializable {
         this.gpsLatitude = gpsLatitude;
         this.gpsLongitude = gpsLongitude;
         this.isExsit = isExsit;
+        this.phase = phase;
     }
     @Generated(hash = 2099306990)
     public MeterBean() {
@@ -123,6 +123,12 @@ public class MeterBean implements Serializable {
     public void setIsExsit(boolean isExsit) {
         this.isExsit = isExsit;
     }
+    public String getPhase() {
+        return this.phase;
+    }
+    public void setPhase(String phase) {
+        this.phase = phase;
+    }
 
     @Override
     public String toString() {
@@ -139,6 +145,7 @@ public class MeterBean implements Serializable {
                 ", gpsLatitude='" + gpsLatitude + '\'' +
                 ", gpsLongitude='" + gpsLongitude + '\'' +
                 ", isExsit=" + isExsit +
+                ", phase='" + phase + '\'' +
                 '}';
     }
 }
