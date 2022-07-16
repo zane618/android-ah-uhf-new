@@ -36,6 +36,7 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
         public final static Property GpsLatitude = new Property(9, String.class, "gpsLatitude", false, "GPS_LATITUDE");
         public final static Property GpsLongitude = new Property(10, String.class, "gpsLongitude", false, "GPS_LONGITUDE");
         public final static Property IsExsit = new Property(11, boolean.class, "isExsit", false, "IS_EXSIT");
+        public final static Property Phase = new Property(12, String.class, "phase", false, "PHASE");
     }
 
 
@@ -62,7 +63,8 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
                 "\"GPS__Z\" TEXT," + // 8: gps_Z
                 "\"GPS_LATITUDE\" TEXT," + // 9: gpsLatitude
                 "\"GPS_LONGITUDE\" TEXT," + // 10: gpsLongitude
-                "\"IS_EXSIT\" INTEGER NOT NULL );"); // 11: isExsit
+                "\"IS_EXSIT\" INTEGER NOT NULL ," + // 11: isExsit
+                "\"PHASE\" TEXT);"); // 12: phase
     }
 
     /** Drops the underlying database table. */
@@ -130,6 +132,11 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
             stmt.bindString(11, gpsLongitude);
         }
         stmt.bindLong(12, entity.getIsExsit() ? 1L: 0L);
+ 
+        String phase = entity.getPhase();
+        if (phase != null) {
+            stmt.bindString(13, phase);
+        }
     }
 
     @Override
@@ -191,6 +198,11 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
             stmt.bindString(11, gpsLongitude);
         }
         stmt.bindLong(12, entity.getIsExsit() ? 1L: 0L);
+ 
+        String phase = entity.getPhase();
+        if (phase != null) {
+            stmt.bindString(13, phase);
+        }
     }
 
     @Override
@@ -212,7 +224,8 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // gps_Z
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // gpsLatitude
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // gpsLongitude
-            cursor.getShort(offset + 11) != 0 // isExsit
+            cursor.getShort(offset + 11) != 0, // isExsit
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // phase
         );
         return entity;
     }
@@ -231,6 +244,7 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
         entity.setGpsLatitude(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setGpsLongitude(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setIsExsit(cursor.getShort(offset + 11) != 0);
+        entity.setPhase(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
      }
     
     @Override

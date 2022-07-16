@@ -14,11 +14,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.alibaba.fastjson.JSONObject;
 import com.beiming.uhf_test.MyApplication;
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.UHFMainActivity;
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.bean.LoginBean;
+import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.UserBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.LoginBeanDao;
@@ -60,24 +62,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void initView() {
-//        String jsonFromTaskInfoMap = GsonUtil.getInstance().getJsonFromTaskInfoMap(TaskInfoMap.taskInfoMap);
-//        Map<Integer, String> taskInfoMapFromJson = GsonUtil.getInstance().getTaskInfoMapFromJson(jsonFromTaskInfoMap);
-
         // 动态添加权限
         initPermission();
-/*        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA},
-                    0x11);
-        } else {
-//            try {
-//                ExcleUtil.readExcel("");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }*/
         loginBeanDao = GreenDaoManager.getInstance().getNewSession().getLoginBeanDao();
         mEtName = (EditText) findViewById(R.id.et_name);
         mEtPwd = (EditText) findViewById(R.id.et_pwd);
@@ -90,14 +76,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.ib_login).setOnClickListener(this);
         findViewById(R.id.tv_register).setOnClickListener(this);
 
-
-       /* String SerialNumber = android.os.Build.SERIAL;//获取序列号
-        LogUtils.i("序列号=" + SerialNumber);
-        String generate = MD5Utils.createActionCode(SerialNumber);//对序列号进行第一次加密
-        LogUtils.i("第一次加密后=" + generate);
-        String generate1 = MD5Utils.generate(generate);//对加密过后的序列号再一次加密
-        LogUtils.i("", "initView: 加密后的序列号=" + generate1);
-        mEtName.setText(generate1);*/
         initProgress();
 
     }
@@ -175,32 +153,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.tv_register://注册按钮
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-//                startUniSdk();
                 break;
         }
     }
-
-    /**
-     * 打开uni小程序
-     */
-    private void startUniSdk() {
-        //判断uni-sdk是否初始化成功
-        if (DCUniMPSDK.getInstance().isInitialize()) {
-            // 启动小程序并传入参数 "Hello uni microprogram"
-            try {
-                UniMPOpenConfiguration uniMPOpenConfiguration = new UniMPOpenConfiguration();
-                uniMPOpenConfiguration.extraData.put("MSG", "Hello DCUniMPConfiguration");
-                SoftReference<IUniMP> mallMP = new SoftReference<>(DCUniMPSDK.getInstance()
-                        .openUniMP(LoginActivity.this, "__UNI__48FDC60", uniMPOpenConfiguration));
-                showToast("uni-sdk完成初始化");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            showToast("uni-sdk未完成初始化");
-        }
-    }
-
 
     //判断用户名和密码是否正确
     public boolean checkUseNameAndPassword() {

@@ -18,7 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.beiming.uhf_test.R;
+import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.activity.pic.PhotoPickerActivity;
 import com.beiming.uhf_test.activity.pic.PreviewPhotoActivity;
 import com.beiming.uhf_test.adapter.pic.AttachmentAdapter;
@@ -43,10 +45,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.dcloud.feature.sdk.DCUniMPSDK;
+import io.dcloud.feature.sdk.Interface.IUniMP;
+import io.dcloud.feature.unimp.config.UniMPOpenConfiguration;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -299,5 +305,32 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(newBase);
+    }
+
+
+    /**
+     * 打开uni小程序
+     */
+    private void startUniSdk() {
+        //判断uni-sdk是否初始化成功
+        if (DCUniMPSDK.getInstance().isInitialize()) {
+            // 启动小程序并传入参数 "Hello uni microprogram"
+            try {
+                List<MeterBean> list = new ArrayList<>();
+                for (int i = 0; i < 5; i++) {
+                    MeterBean meterBean = new MeterBean();
+                    meterBean.setMeterAssetNo("00000"+i);
+                    list.add(meterBean);
+                }
+                UniMPOpenConfiguration uniMPOpenConfiguration = new UniMPOpenConfiguration();
+                uniMPOpenConfiguration.extraData.put("MSG", JSONObject.toJSON(list));
+                SoftReference<IUniMP> mallMP = new SoftReference<>(DCUniMPSDK.getInstance()
+                        .openUniMP(RecordDataActivity.this, "__UNI__D0FCDA1", uniMPOpenConfiguration));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            showToast("uni-sdk未完成初始化");
+        }
     }
 }
