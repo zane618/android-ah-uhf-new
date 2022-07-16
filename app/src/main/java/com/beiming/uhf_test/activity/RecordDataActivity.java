@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -69,10 +71,17 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     Button btSave;
     @BindView(R.id.iv_back)
     FrameLayout ivBack;
+    @BindView(R.id.tv_xiang_bh)//箱号
+    TextView tv_xiang_bh;
+    @BindView(R.id.et_xiang_chang)
+    EditText et_xiang_chang;//长
+    @BindView(R.id.tv_xiang_kuan)
+    EditText tv_xiang_kuan;//宽
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
 
     private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
     private AttachmentAdapter attachmentAdapter;
-    private MeasBoxBean measBoxBean;
     private static final int CHOOSE_PIC_MAX = 10;
     private int MY_PERMISSIONS_REQUEST = 10011;//图片请求码
     private static final int PICK_PHOTO = 101;
@@ -162,6 +171,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         } else {
             tvAddr.setText("暂未获取到定位信息");
         }
+        tv_xiang_bh.setText(boxBean.getBarCode());
     }
 
     @Override

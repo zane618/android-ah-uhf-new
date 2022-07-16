@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 箱
  * 条形码bean
  * Created by htj on 2021/5/20.
  */

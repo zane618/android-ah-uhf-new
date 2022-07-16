@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.Id;
 import java.io.Serializable;
 
 /**
+ * 表
  * 条形码bean
  * Created by htj on 2021/5/20.
  */
