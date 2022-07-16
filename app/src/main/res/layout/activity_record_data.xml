@@ -16,8 +16,8 @@
 
         <com.beiming.uhf_test.widget.RecyclerScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,6 +124,61 @@
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="计量箱材质："
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_333"
+                        android:textSize="13sp" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_caizhi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/caizhi_Y"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:button="@null"
+                            android:checked="true"
+                            android:drawableLeft="@drawable/radiobutton_bg"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_horizontal"
+                            android:text="金属"
+                            android:textColor="#333333" />
+
+                        <RadioButton
+                            android:id="@+id/caizhi_n"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/radiobutton_bg"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_horizontal"
+                            android:text="非金属"
+                            android:textColor="#333333" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
                 <!--       当前位置         -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -266,6 +321,7 @@
 
                 <!--        计量箱缺陷        -->
                 <LinearLayout
+                    android:id="@+id/ll_quexian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -553,10 +609,16 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleview"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

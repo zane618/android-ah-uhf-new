@@ -138,7 +138,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 name = mEtName.getText().toString().trim();
                 pwd = mEtPwd.getText().toString().trim();
 
-                if (checkUseNameAndPassword()) {
+//                if (checkUseNameAndPassword()) {
+                if (true) {
                     if (progressDialog != null) {
                         progressDialog.show();
                     }

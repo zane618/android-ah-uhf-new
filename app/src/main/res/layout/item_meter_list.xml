@@ -6,13 +6,15 @@
     android:orientation="horizontal"
     android:id="@+id/ll_baseview">
 
-    <ImageView
-        android:id="@+id/iv_cb"
-        android:layout_width="3dp"
-        android:layout_height="30dp"
-        android:src="@drawable/select_cb_line"
-        android:layout_gravity="center_vertical"
-        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_axiang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="【A相】"
+        android:textColor="#ff0b7671"
+        android:textSize="13sp"
+        />
 
     <TextView
         android:id="@+id/tv_zc_type"

@@ -35,6 +35,7 @@
         <com.beiming.uhf_test.widget.RecyclerScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="5dp"
             android:background="@color/white">
 
             <LinearLayout
@@ -42,52 +43,283 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="10dp"
-                    android:text="位置信息："
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_chicun"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="尺寸信息"
+                        android:background="@drawable/shape_ty_bendi"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="计量箱长度："
+                        android:textColor="#ff4d4d4d"
+                        android:textSize="13sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_chang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="400cm"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="计量箱宽度："
+                        android:textColor="#ff4d4d4d"
+                        android:textSize="13sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_kuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="280cm"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+<!--                材质-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="计量箱材质："
+                        android:textColor="#ff4d4d4d"
+                        android:textSize="13sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_caizhi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="金属"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_weizhi"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="位置信息"
+                        android:background="@drawable/shape_ty_bendi"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_addr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:paddingRight="5dp"
-                    android:text="无" />
-
-                <TextView
+                    android:text="合肥市包河区南淝河路800号康源大酒店" />
+<!--备注-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="10dp"
-                    android:text="备注："
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_beizhu"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="备注"
+                        android:background="@drawable/shape_ty_bendi"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_note"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:text="无" />
+                    android:text="未添加备注" />
 
-                <TextView
-                    android:id="@+id/tv_meter_number"
+                <!--计量箱缺陷-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="10dp"
-                    android:text="表数：12个"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_quexian"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="计量箱缺陷"
+                        android:background="@drawable/shape_ty_bendi"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="计量装置铰链断裂："
+                        android:textColor="@color/gray_333"
+                        android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/tv_jiaolian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="计量箱安装不牢固："
+                        android:textColor="@color/gray_333"
+                        android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/tv_laogu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="计量箱锁具缺失："
+                        android:textColor="@color/gray_333"
+                        android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/tv_suo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="计量箱内存在杂物："
+                        android:textColor="@color/gray_333"
+                        android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/tv_zawu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+
+                <!--表数-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_biaoshu"/>
+                    <TextView
+                        android:id="@+id/tv_meter_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="表数"
+                        android:background="@drawable/shape_ty_bendi"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"/>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_meter"
@@ -96,15 +328,27 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-                <TextView
+                <!--图片信息-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="10dp"
-                    android:text="图片信息："
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_tupian"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="图片信息"
+                        android:background="@drawable/shape_ty_bendi"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_pic_show"

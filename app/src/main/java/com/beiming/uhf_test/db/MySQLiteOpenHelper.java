@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.beiming.uhf_test.greendao.gen.DaoMaster;
+import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
 
 import java.io.File;
@@ -102,7 +103,7 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
             Log.i("version", oldVersion + "---先前和更新之后的版本---" + newVersion);
             MigrationHelper.migrate(db);
             //更改过的实体类(新增的不用加)   更新UserDao文件 可以添加多个  XXDao.class 文件
-//             MigrationHelper.migrate(db, UserDao.class,XXDao.class);
+             MigrationHelper.migrate(db, MeasBoxBeanDao.class /*,XXDao.class*/);
         }
 
     }

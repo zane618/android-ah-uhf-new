@@ -70,6 +70,23 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     @BindView(R.id.ll_pic_show)
     LinearLayout llPicShow;
 
+    @BindView(R.id.tv_chang)
+    TextView tv_chang;
+    @BindView(R.id.tv_kuan)
+    TextView tv_kuan;
+    @BindView(R.id.tv_caizhi)
+    TextView tv_caizhi;
+
+    @BindView(R.id.tv_jiaolian)
+    TextView tv_jiaolian;
+    @BindView(R.id.tv_laogu)
+    TextView tv_laogu;
+    @BindView(R.id.tv_suo)
+    TextView tv_suo;
+    @BindView(R.id.tv_zawu)
+    TextView tv_zawu;
+
+
     private UHFMainActivity mContext;
     private List<MeasBoxBean> boxBeanList;
     private List<MeterBean> meterBeanList;
@@ -208,6 +225,17 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             meterBeanList = measBoxBean.getMeters();
             photoBeanList = measBoxBean.getBoxImages();
             tvAddr.setText(measBoxBean.getInstAddr());
+            tv_chang.setText(measBoxBean.getChang());
+            tv_kuan.setText(measBoxBean.getKuan());
+            tv_caizhi.setText(measBoxBean.getCaizhi());
+            if (!TextUtils.isEmpty(measBoxBean.getNote())) {
+                tvNote.setText(measBoxBean.getNote());
+            }
+            tv_jiaolian.setText(measBoxBean.getQxJiaolian());
+            tv_laogu.setText(measBoxBean.getQxLaogu());
+            tv_suo.setText(measBoxBean.getQxSuo());
+            tv_zawu.setText(measBoxBean.getQxZawu());
+
         }
         //刷新右侧表列表
         meterAdapter.setNewData(meterBeanList);

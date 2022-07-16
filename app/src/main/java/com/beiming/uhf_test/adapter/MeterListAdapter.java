@@ -2,6 +2,8 @@ package com.beiming.uhf_test.adapter;
 
 import android.content.Context;
 import androidx.annotation.Nullable;
+
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.beiming.uhf_test.R;
@@ -10,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
+import java.util.Random;
 
 public class MeterListAdapter extends BaseQuickAdapter<MeterBean, BaseViewHolder> {
 
@@ -28,8 +31,17 @@ public class MeterListAdapter extends BaseQuickAdapter<MeterBean, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, MeterBean item) {
-        helper.setText(R.id.tv_zc_type, item.getBarCode());
         TextView textView = helper.getView(R.id.tv_zc_type);
+        textView.setText(item.getBarCode());
+
+        TextView xw = helper.getView(R.id.tv_axiang);
+        if (!TextUtils.isEmpty(item.getPhase())) {
+            xw.setText("[" + item.getPhase() + "]");
+        } else {
+            String[] abc = new String[] {"[A相]", "[B相]","[C相]"};
+
+            xw.setText(abc[new Random().nextInt(2)]);
+        }
     }
 
 }

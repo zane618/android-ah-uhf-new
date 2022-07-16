@@ -7,14 +7,18 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,7 @@ import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
 import com.beiming.uhf_test.widget.ScrollGridView;
+import com.nostra13.dcloudimageloader.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -85,6 +90,22 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     EditText tv_xiang_kuan;//宽
     @BindView(R.id.recycleview)
     RecyclerView recycleview;
+    @BindView(R.id.radioGroup_qx)
+    RadioGroup radioGroup_qx;
+    @BindView(R.id.ll_quexian)
+    LinearLayout ll_quexian;
+    @BindView(R.id.jiaolian_y)
+    RadioButton jiaolian_y; //铰链
+    @BindView(R.id.laogu_y)
+    RadioButton laogu_y; //牢固
+    @BindView(R.id.suo_y)
+    RadioButton suo_y; //锁
+    @BindView(R.id.zawu_y)
+    RadioButton zawu_y; //杂物
+    @BindView(R.id.rb_qx_you)
+    RadioButton rb_qx_you; //缺陷
+    @BindView(R.id.rg_caizhi)
+    RadioGroup rg_caizhi;
 
     private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
     private AttachmentAdapter attachmentAdapter;
@@ -92,6 +113,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     private int MY_PERMISSIONS_REQUEST = 10011;//图片请求码
     private static final int PICK_PHOTO = 101;
     private MeasBoxBean boxBean;
+    private RdAdapter rdAdapter;
+    private String caizhi = "金属";
 
     @Override
     protected int onCreateView() {
@@ -102,6 +125,32 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     protected void initView() {
         boxBean = (MeasBoxBean) getIntent().getSerializableExtra("box");
         initAdapter();
+        rdAdapter = new RdAdapter(boxBean.getMeters());
+        recycleview.setNestedScrollingEnabled(false);
+        recycleview.setHasFixedSize(true);
+        recycleview.setLayoutManager(new LinearLayoutManager(context));
+        recycleview.setAdapter(rdAdapter);
+        radioGroup_qx.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (R.id.rb_qx_you == i) {
+                    //有缺陷
+                    ll_quexian.setVisibility(View.VISIBLE);
+                } else {//无缺陷
+                    ll_quexian.setVisibility(View.GONE);
+                }
+            }
+        });
+        rg_caizhi.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (R.id.caizhi_Y == i) {
+                    caizhi = "金属";
+                } else {
+                    caizhi = "非金属";
+                }
+            }
+        });
     }
 
     private void initAdapter() {
@@ -215,7 +264,23 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         }
 
         boxBean.setNote(etNote.getText().toString());
+        boxBean.setHasQx(rb_qx_you.isChecked() ? "有" : "无");
+        boxBean.setQxJiaolian(jiaolian_y.isChecked() ? "是" : "否");
+        boxBean.setQxLaogu(laogu_y.isChecked() ? "是" : "否");
+        boxBean.setQxSuo(suo_y.isChecked() ? "是" : "否");
+        boxBean.setQxZawu(zawu_y.isChecked() ? "是" : "否");
+        boxBean.setCaizhi(caizhi);
         boxBean.setBoxImages(photoBeanList);
+        if (TextUtils.isEmpty(et_xiang_chang.getText().toString())) {
+            boxBean.setChang("未填写");
+        } else {
+            boxBean.setChang(et_xiang_chang.getText().toString());
+        }
+        if (TextUtils.isEmpty(tv_xiang_kuan.getText().toString())) {
+            boxBean.setKuan("未填写");
+        } else {
+            boxBean.setKuan(tv_xiang_kuan.getText().toString());
+        }
         //保存箱
         MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
         int size = measBoxBeanDao.loadAll().size();

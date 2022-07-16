@@ -29,7 +29,7 @@ public class MeterBean implements Serializable {
     private String gpsLatitude;//GPS纬度
     private String gpsLongitude;//GPS经度
     private boolean isExsit;//本地是否存在
-    private String phase;//电表接入的相位信息，有四种值：a，b，c，空
+    private String phase = "";//电表接入的相位信息，有四种值：a，b，c，空
     @Generated(hash = 1903856073)
     public MeterBean(Long meterId, String barCode, String meterAssetNo,
             String measAssetNo, String measBarCode, String scanTime, String gps_X,

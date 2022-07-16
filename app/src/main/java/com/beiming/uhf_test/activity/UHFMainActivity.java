@@ -88,6 +88,7 @@ public class UHFMainActivity extends BaseTabFragmentActivity implements AMapLoca
         //初始化uhf
         settingsUtil = new SettingsUtil("uhf");
         inventoryEpc = settingsUtil.getBoolean("inventory", false);
+        initUHF();
         initSound();
     }
 
@@ -95,7 +96,6 @@ public class UHFMainActivity extends BaseTabFragmentActivity implements AMapLoca
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume");
-        initUHF();
 
     }
 
@@ -112,7 +112,6 @@ public class UHFMainActivity extends BaseTabFragmentActivity implements AMapLoca
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "onPause");
-        exitUHF();
     }
 
     private void exitUHF() {
@@ -311,6 +310,7 @@ public class UHFMainActivity extends BaseTabFragmentActivity implements AMapLoca
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        exitUHF();
     }
 
     /**

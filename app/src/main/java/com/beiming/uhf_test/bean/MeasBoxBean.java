@@ -38,8 +38,16 @@ public class MeasBoxBean implements Serializable {
     private String tgName;  //台区名称
     private String boxRows;//行数
     private String boxCols;//列数
-    private String note;//备注
+    private String note = "无备注";//备注
     private boolean isExsit;//本地是否存在
+    private String hasQx; //是否缺陷，0是，1否
+    private String qxJiaolian; //铰链缺陷，0是，1否
+    private String qxLaogu; //牢固缺陷，0是，1否
+    private String qxSuo; //锁缺陷，0是，1否
+    private String qxZawu; //杂物缺陷，0是，1否
+    private String caizhi = "金属"; //金属，非金属
+    private String chang = ""; //长
+    private String kuan = ""; //宽
 
     @Convert(columnType = String.class, converter = MeterBeanConverter.class)
     private List<MeterBean> meters;//计量箱下电能表的集合
@@ -47,12 +55,13 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 23164675)
-    public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo,
-                       String scanTime, String gps_X, String gps_Y, String gps_Z,
-                       String instAddr, String instLoc, String describe, String tmnlAddr,
-                       String tgName, String boxRows, String boxCols, String note,
-                       boolean isExsit, List<MeterBean> meters, List<PhotoBean> boxImages) {
+    @Generated(hash = 2106784178)
+    public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
+            String gps_X, String gps_Y, String gps_Z, String instAddr, String instLoc,
+            String describe, String tmnlAddr, String tgName, String boxRows, String boxCols,
+            String note, boolean isExsit, String hasQx, String qxJiaolian, String qxLaogu,
+            String qxSuo, String qxZawu, String caizhi, String chang, String kuan,
+            List<MeterBean> meters, List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
         this.barCode = barCode;
         this.measAssetNo = measAssetNo;
@@ -69,12 +78,84 @@ public class MeasBoxBean implements Serializable {
         this.boxCols = boxCols;
         this.note = note;
         this.isExsit = isExsit;
+        this.hasQx = hasQx;
+        this.qxJiaolian = qxJiaolian;
+        this.qxLaogu = qxLaogu;
+        this.qxSuo = qxSuo;
+        this.qxZawu = qxZawu;
+        this.caizhi = caizhi;
+        this.chang = chang;
+        this.kuan = kuan;
         this.meters = meters;
         this.boxImages = boxImages;
     }
 
     @Generated(hash = 1045529700)
     public MeasBoxBean() {
+    }
+
+    public String getChang() {
+        return chang;
+    }
+
+    public void setChang(String chang) {
+        this.chang = chang;
+    }
+
+    public String getKuan() {
+        return kuan;
+    }
+
+    public void setKuan(String kuan) {
+        this.kuan = kuan;
+    }
+
+    public String getCaizhi() {
+        return caizhi;
+    }
+
+    public void setCaizhi(String caizhi) {
+        this.caizhi = caizhi;
+    }
+
+    public String getHasQx() {
+        return hasQx;
+    }
+
+    public void setHasQx(String hasQx) {
+        this.hasQx = hasQx;
+    }
+
+    public String getQxJiaolian() {
+        return qxJiaolian;
+    }
+
+    public void setQxJiaolian(String qxJiaolian) {
+        this.qxJiaolian = qxJiaolian;
+    }
+
+    public String getQxLaogu() {
+        return qxLaogu;
+    }
+
+    public void setQxLaogu(String qxLaogu) {
+        this.qxLaogu = qxLaogu;
+    }
+
+    public String getQxSuo() {
+        return qxSuo;
+    }
+
+    public void setQxSuo(String qxSuo) {
+        this.qxSuo = qxSuo;
+    }
+
+    public String getQxZawu() {
+        return qxZawu;
+    }
+
+    public void setQxZawu(String qxZawu) {
+        this.qxZawu = qxZawu;
     }
 
     public Long getMeasBoxId() {
