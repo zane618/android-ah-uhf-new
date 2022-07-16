@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -56,7 +57,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import io.dcloud.feature.sdk.DCUniMPSDK;
+import io.dcloud.feature.sdk.Interface.IOnUniMPEventCallBack;
 import io.dcloud.feature.sdk.Interface.IUniMP;
+import io.dcloud.feature.unimp.DCUniMPJSCallback;
 import io.dcloud.feature.unimp.config.UniMPOpenConfiguration;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -311,7 +314,14 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         EventBus.getDefault().register(this);
-
+        DCUniMPSDK.getInstance().setOnUniMPEventCallBack(new IOnUniMPEventCallBack() {
+            @Override
+            public void onUniMPEventReceive(String appid, String event, Object data, DCUniMPJSCallback callback) {
+                Log.d("cs", "onUniMPEventReceive    event="+event);
+                //回传数据给小程序
+                callback.invoke( "收到消息");
+            }
+        });
     }
 
 
@@ -397,5 +407,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         } else {
             showToast("uni-sdk未完成初始化");
         }
+
     }
+
+
 }
