@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * created by zhangshi on 2022/7/16.
@@ -29,7 +30,7 @@ public class RdAdapter extends BaseQuickAdapter<MeterBean, BaseViewHolder> {
             tv_code.setText(item.getBarCode());
         }
         if (!TextUtils.isEmpty(item.getPhase())) {
-            xiang.setText(item.getPhase());
+            xiang.setText("[" + item.getPhase().toUpperCase(Locale.ROOT) + "相]");
         } else {
             xiang.setText("");
         }

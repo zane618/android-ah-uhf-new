@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class MeterListAdapter extends BaseQuickAdapter<MeterBean, BaseViewHolder> {
@@ -36,7 +37,7 @@ public class MeterListAdapter extends BaseQuickAdapter<MeterBean, BaseViewHolder
 
         TextView xw = helper.getView(R.id.tv_axiang);
         if (!TextUtils.isEmpty(item.getPhase())) {
-            xw.setText("[" + item.getPhase() + "]");
+            xw.setText("[" + item.getPhase().toUpperCase(Locale.ROOT) + "相]");
         } else {
             String[] abc = new String[] {"[A相]", "[B相]","[C相]"};
 

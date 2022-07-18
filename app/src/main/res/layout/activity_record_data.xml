@@ -595,6 +595,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_x_luru"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -617,7 +618,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycleview"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </RelativeLayout>
 
                 <LinearLayout

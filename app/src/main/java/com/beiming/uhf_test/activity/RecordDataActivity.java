@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +42,7 @@ import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.listener.OnHintDialogClicklistener;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.DialogUtils;
+import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
@@ -109,6 +111,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     RadioButton rb_qx_you; //缺陷
     @BindView(R.id.rg_caizhi)
     RadioGroup rg_caizhi;
+    @BindView(R.id.tv_x_luru)
+    TextView tv_x_luru;
 
     private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
     private AttachmentAdapter attachmentAdapter;
@@ -154,6 +158,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
                 }
             }
         });
+        tv_x_luru.setOnClickListener(this);
     }
 
     private void initAdapter() {
@@ -251,6 +256,10 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
                 });
 
                 break;
+            case R.id.tv_x_luru:
+                //打开小程序
+                startUniSdk();
+                break;
             case R.id.iv_back:
                 finish();
                 break;
@@ -317,9 +326,30 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         DCUniMPSDK.getInstance().setOnUniMPEventCallBack(new IOnUniMPEventCallBack() {
             @Override
             public void onUniMPEventReceive(String appid, String event, Object data, DCUniMPJSCallback callback) {
-                Log.d("cs", "onUniMPEventReceive    event="+event);
-                //回传数据给小程序
-                callback.invoke( "收到消息");
+                Log.d("cs", "onUniMPEventReceive    event=" + event);
+                if ("completeFileCheck".equals(event)) {
+                    JSONObject ajo = (JSONObject) data;
+                    String listStr = ajo.getString("list");
+                    Log.d("cs", "onUniMPEventReceive    listStr=" + ajo.getString("list"));
+                    List<MeterBean> tmpMeters = FastJson.parseArray(listStr, MeterBean.class);
+                    //刷新电能表列表，abc 相位
+                    List<MeterBean> meterBeans = boxBean.getMeters();
+                    for (int i = 0; i < meterBeans.size(); i++) {
+                        for (int j = 0; j < tmpMeters.size(); j++) {
+                            if (meterBeans.get(i).getBarCode().equals(tmpMeters.get(j).getBarCode())) {
+                                meterBeans.get(i).setPhase(tmpMeters.get(j).getPhase());
+                                break;
+                            }
+                        }
+                    }
+                    if (rdAdapter != null) {
+                        rdAdapter.notifyDataSetChanged();
+                    }
+
+                    //回传数据给小程序er
+                    callback.invoke("收到消息");
+                }
+
             }
         });
     }
@@ -391,16 +421,15 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         if (DCUniMPSDK.getInstance().isInitialize()) {
             // 启动小程序并传入参数 "Hello uni microprogram"
             try {
-                List<MeterBean> list = new ArrayList<>();
-                for (int i = 0; i < 5; i++) {
-                    MeterBean meterBean = new MeterBean();
-                    meterBean.setMeterAssetNo("00000"+i);
-                    list.add(meterBean);
+                List<MeterBean> meters = null;
+                if (boxBean != null) {
+                    meters = boxBean.getMeters();
                 }
                 UniMPOpenConfiguration uniMPOpenConfiguration = new UniMPOpenConfiguration();
-                uniMPOpenConfiguration.extraData.put("MSG", JSONObject.toJSON(list));
+                uniMPOpenConfiguration.extraData.put("MSG", JSONObject.toJSON(meters));
                 SoftReference<IUniMP> mallMP = new SoftReference<>(DCUniMPSDK.getInstance()
-                        .openUniMP(RecordDataActivity.this, "__UNI__D0FCDA1", uniMPOpenConfiguration));
+                        .openUniMP(RecordDataActivity.this, "__UNI__6411EDB", uniMPOpenConfiguration));
+//                mallMP.get().closeUniMP();
             } catch (Exception e) {
                 e.printStackTrace();
             }
