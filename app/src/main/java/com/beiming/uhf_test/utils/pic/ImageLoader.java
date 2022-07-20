@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.util.LruCache;
 import android.widget.ImageView;
 
-import com.beiming.uhf_test.MyApplication;
+import com.beiming.uhf_test.App;
 
 import java.io.File;
 import java.io.IOException;
@@ -141,11 +141,11 @@ public class ImageLoader {
      */
     private void initDiskCache() {
         try {
-            File cacheDir = OtherUtils.getDiskCacheDir(MyApplication.getInstance(), "images");
+            File cacheDir = OtherUtils.getDiskCacheDir(App.getInstance(), "images");
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs();
             }
-            mDiskLruCache = DiskLruCache.open(cacheDir, OtherUtils.getAppVersion(MyApplication.getInstance()),
+            mDiskLruCache = DiskLruCache.open(cacheDir, OtherUtils.getAppVersion(App.getInstance()),
                     1, 15 * 1024 * 1024);
         } catch (IOException e) {
             e.printStackTrace();

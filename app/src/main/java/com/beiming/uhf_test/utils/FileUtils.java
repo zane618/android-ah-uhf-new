@@ -15,7 +15,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.beiming.uhf_test.MyApplication;
+import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.bean.FileBean;
 import com.beiming.uhf_test.utils.pic.OtherUtils;
 
@@ -238,7 +238,7 @@ public class FileUtils {
         File file = new File(filePath);
         Uri uri = Uri.fromFile(file);
         intent.setData(uri);
-        MyApplication.getInstance().sendBroadcast(intent);
+        App.getInstance().sendBroadcast(intent);
     }
 
 

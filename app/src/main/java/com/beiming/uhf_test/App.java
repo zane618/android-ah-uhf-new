@@ -6,8 +6,15 @@ import android.util.Log;
 
 import com.beiming.uhf_test.bean.LoginBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
+import com.beiming.uhf_test.nohttp.NetConsts;
+import com.beiming.uhf_test.utils.AppUtil;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.kongzue.baseframework.BaseApp;
+import com.yanzhenjie.nohttp.InitializationConfig;
+import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
+import com.yanzhenjie.nohttp.cache.DBCacheStore;
+import com.yanzhenjie.nohttp.cookie.DBCookieStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +28,20 @@ import io.dcloud.feature.sdk.MenuActionSheetItem;
  * Created by htj on 2020/7/8.
  */
 
-public class MyApplication extends BaseApp<MyApplication> {
-    private static MyApplication instance;
+public class App extends BaseApp<App> {
+    private static App instance;
     public static Context mContext;
     public static LoginBean loginBean;
+    private String appVersion = "";
 
-    public synchronized static MyApplication getInstance() {
+    public synchronized static App getInstance() {
         return instance;
     }
 
     @Override
     public void init() {
-
+        initNoHttp();
+        appVersion = AppUtil.getVersionName(this);
     }
 
     @Override
@@ -72,6 +81,24 @@ public class MyApplication extends BaseApp<MyApplication> {
         });
         //初始化 uni小程序SDK ----end----------
 
+    }
+
+    /**
+     * 初始化noHttp框架
+     */
+    private void initNoHttp() {
+        NoHttp.initialize(InitializationConfig.newBuilder(this)
+                .connectionTimeout(NetConsts.HTTP_REQUEST_TIME)
+                .readTimeout(NetConsts.HTTP_REQUEST_TIME)
+                .cacheStore(new DBCacheStore(this).setEnable(false))
+                .cookieStore(new DBCookieStore(this).setEnable(false))
+                .networkExecutor(new OkHttpNetworkExecutor())
+                .build()
+        );
+    }
+
+    public String getAppVersion() {
+        return appVersion;
     }
 
     public static synchronized Context getContext() {

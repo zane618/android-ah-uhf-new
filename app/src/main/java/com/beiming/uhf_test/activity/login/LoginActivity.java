@@ -14,20 +14,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.alibaba.fastjson.JSONObject;
-import com.beiming.uhf_test.MyApplication;
+import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.UHFMainActivity;
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.bean.LoginBean;
-import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.UserBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.LoginBeanDao;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.utils.ToastUtils;
 
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -36,9 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.dcloud.feature.sdk.DCUniMPSDK;
-import io.dcloud.feature.sdk.Interface.IUniMP;
-import io.dcloud.feature.unimp.config.UniMPOpenConfiguration;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
@@ -174,7 +168,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 if (password.equals(pwd)) {
                     //判断是否为超级管理员
                     if (loginBean.getType().equals("1")) {
-                        MyApplication.loginBean = loginBean;
+                        App.loginBean = loginBean;
                         return true;
                     }
                     //todo 判断该用户是否启用或有效时间是否超时
@@ -182,7 +176,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         //启用
                         if (TimeUtils.isOutTime(loginBean.getAvailableTimeType(), loginBean.getAvailableTime(), loginBean.getStartEffectiveTime())) {
                             //有效期内
-                            MyApplication.loginBean = loginBean;
+                            App.loginBean = loginBean;
                             return true;
                         } else {
                             //超过有效期

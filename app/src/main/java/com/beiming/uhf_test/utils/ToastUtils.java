@@ -5,7 +5,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
-import com.beiming.uhf_test.MyApplication;
+import com.beiming.uhf_test.App;
 
 
 /**
@@ -39,7 +39,7 @@ public class ToastUtils {
             {
                 Looper.prepare();
             }
-            Toast.makeText(MyApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
             Looper.loop();
         }
 
@@ -56,11 +56,11 @@ public class ToastUtils {
 
         try {
             if (null == toast) {
-                toast = Toast.makeText(MyApplication.getContext(), msg, Toast.LENGTH_SHORT);
+                toast = Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT);
             } else {
                 View view = toast.getView();
                 toast.cancel();
-                toast = new Toast(MyApplication.getContext());
+                toast = new Toast(App.getContext());
                 toast.setView(view);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setText(msg);
@@ -73,7 +73,7 @@ public class ToastUtils {
             {
                 Looper.prepare();
             }
-            Toast.makeText(MyApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
             Looper.loop();
         }
     }

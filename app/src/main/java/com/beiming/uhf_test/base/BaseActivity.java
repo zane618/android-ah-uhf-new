@@ -19,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.beiming.uhf_test.MyApplication;
+import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.dialog.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -34,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     //获取TAG的activity名称
     protected final String TAG = this.getClass().getSimpleName();
     private ProgressDialog mProgressDialog;
-    private MyApplication mApplication;
+    private App mApplication;
     private Unbinder bind;
     public Context context;
     //是否允许旋转屏幕

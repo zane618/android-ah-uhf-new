@@ -47,10 +47,12 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
             signingConfig signingConfigs.Myconfig
         }
     }
@@ -144,6 +146,10 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'com.github.kongzue:BaseFramework:6.8.0'
+    //https://github.com/yanzhenjie/NoHttp
+    implementation 'com.yanzhenjie.nohttp:nohttp:1.1.11'
+    implementation 'com.yanzhenjie.nohttp:okhttp:1.1.11'
+
 }
 allprojects {
     repositories {

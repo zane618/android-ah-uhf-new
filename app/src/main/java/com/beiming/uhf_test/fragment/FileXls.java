@@ -3,12 +3,11 @@ package com.beiming.uhf_test.fragment;
 import android.text.TextUtils;
 import android.util.Xml;
 
-import com.beiming.uhf_test.MyApplication;
+import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.pic.PhotoBean;
 import com.beiming.uhf_test.utils.contant;
-import com.lidroid.xutils.util.LogUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -330,31 +329,31 @@ public class FileXls {
                             }
                             break;
                         case 11://登录账号
-                            if (MyApplication.loginBean != null)
-                                content = MyApplication.loginBean.getUserName();
+                            if (App.loginBean != null)
+                                content = App.loginBean.getUserName();
                             break;
                         case 12://密码
-                            if (MyApplication.loginBean != null)
-                                content = MyApplication.loginBean.getPassword();
+                            if (App.loginBean != null)
+                                content = App.loginBean.getPassword();
                             /*String generate = MD5Utils.createActionCode(SerialNumber);//对序列号进行第一次加密
                             LogUtils.i("第一次加密后=" + generate);
                             String generate1 = MD5Utils.generate(generate);//对加密过后的序列号再一次加密*/
                             break;
                         case 13://所在项目组
-                            if (MyApplication.loginBean != null)
-                                content = MyApplication.loginBean.getProjectTeam();
+                            if (App.loginBean != null)
+                                content = App.loginBean.getProjectTeam();
                             break;
                         case 14://答案一
-                            if (MyApplication.loginBean != null)
-                                content = MyApplication.loginBean.getAnswerOne();
+                            if (App.loginBean != null)
+                                content = App.loginBean.getAnswerOne();
                             break;
                         case 15://答案二
-                            if (MyApplication.loginBean != null)
-                                content = MyApplication.loginBean.getAnswerTwo();
+                            if (App.loginBean != null)
+                                content = App.loginBean.getAnswerTwo();
                             break;
                         case 16://答案三
-                            if (MyApplication.loginBean != null)
-                                content = MyApplication.loginBean.getAnswerThree();
+                            if (App.loginBean != null)
+                                content = App.loginBean.getAnswerThree();
                             break;
                     }
                     //i+j是行号

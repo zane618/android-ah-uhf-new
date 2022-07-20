@@ -2,7 +2,7 @@ package com.beiming.uhf_test.utils;
 
 import android.os.Environment;
 
-import com.beiming.uhf_test.MyApplication;
+import com.beiming.uhf_test.App;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ import java.io.File;
 public class ConstantUtil {
 
     public static final String NORMAL_DIR = Environment.getExternalStorageDirectory() + File.separator + "/UHF";
-    public static final String DATA_DATA_DIR_PATH = MyApplication.getInstance().getExternalFilesDir(null).getPath() + "/UHF";
+    public static final String DATA_DATA_DIR_PATH = App.getInstance().getExternalFilesDir(null).getPath() + "/UHF";
     public static final String IMAGE_STR = NORMAL_DIR + "/image/";
     public static final String EXCEL_STR = NORMAL_DIR + "/excel/";
     public static final String PRIVATE_IMAGE_STR = DATA_DATA_DIR_PATH + "/.image/";
