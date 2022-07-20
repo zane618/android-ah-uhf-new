@@ -15,14 +15,22 @@ import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
 import com.yanzhenjie.nohttp.cache.DBCacheStore;
 import com.yanzhenjie.nohttp.cookie.DBCookieStore;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.https.HttpsUtils;
+import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
 import io.dcloud.feature.sdk.DCSDKInitConfig;
 import io.dcloud.feature.sdk.DCUniMPSDK;
 import io.dcloud.feature.sdk.Interface.IDCUniMPPreInitCallback;
 import io.dcloud.feature.sdk.MenuActionSheetItem;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by htj on 2020/7/8.
@@ -41,8 +49,10 @@ public class App extends BaseApp<App> {
     @Override
     public void init() {
         initNoHttp();
+        initOkhttpUtils();
         appVersion = AppUtil.getVersionName(this);
     }
+
 
     @Override
     public void onCreate() {
@@ -81,6 +91,26 @@ public class App extends BaseApp<App> {
         });
         //初始化 uni小程序SDK ----end----------
 
+    }
+
+    private void initOkhttpUtils() {
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                .addInterceptor(new LoggerInterceptor("TAG"))
+//                .cookieJar(cookieJar1)
+                .hostnameVerifier(new HostnameVerifier()
+                {
+                    @Override
+                    public boolean verify(String hostname, SSLSession session)
+                    {
+                        return true;
+                    }
+                })
+                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
+                .build();
+        OkHttpUtils.initClient(okHttpClient);
     }
 
     /**

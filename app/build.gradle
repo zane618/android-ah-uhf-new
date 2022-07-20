@@ -149,6 +149,10 @@ dependencies {
     //https://github.com/yanzhenjie/NoHttp
     implementation 'com.yanzhenjie.nohttp:nohttp:1.1.11'
     implementation 'com.yanzhenjie.nohttp:okhttp:1.1.11'
+    //https://github.com/hongyangAndroid/okhttputils
+    implementation 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.3.1'
+
 
 }
 allprojects {
