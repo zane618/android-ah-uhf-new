@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--                左上门尺寸-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="左上门    高度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_zs_gao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    宽度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_zs_kuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--                左上门尺寸-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="左下门    高度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_zx_gao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    宽度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_zx_kuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--                左上门尺寸-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="右上门    高度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_ys_gao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    宽度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_ys_kuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--                左上门尺寸-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="右下门    高度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_yx_gao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    宽度(cm)："
+            android:textColor="#ff333333"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tv_yx_kuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="4"
+            android:gravity="left"
+            android:hint="请点击输入"
+            android:background="@null"
+            android:inputType="number"
+            android:textColor="#4D4D4D"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

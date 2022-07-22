@@ -48,6 +48,15 @@ public class MeasBoxBean implements Serializable {
     private String caizhi = "金属"; //金属，非金属
     private String chang = ""; //长
     private String kuan = ""; //宽
+    private String zsGao = "";
+    private String zsKuan = "";
+    private String zxGao = "";
+    private String zxKuan = "";
+    private String ysGao = "";
+    private String ysKuan = "";
+    private String yxGao = "";
+    private String yxKuan = "";
+
 
     @Convert(columnType = String.class, converter = MeterBeanConverter.class)
     private List<MeterBean> meters;//计量箱下电能表的集合
@@ -55,13 +64,15 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 2106784178)
+    @Generated(hash = 556139876)
     public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
             String gps_X, String gps_Y, String gps_Z, String instAddr, String instLoc,
             String describe, String tmnlAddr, String tgName, String boxRows, String boxCols,
             String note, boolean isExsit, String hasQx, String qxJiaolian, String qxLaogu,
             String qxSuo, String qxZawu, String caizhi, String chang, String kuan,
-            List<MeterBean> meters, List<PhotoBean> boxImages) {
+            String zsGao, String zsKuan, String zxGao, String zxKuan, String ysGao,
+            String ysKuan, String yxGao, String yxKuan, List<MeterBean> meters,
+            List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
         this.barCode = barCode;
         this.measAssetNo = measAssetNo;
@@ -86,6 +97,14 @@ public class MeasBoxBean implements Serializable {
         this.caizhi = caizhi;
         this.chang = chang;
         this.kuan = kuan;
+        this.zsGao = zsGao;
+        this.zsKuan = zsKuan;
+        this.zxGao = zxGao;
+        this.zxKuan = zxKuan;
+        this.ysGao = ysGao;
+        this.ysKuan = ysKuan;
+        this.yxGao = yxGao;
+        this.yxKuan = yxKuan;
         this.meters = meters;
         this.boxImages = boxImages;
     }
@@ -334,5 +353,69 @@ public class MeasBoxBean implements Serializable {
     public int hashCode() {
         String in = barCode;
         return in.hashCode();
+    }
+
+    public String getZsGao() {
+        return this.zsGao;
+    }
+
+    public void setZsGao(String zsGao) {
+        this.zsGao = zsGao;
+    }
+
+    public String getZsKuan() {
+        return this.zsKuan;
+    }
+
+    public void setZsKuan(String zsKuan) {
+        this.zsKuan = zsKuan;
+    }
+
+    public String getZxGao() {
+        return this.zxGao;
+    }
+
+    public void setZxGao(String zxGao) {
+        this.zxGao = zxGao;
+    }
+
+    public String getZxKuan() {
+        return this.zxKuan;
+    }
+
+    public void setZxKuan(String zxKuan) {
+        this.zxKuan = zxKuan;
+    }
+
+    public String getYsGao() {
+        return this.ysGao;
+    }
+
+    public void setYsGao(String ysGao) {
+        this.ysGao = ysGao;
+    }
+
+    public String getYsKuan() {
+        return this.ysKuan;
+    }
+
+    public void setYsKuan(String ysKuan) {
+        this.ysKuan = ysKuan;
+    }
+
+    public String getYxGao() {
+        return this.yxGao;
+    }
+
+    public void setYxGao(String yxGao) {
+        this.yxGao = yxGao;
+    }
+
+    public String getYxKuan() {
+        return this.yxKuan;
+    }
+
+    public void setYxKuan(String yxKuan) {
+        this.yxKuan = yxKuan;
     }
 }
