@@ -46,6 +46,7 @@ import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
+import com.beiming.uhf_test.view.DoorInfoLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
 import com.nostra13.dcloudimageloader.utils.L;
 
@@ -113,6 +114,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     RadioGroup rg_caizhi;
     @BindView(R.id.tv_x_luru)
     TextView tv_x_luru;
+    @BindView(R.id.doorInfoLayout)
+    DoorInfoLayout doorInfoLayout;
 
     private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
     private AttachmentAdapter attachmentAdapter;
@@ -282,6 +285,15 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         boxBean.setQxSuo(suo_y.isChecked() ? "是" : "否");
         boxBean.setQxZawu(zawu_y.isChecked() ? "是" : "否");
         boxBean.setCaizhi(caizhi);
+        //四门尺寸
+        boxBean.setZsGao(doorInfoLayout.getZsGao());
+        boxBean.setZsKuan(doorInfoLayout.getZsKuan());
+        boxBean.setZxGao(doorInfoLayout.getZxGao());
+        boxBean.setZxKuan(doorInfoLayout.getZxKuan());
+        boxBean.setYsGao(doorInfoLayout.getYsGao());
+        boxBean.setYsKuan(doorInfoLayout.getYsKuan());
+        boxBean.setYxGao(doorInfoLayout.getYxGao());
+        boxBean.setYxKuan(doorInfoLayout.getYxKuan());
         boxBean.setBoxImages(photoBeanList);
         if (TextUtils.isEmpty(et_xiang_chang.getText().toString())) {
             boxBean.setChang("未填写");
