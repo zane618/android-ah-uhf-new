@@ -34,10 +34,6 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
     TextView tvBoxBarcode;
     RecyclerView rvSaved;
     Button btSave;
-    private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
-    private static final int CHOOSE_PIC_MAX = 10;
-    private int MY_PERMISSIONS_REQUEST = 10011;//图片请求码
-    private static final int PICK_PHOTO = 101;
     private Context context;
     private List<MeterBean> exsitBarCode = new ArrayList<>();
     private List<MeterBean> savedBarCode = new ArrayList<>();

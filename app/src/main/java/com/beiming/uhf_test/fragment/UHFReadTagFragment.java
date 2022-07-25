@@ -66,13 +66,11 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     RecyclerView recycleview;
 
     Unbinder unbinder;
-    private boolean loopFlag = false;
     private int inventoryFlag = 1;
     private List<BarCodeBean> barCodeBeanList;
     private List<MeasBoxBean> measBoxBeanList;
     private MeasBoxBean boxBean;//点击保存时维护的计量箱bean
     private List<MeterBean> meterBeanList;
-    private List<BarCodeBean> errorCodeList;
     BarCodeAdpater adapter;
     Button BtClear;
     TextView tv_count;
@@ -216,7 +214,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         barCodeBeanList = new ArrayList<>();
         measBoxBeanList = new ArrayList<>();
         meterBeanList = new ArrayList<>();
-        errorCodeList = new ArrayList<>();
         BtClear = (Button) getView().findViewById(R.id.BtClear);
         Btimport = (Button) getView().findViewById(R.id.BtImport);
         tv_count = (TextView) getView().findViewById(R.id.tv_count);
@@ -393,8 +390,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
             BarCodeBean barCodeBean = new BarCodeBean(epc, barCode, barCodeType, 1, "无", scanTime);
             switch (barCodeType) {
                 case "-1":
-//                    errorCodeList.add(barCodeBean);
-//                    barCodeBeanList.add(0, barCodeBean);
+
                     break;
                 case "0":
                     MeasBoxBean measBoxBean = new MeasBoxBean();
@@ -463,7 +459,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         barCodeBeanList.clear();
         measBoxBeanList.clear();
         meterBeanList.clear();
-        errorCodeList.clear();
 
         adapter.setBoxNumber(measBoxBeanList.size());
         adapter.setNewData(barCodeBeanList);
