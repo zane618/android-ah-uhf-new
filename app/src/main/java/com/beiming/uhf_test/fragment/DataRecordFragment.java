@@ -34,6 +34,7 @@ import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.utils.ConstantUtil;
+import com.beiming.uhf_test.view.DoorInfoShowLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -85,6 +86,9 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     TextView tv_suo;
     @BindView(R.id.tv_zawu)
     TextView tv_zawu;
+
+    @BindView(R.id.doorInfoLayout)
+    DoorInfoShowLayout doorInfoLayout;
 
 
     private UHFMainActivity mContext;
@@ -235,6 +239,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             tv_laogu.setText(measBoxBean.getQxLaogu());
             tv_suo.setText(measBoxBean.getQxSuo());
             tv_zawu.setText(measBoxBean.getQxZawu());
+            doorInfoLayout.setDatas(measBoxBean);
 
         }
         //刷新右侧表列表

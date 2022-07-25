@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:padding="2dp"
                         android:layout_marginLeft="5dp"
-                        android:text="尺寸信息"
+                        android:text="尺寸信息(单位cm)"
                         android:background="@drawable/shape_ty_bendi"
                         android:textColor="#ff0b7671"
                         android:textSize="13sp"/>
@@ -80,7 +80,7 @@
                         android:id="@+id/tv_chang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="400cm"
+                        android:text="400"
                         android:textColor="#ff0b7671"
                         android:textSize="13sp"
                         />
@@ -102,7 +102,7 @@
                         android:id="@+id/tv_kuan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="280cm"
+                        android:text="280"
                         android:textColor="#ff0b7671"
                         android:textSize="13sp"
                         />
@@ -130,6 +130,10 @@
                         android:textSize="13sp"
                         />
                 </LinearLayout>
+                <com.beiming.uhf_test.view.DoorInfoShowLayout
+                    android:id="@+id/doorInfoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.beiming.uhf_test.R;
-import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.activity.pic.PhotoPickerActivity;
 import com.beiming.uhf_test.activity.pic.PreviewPhotoActivity;
 import com.beiming.uhf_test.adapter.pic.AttachmentAdapter;
@@ -46,9 +45,8 @@ import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
-import com.beiming.uhf_test.view.DoorInfoLayout;
+import com.beiming.uhf_test.view.DoorInfoInputLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
-import com.nostra13.dcloudimageloader.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -115,7 +113,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.tv_x_luru)
     TextView tv_x_luru;
     @BindView(R.id.doorInfoLayout)
-    DoorInfoLayout doorInfoLayout;
+    DoorInfoInputLayout doorInfoInputLayout;
 
     private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
     private AttachmentAdapter attachmentAdapter;
@@ -286,14 +284,14 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         boxBean.setQxZawu(zawu_y.isChecked() ? "是" : "否");
         boxBean.setCaizhi(caizhi);
         //四门尺寸
-        boxBean.setZsGao(doorInfoLayout.getZsGao());
-        boxBean.setZsKuan(doorInfoLayout.getZsKuan());
-        boxBean.setZxGao(doorInfoLayout.getZxGao());
-        boxBean.setZxKuan(doorInfoLayout.getZxKuan());
-        boxBean.setYsGao(doorInfoLayout.getYsGao());
-        boxBean.setYsKuan(doorInfoLayout.getYsKuan());
-        boxBean.setYxGao(doorInfoLayout.getYxGao());
-        boxBean.setYxKuan(doorInfoLayout.getYxKuan());
+        boxBean.setZsGao(doorInfoInputLayout.getZsGao());
+        boxBean.setZsKuan(doorInfoInputLayout.getZsKuan());
+        boxBean.setZxGao(doorInfoInputLayout.getZxGao());
+        boxBean.setZxKuan(doorInfoInputLayout.getZxKuan());
+        boxBean.setYsGao(doorInfoInputLayout.getYsGao());
+        boxBean.setYsKuan(doorInfoInputLayout.getYsKuan());
+        boxBean.setYxGao(doorInfoInputLayout.getYxGao());
+        boxBean.setYxKuan(doorInfoInputLayout.getYxKuan());
         boxBean.setBoxImages(photoBeanList);
         if (TextUtils.isEmpty(et_xiang_chang.getText().toString())) {
             boxBean.setChang("未填写");

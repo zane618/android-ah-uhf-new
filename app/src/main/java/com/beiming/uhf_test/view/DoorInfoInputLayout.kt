@@ -10,7 +10,7 @@ import com.beiming.uhf_test.R
 /**
  * created by zhangshi on 2022/7/22.
  */
-class DoorInfoLayout(context: Context, attributeSet: AttributeSet?=null): LinearLayout (
+class DoorInfoInputLayout(context: Context, attributeSet: AttributeSet?=null): LinearLayout (
         context, attributeSet){
 
     private var zsGao: EditText

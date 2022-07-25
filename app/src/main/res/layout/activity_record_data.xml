@@ -125,7 +125,7 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <com.beiming.uhf_test.view.DoorInfoLayout
+                <com.beiming.uhf_test.view.DoorInfoInputLayout
                     android:id="@+id/doorInfoLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
