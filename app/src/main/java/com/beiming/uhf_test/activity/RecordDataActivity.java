@@ -42,6 +42,7 @@ import com.beiming.uhf_test.listener.OnHintDialogClicklistener;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.DialogUtils;
 import com.beiming.uhf_test.utils.FastJson;
+import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
@@ -325,6 +326,13 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         attachmentUpdate.setTag(ConstantUtil.CLEAR_READ_TAG_DATA);
         EventBus.getDefault().post(attachmentUpdate);
         showToast("保存成功");
+
+        List<MeterBean> biao = meterBeanDao.loadAll();
+        for (MeterBean item : biao) {
+            LogPrintUtil.zhangshi("表:" + item.toString());
+        }
+
+
         finish();
     }
 

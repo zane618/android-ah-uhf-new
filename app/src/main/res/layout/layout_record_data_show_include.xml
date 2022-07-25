@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="15dp">
+    android:paddingLeft="0dp">
 
     <!--                左上门尺寸-->
     <LinearLayout

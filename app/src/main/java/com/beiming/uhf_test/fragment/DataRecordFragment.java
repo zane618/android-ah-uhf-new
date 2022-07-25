@@ -86,6 +86,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     TextView tv_suo;
     @BindView(R.id.tv_zawu)
     TextView tv_zawu;
+    @BindView(R.id.content)
+    LinearLayout content;
 
     @BindView(R.id.doorInfoLayout)
     DoorInfoShowLayout doorInfoLayout;
@@ -197,9 +199,9 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
                 }
             }
         });
-
-        rvMeter.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-
+        rvMeter.setNestedScrollingEnabled(false);
+        rvMeter.setHasFixedSize(true);
+        rvMeter.setLayoutManager(new LinearLayoutManager(mContext));
         meterAdapter = new MeterListAdapter(R.layout.item_meter_list, meterBeanList);
         meterAdapter.setContext(mContext);
         rvMeter.setAdapter(meterAdapter);
@@ -221,13 +223,15 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     //切换右侧布局数据
     private void changeRightData(int position) {
         if (boxBeanList.size() == 0) {
+            content.setVisibility(View.GONE);
+        } else {
             meterBeanList.clear();
             photoBeanList.clear();
-            tvAddr.setText("无");
-        } else {
+            content.setVisibility(View.VISIBLE);
             MeasBoxBean measBoxBean = boxBeanList.get(position);
-            meterBeanList = measBoxBean.getMeters();
-            photoBeanList = measBoxBean.getBoxImages();
+            meterBeanList.addAll(measBoxBean.getMeters());
+            photoBeanList.addAll(measBoxBean.getBoxImages());
+
             tvAddr.setText(measBoxBean.getInstAddr());
             tv_chang.setText(measBoxBean.getChang());
             tv_kuan.setText(measBoxBean.getKuan());
@@ -249,23 +253,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         boxListAdapter.setSelectedPosition(position);
         boxListAdapter.setNewData(boxBeanList);
         //刷新右侧图片列表
-        if (photoBeanList == null) {
-            photoBeanList = new ArrayList<>();
-        }
         attachmentAdapter.modifyData(photoBeanList);
-    }
-
-    private void getTestData() {
-        for (int i = 0; i < 20; i++) {
-            MeasBoxBean boxBean = new MeasBoxBean();
-            boxBean.setBarCode("箱：343000545123456789011" + i);
-            boxBeanList.add(boxBean);
-        }
-        for (int i = 0; i < 12; i++) {
-            MeterBean meterBean = new MeterBean();
-            meterBean.setBarCode("表:343000545123456789999" + i);
-            meterBeanList.add(meterBean);
-        }
     }
 
     @Override
@@ -276,41 +264,28 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
 
     }
 
-    //查询箱列表
-    private List<MeasBoxBean> queryBoxData(String content) {
-        List<MeasBoxBean> boxList;
-        MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
-        if (TextUtils.isEmpty(content)) {
-            boxList = measBoxBeanDao.loadAll();
-        } else {
-            boxList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%")).build().list();
-        }
-        return boxList;
-    }
-
     //查询表
     private void queryMeterData(String content) {
         boxBeanList.clear();
-        MeterBeanDao meterBeanDao = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao();
+        MeterBeanDao biaoDao = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao();
         //当输入框为空时，则不用查询电表的箱集合
         if (!TextUtils.isEmpty(content)) {
             //查询到的所有电表
-            List<MeterBean> queryMeterList = meterBeanDao.queryBuilder().where(MeterBeanDao.Properties.BarCode.like("%" + content + "%")).build().list();
-            //遍历查询到的所有电表，获取表箱集合
-            //有匹配数据时，先清楚原有箱，再遍历添加箱，需要去重
-            List<MeasBoxBean> boxList;
-            for (int i = 0; i < queryMeterList.size(); i++) {
-                boxList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%"),MeasBoxBeanDao.Properties.BarCode.eq(queryMeterList.get(i).getMeasBarCode())).build().list();
+            List<MeterBean> biaoList = biaoDao.queryBuilder().where(MeterBeanDao.Properties.BarCode.like("%" + content + "%")).build().list();
+            //1 遍历查询到的所有电表，根据电表的箱code查询箱数据
+            for (int i = 0; i < biaoList.size(); i++) {
+                List<MeasBoxBean> boxList = measBoxBeanDao.queryBuilder().where(/*MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%"),*/
+                        MeasBoxBeanDao.Properties.BarCode.eq(biaoList.get(i).getMeasBarCode())).build().list();
                 boxBeanList.addAll(boxList);
             }
-            Log.i("CMCC",boxBeanList.toString());
+            Log.i("zhangshi",boxBeanList.toString());
             //查询箱列表数据
             boxBeanList.addAll(measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%")).build().list());
         } else {
             //查询箱列表数据
             boxBeanList = measBoxBeanDao.loadAll();
         }
-        //去重
+        //2 去重
         Set<MeasBoxBean> userSet = new HashSet<>(boxBeanList);
         boxBeanList = new ArrayList<>(userSet);
 

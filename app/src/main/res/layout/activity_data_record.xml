@@ -32,13 +32,14 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <com.beiming.uhf_test.widget.RecyclerScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="5dp"
             android:background="@color/white">
 
             <LinearLayout
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -66,7 +67,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
                     <TextView
@@ -88,7 +89,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
                     <TextView
@@ -111,7 +112,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
                     <TextView
@@ -133,7 +134,8 @@
                 <com.beiming.uhf_test.view.DoorInfoShowLayout
                     android:id="@+id/doorInfoLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -365,7 +367,7 @@
 
                 </LinearLayout>
             </LinearLayout>
-        </com.beiming.uhf_test.widget.RecyclerScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

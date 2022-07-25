@@ -14,7 +14,7 @@
         android:background="@color/gray_f8f8f8"
         android:orientation="vertical">
 
-        <com.beiming.uhf_test.widget.RecyclerScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
@@ -680,7 +680,7 @@
 
             </LinearLayout>
 
-        </com.beiming.uhf_test.widget.RecyclerScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

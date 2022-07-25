@@ -55,6 +55,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        startActivity(new Intent(LoginActivity.this, UHFMainActivity.class));
+        finish();
+    }
+
+    @Override
     protected void initView() {
         // 动态添加权限
         initPermission();
