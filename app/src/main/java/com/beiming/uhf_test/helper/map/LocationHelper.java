@@ -109,7 +109,6 @@ public class LocationHelper {
         //初始化AMapLocationClientOption对象
         mLocationOption = new AMapLocationClientOption();
 
-        AMapLocationClientOption option = new AMapLocationClientOption();
         /**
          * 设置定位场景，目前支持三种场景（签到、出行、运动，默认无场景）
          */
@@ -121,6 +120,7 @@ public class LocationHelper {
             mLocationClient.startLocation();
         }*/
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Transport);
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setGpsFirst(false);
         mLocationOption.setOnceLocation(true);     //只定位一次
