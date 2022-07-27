@@ -20,10 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,15 +70,11 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     BarCodeAdpater adapter;
     Button BtClear;
     TextView tv_count;
-    RadioGroup RgInventory;
-    RadioButton RbInventorySingle;
-    RadioButton RbInventoryLoop;
-    Button Btimport;
-    Button BtInventory;
+    Button btnSave;
+    /**开始识别**/
+    Button btnShibie;
 
-    private LinearLayout llContinuous;
     private UHFMainActivity mContext;
-    PopupWindow popFilter;
     private ContrastBarCodeDialog contrastBarCodeDialog;
     private HintDialog hintDialog;
     private int MY_PERMISSIONS_REQUEST_FOR_EXCLE = 0x11;
@@ -110,7 +102,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.BtImport://确定按钮
+            case R.id.btn_save://保存
 //                checkImportExcel();
                 //1.判断当前扫描的箱集合大小，为0或大于1时做出相应提示
                 if (!checkBoxBarCodeNumber()) {
@@ -214,36 +206,22 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         barCodeBeanList = new ArrayList<>();
         measBoxBeanList = new ArrayList<>();
         meterBeanList = new ArrayList<>();
-        BtClear = (Button) getView().findViewById(R.id.BtClear);
-        Btimport = (Button) getView().findViewById(R.id.BtImport);
-        tv_count = (TextView) getView().findViewById(R.id.tv_count);
-        RgInventory = (RadioGroup) getView().findViewById(R.id.RgInventory);
-        String tr = "";
-        RbInventorySingle = (RadioButton) getView()
-                .findViewById(R.id.RbInventorySingle);
-        RbInventoryLoop = (RadioButton) getView()
-                .findViewById(R.id.RbInventoryLoop);
+        BtClear = getView().findViewById(R.id.BtClear);
+        btnSave = getView().findViewById(R.id.btn_save);
+        tv_count = getView().findViewById(R.id.tv_count);
 
-        BtInventory = (Button) getView().findViewById(R.id.BtInventory);
+        btnShibie = getView().findViewById(R.id.BtInventory);
 
-        llContinuous = (LinearLayout) getView().findViewById(R.id.llContinuous);
-
-        /*adapter = new SimpleAdapter(mContext, tagList, R.layout.listtag_items,
-                new String[]{"tagUii", "tagLen", "tagCount", "tagRssi"},
-                new int[]{R.id.TvTagUii, R.id.TvTagLen, R.id.TvTagCount,
-                        R.id.TvTagRssi});*/
         recycleview.setLayoutManager(new GridLayoutManager(getContext(), 1, LinearLayoutManager.VERTICAL, false));
-        adapter = new BarCodeAdpater(R.layout.listtag_items, barCodeBeanList, measBoxBeanList.size());
+        adapter = new BarCodeAdpater(barCodeBeanList, measBoxBeanList);
         adapter.setContext(mContext);
         recycleview.setAdapter(adapter);
 
         initAdapterListener();
-//        clearData();
 
         BtClear.setOnClickListener(this);
-        Btimport.setOnClickListener(this);
-        RgInventory.setOnCheckedChangeListener(new RgInventoryCheckedListener());
-        BtInventory.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        btnShibie.setOnClickListener(this);
     }
 
     private int currentPosition = 0;
@@ -255,13 +233,13 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                 currentPosition = position;
                 //条形码类型 0:计量箱 ，1：电能表 -1:不能识别的条形码
                 switch (barCodeBeanList.get(position).getBarCodeType()) {
-                    case "0":
+                    case "0": //箱
                         if (hintDialog == null)
                             showBoxHint("是否删除该箱条形码？");
                         else
                             hintDialog.show();
                         break;
-                    case "1":
+                    case "1"://表
                         if (contrastBarCodeDialog == null) {
                             showContrastBarCodeDialog();
                         } else {
@@ -316,7 +294,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
             public void onConfirm() {
                 barCodeBeanList.remove(currentPosition);
                 measBoxBeanList.remove(currentPosition);
-                adapter.setBoxNumber(measBoxBeanList.size());
                 adapter.setNewData(barCodeBeanList);
                 tv_count.setText(measBoxBeanList.size() + "个箱  " + meterBeanList.size() + "个表");
             }
@@ -356,14 +333,12 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
      */
     private void addEPCToList(String epc) {
         if (!TextUtils.isEmpty(epc)) {
-            int index = checkIsExist(epc);
-            // mContext.getAppContext().uhfQueue.offer(epc + "\t 1");
+            boolean exist = checkIsExist(epc);
             //不存在则新增
-            if (index == -1) {
+            if (!exist) {
                 addTag(epc);
+                adapter.setNewData(barCodeBeanList);
             }
-            adapter.setBoxNumber(measBoxBeanList.size());
-            adapter.setNewData(barCodeBeanList);
         }
     }
 
@@ -377,15 +352,14 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         //去除扫到表的后两位
         if (epc.length() == 24) {
             barCode = epc.substring(0, epc.length() - 2);
-            assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1);
-            //todo 判断是表还是箱条形码
-            if (assetNo.substring(0, 2).equals("18"))//表
+            assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1); //第7位开始，共14位
+            ////第8、9位 箱表类型
+            if (assetNo.startsWith("18"))//表
                 barCodeType = "1";
-            else if (assetNo.substring(0, 2).equals("15"))//箱
+            else if (assetNo.startsWith("15"))//箱
                 barCodeType = "0";
             else
                 barCodeType = "-1";
-
 
             BarCodeBean barCodeBean = new BarCodeBean(epc, barCode, barCodeType, 1, "无", scanTime);
             switch (barCodeType) {
@@ -399,7 +373,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                     measBoxBean.setScanTime(scanTime);
                     List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
                             MeasBoxBeanDao.Properties.BarCode.eq(barCode)).build().list();
-                    if (boxBarCodelist != null && boxBarCodelist.size() > 0) {
+                    if (boxBarCodelist.size() > 0) {
                         measBoxBean.setIsExsit(true);
                         barCodeBean.setExsit(true);
                     }
@@ -415,7 +389,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                     List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
                             MeterBeanDao.Properties.BarCode.eq(barCode))
                             .build().list();
-                    if (meterBarCodelist != null && meterBarCodelist.size() > 0) {
+                    if (meterBarCodelist.size() > 0) {
                         meterBean.setIsExsit(true);
                         barCodeBean.setExsit(true);
                     }
@@ -435,7 +409,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
 
     //导出excel表格
     private void ImportExcel() {
-        if (BtInventory.getText().equals(
+        if (btnShibie.getText().equals(
                 mContext.getString(R.string.btInventory))) {
             if (measBoxBeanList.size() == 0) {
 
@@ -460,29 +434,12 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         measBoxBeanList.clear();
         meterBeanList.clear();
 
-        adapter.setBoxNumber(measBoxBeanList.size());
         adapter.setNewData(barCodeBeanList);
     }
 
-    //单步还是循环
-    public class RgInventoryCheckedListener implements RadioGroup.OnCheckedChangeListener {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            llContinuous.setVisibility(View.GONE);
-            if (checkedId == RbInventorySingle.getId()) {
-                // 单步识别
-                inventoryFlag = 0;
-            } else if (checkedId == RbInventoryLoop.getId()) {
-                // 单标签循环识别
-                inventoryFlag = 1;
-                llContinuous.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
     private void readTag() {
-        if (BtInventory.getText().equals(mContext.getString(R.string.btInventory))) {// 识别标签
-            BtInventory.setText(mContext.getString(R.string.title_stop_Inventory));
+        if (btnShibie.getText().equals(mContext.getString(R.string.btInventory))) {// 识别标签
+            btnShibie.setText(mContext.getString(R.string.title_stop_Inventory));
             if (mContext.isR2000) {
                 startScanToR2000();
             } else {
@@ -515,7 +472,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                 //获取定时的时间
 //                String time = et_stopTime.getText().toString().trim();
                 //设置按钮为停止扫描
-                BtInventory.setText(mContext
+                btnShibie.setText(mContext
                         .getString(R.string.title_stop_Inventory));
                 String time = "10";
                 //开启扫描线程
@@ -541,7 +498,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
             isReading = false;
             Reader.READER_ERR reader_err = mContext.uhfReader.AsyncStopReading();
             if (reader_err == Reader.READER_ERR.MT_OK_ERR) {
-                BtInventory.setText(mContext.getString(R.string.btInventory));
+                btnShibie.setText(mContext.getString(R.string.btInventory));
                 setViewEnabled(true);
             } else {
                 UIHelper.ToastMessage(mContext,
@@ -551,8 +508,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     }
 
     private void setViewEnabled(boolean enabled) {
-        RbInventorySingle.setEnabled(enabled);
-        RbInventoryLoop.setEnabled(enabled);
         BtClear.setEnabled(enabled);
     }
 
@@ -562,21 +517,19 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
      * @param strEPC 索引
      * @return
      */
-    public int checkIsExist(String strEPC) {
-        int existFlag = -1;
+    public boolean checkIsExist(String strEPC) {
         if (StringUtils.isEmpty(strEPC)) {
-            return existFlag;
+            return false;
         }
         BarCodeBean barCodeBean;
         for (int i = 0; i < barCodeBeanList.size(); i++) {
             barCodeBean = barCodeBeanList.get(i);
             if (strEPC.equals(barCodeBean.getTagUii())) {
                 barCodeBean.setTagCount(barCodeBean.getTagCount() + 1);
-                existFlag = i;
-                break;
+                return true;
             }
         }
-        return existFlag;
+        return false;
     }
 
     public class InventoryRawThread extends Thread {

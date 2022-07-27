@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.bean.BarCodeBean;
+import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -17,14 +18,12 @@ import java.util.List;
  */
 
 public class BarCodeAdpater extends BaseQuickAdapter<BarCodeBean, BaseViewHolder> {
-    List<BarCodeBean> datas;
+    private final List<MeasBoxBean> boxList;
     private Context context;
-    private int boxNumber = 0;
 
-    public BarCodeAdpater(int layoutResId, @Nullable List<BarCodeBean> data, int boxNumber) {
-        super(layoutResId, data);
-        datas = data;
-        this.boxNumber = boxNumber;
+    public BarCodeAdpater(@Nullable List<BarCodeBean> data, List<MeasBoxBean> measBoxBeanList) {
+        super(R.layout.listtag_items, data);
+        this.boxList = measBoxBeanList;
     }
 
     public void setContext(Context context) {
@@ -61,14 +60,14 @@ public class BarCodeAdpater extends BaseQuickAdapter<BarCodeBean, BaseViewHolder
             helper.setTextColor(R.id.tv_count, context.getResources().getColor(R.color.red));
 
             helper.setVisible(R.id.tv_tag_rssi, true);
-        } else {
+        } else { //数据库无此表
             helper.setText(R.id.tv_count, "可用");
             helper.setTextColor(R.id.tv_count, context.getResources().getColor(R.color.black));
 
             //正式使用时设置为false
             if (item.getBarCodeType().equals("0")) {
                 //为箱，箱在本地不存在时，判断扫描到的箱数量，若不等于1的话则显示管理按钮
-                if (boxNumber != 1)
+                if (boxList.size() != 1)
                     helper.setVisible(R.id.tv_tag_rssi, true);
                 else
                     helper.setVisible(R.id.tv_tag_rssi, false);
@@ -77,9 +76,5 @@ public class BarCodeAdpater extends BaseQuickAdapter<BarCodeBean, BaseViewHolder
                 helper.setVisible(R.id.tv_tag_rssi, false);
             }
         }
-    }
-
-    public void setBoxNumber(int boxNumber) {
-        this.boxNumber = boxNumber;
     }
 }
