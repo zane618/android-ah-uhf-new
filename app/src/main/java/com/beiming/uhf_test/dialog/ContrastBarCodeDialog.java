@@ -14,7 +14,6 @@ import com.beiming.uhf_test.adapter.ConflictBarCodeAdpater;
 import com.beiming.uhf_test.base.BaseDialog;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.bean.MeterBean;
-import com.beiming.uhf_test.bean.pic.PhotoBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
@@ -35,8 +34,8 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
     RecyclerView rvSaved;
     Button btSave;
     private Context context;
-    private List<MeterBean> exsitBarCode = new ArrayList<>();
-    private List<MeterBean> savedBarCode = new ArrayList<>();
+    private List<MeterBean> exsitMeterList = new ArrayList<>();
+    private List<MeterBean> savedMeterList = new ArrayList<>();
     private List<MeterBean> deleteMeterList = new ArrayList<>();//记录被删除的电表bean
     private List<String> deleteBarCodeList = new ArrayList<>();//记录被删除的条码集合与deleteMeterList的大小保持一致
     private MeasBoxBean currentBox;//删除了表所属箱的集合
@@ -45,11 +44,11 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
     private ConflictBarCodeAdpater savedAdapter;
     private int type;//hintDialog中的处理逻辑：0:当前冲突，1：本地保存，2确认按钮
 
-    public ContrastBarCodeDialog(Context context, List<MeterBean> exsitBarCode, String selectBarCode) {
+    public ContrastBarCodeDialog(Context context, List<MeterBean> exsitMeterList, String selectBarCode) {
         super(context);
         this.context = context;
         this.selectBarCode = selectBarCode;
-        this.exsitBarCode = exsitBarCode;
+        this.exsitMeterList = exsitMeterList;
     }
 
 
@@ -113,41 +112,41 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
                 String selectBarCode = "";
                 switch (type) {
                     case 0:
-                        deleteMeterList.add(exsitBarCode.get(currentPosition));
-                        deleteBarCodeList.add(exsitBarCode.get(currentPosition).getBarCode());
-                        exsitBarCode.remove(currentPosition);
-                        if (exsitBarCode.size() == 0) {
+                        deleteMeterList.add(exsitMeterList.get(currentPosition));
+                        deleteBarCodeList.add(exsitMeterList.get(currentPosition).getBarCode());
+                        exsitMeterList.remove(currentPosition);
+                        if (exsitMeterList.size() == 0) {
                             selectBarCode = "";
                         } else {
-                            selectBarCode = exsitBarCode.get(0).getBarCode();
+                            selectBarCode = exsitMeterList.get(0).getBarCode();
                         }
                         break;
                     case 1:
                         //1.删除上面的集合
                         //todo 记录本地要被删除的数据，该用来记录的集合在dialogdismiss的时候需要清除
-                        MeterBean meterBean = savedBarCode.get(currentPosition);
-                        exsitBarCode.remove(currentPosition);
+                        MeterBean meterBean = savedMeterList.get(currentPosition);
+                        exsitMeterList.remove(currentPosition);
                         int position = -1;
-                        for (int i = 0; i < exsitBarCode.size(); i++) {
-                            if (exsitBarCode.get(i).getBarCode().equals(meterBean.getBarCode())) {
+                        for (int i = 0; i < exsitMeterList.size(); i++) {
+                            if (exsitMeterList.get(i).getBarCode().equals(meterBean.getBarCode())) {
                                 position = i;
                             }
                         }
                         if (position != -1) {
-                            deleteMeterList.add(exsitBarCode.get(position));
-                            deleteBarCodeList.add(exsitBarCode.get(position).getBarCode());
-                            exsitBarCode.remove(position);
+                            deleteMeterList.add(exsitMeterList.get(position));
+                            deleteBarCodeList.add(exsitMeterList.get(position).getBarCode());
+                            exsitMeterList.remove(position);
                         }
-                        if (exsitBarCode.size() == 0) {
+                        if (exsitMeterList.size() == 0) {
                             selectBarCode = "";
                         } else {
-                            selectBarCode = exsitBarCode.get(0).getBarCode();
+                            selectBarCode = exsitMeterList.get(0).getBarCode();
                         }
                         //删除本地数据
                         deleteData(meterBean);
                         break;
                 }
-                updateData(exsitBarCode, selectBarCode);
+                updateData(exsitMeterList, selectBarCode);
             }
 
             @Override
@@ -167,19 +166,19 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
         }
         //删除箱中表
         MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
-        savedBarCode.remove(meterBean);
-        currentBox.setMeters(savedBarCode);
+        savedMeterList.remove(meterBean);
+        currentBox.setMeters(savedMeterList);
         measBoxBeanDao.update(currentBox);
-        savedAdapter.setNewData(savedBarCode);
+        savedAdapter.setNewData(savedMeterList);
     }
 
     private void initAdapter() {
         rvCurrent.setLayoutManager(new GridLayoutManager(getContext(), 1, LinearLayoutManager.VERTICAL, false));
-        currentAdapter = new ConflictBarCodeAdpater(context, R.layout.item_conflict_barcode_dialog, exsitBarCode, selectBarCode);
+        currentAdapter = new ConflictBarCodeAdpater(exsitMeterList, selectBarCode);
         rvCurrent.setAdapter(currentAdapter);
 
         rvSaved.setLayoutManager(new GridLayoutManager(getContext(), 1, LinearLayoutManager.VERTICAL, false));
-        savedAdapter = new ConflictBarCodeAdpater(context, R.layout.item_conflict_barcode_dialog, savedBarCode, selectBarCode);
+        savedAdapter = new ConflictBarCodeAdpater(savedMeterList, selectBarCode);
         rvSaved.setAdapter(savedAdapter);
     }
 
@@ -207,11 +206,11 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
     }
 
     private void updateData(List<MeterBean> exsitBarCode, String selectBarCode) {
-        this.exsitBarCode = exsitBarCode;
+        this.exsitMeterList = exsitBarCode;
         if (!this.selectBarCode.equals(selectBarCode)) {
             this.selectBarCode = selectBarCode;
             //若与原条码不一致，刷新上下两个adapter布局
-            this.exsitBarCode = exsitBarCode;
+            this.exsitMeterList = exsitBarCode;
             currentAdapter.setSelectBarCode(selectBarCode);
             currentAdapter.setNewData(exsitBarCode);
             //获取本地存储的数据并更新ui
@@ -234,13 +233,13 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
                     MeasBoxBeanDao.Properties.BarCode.eq(meterBeans.get(0).getMeasBarCode())).build().list();
             if (boxBeans.size() > 0) {
                 currentBox = boxBeans.get(0);
-                savedBarCode = currentBox.getMeters();
+                savedMeterList = currentBox.getMeters();
                 tvBoxBarcode.setText("所存在表箱资产：" + currentBox.getBarCode());
             }
         }
         //刷新
         savedAdapter.setSelectBarCode(selectBarCode);
-        savedAdapter.setNewData(savedBarCode);
+        savedAdapter.setNewData(savedMeterList);
     }
 
     public List<MeterBean> getDeleteMeterList() {

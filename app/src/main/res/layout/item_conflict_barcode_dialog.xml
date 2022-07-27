@@ -26,14 +26,6 @@
         android:paddingBottom="2dp" />
 
     <TextView
-        android:id="@+id/tv_count"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingTop="3dp"
-        android:paddingBottom="2dp" />
-    
-    <TextView
         android:id="@+id/tv_tag_rssi"
         android:layout_width="0dip"
         android:layout_height="wrap_content"

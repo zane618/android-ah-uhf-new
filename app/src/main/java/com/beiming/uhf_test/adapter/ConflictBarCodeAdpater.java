@@ -18,14 +18,12 @@ import java.util.List;
 
 public class ConflictBarCodeAdpater extends BaseQuickAdapter<MeterBean, BaseViewHolder> {
     List<MeterBean> datas;
-    private Context context;
     private String selectBarCode;
 
-    public ConflictBarCodeAdpater(Context context, int layoutResId, @Nullable List<MeterBean> data, String selectBarCode) {
-        super(layoutResId, data);
+    public ConflictBarCodeAdpater(@Nullable List<MeterBean> data, String selectBarCode) {
+        super(R.layout.item_conflict_barcode_dialog, data);
         datas = data;
         this.selectBarCode = selectBarCode;
-        this.context = context;
     }
 
     @Override
