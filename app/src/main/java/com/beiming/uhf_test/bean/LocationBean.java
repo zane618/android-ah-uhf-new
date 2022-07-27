@@ -24,6 +24,10 @@ public class LocationBean implements Serializable {
     private String floor;//获取当前室内定位的楼层
     private String gpsAccuracyStatus;//获取GPS的当前状态
     private String time;//获取定位的时间
+    private String cityCode;//城市区号
+    private String adCode;//行政区号
+
+    private String errorInfo;                //定位失败信息
 
     public LocationBean() {
     }
@@ -53,6 +57,22 @@ public class LocationBean implements Serializable {
                 ", gpsAccuracyStatus='" + gpsAccuracyStatus + '\'' +
                 ", time='" + time + '\'' +
                 '}';
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getAdCode() {
+        return adCode;
+    }
+
+    public void setAdCode(String adCode) {
+        this.adCode = adCode;
     }
 
     public String getLatitude() {
@@ -145,6 +165,14 @@ public class LocationBean implements Serializable {
 
     public String getBuildingId() {
         return buildingId;
+    }
+
+    public String getErrorInfo() {
+        return errorInfo;
+    }
+
+    public void setErrorInfo(String errorInfo) {
+        this.errorInfo = errorInfo;
     }
 
     public void setBuildingId(String buildingId) {
