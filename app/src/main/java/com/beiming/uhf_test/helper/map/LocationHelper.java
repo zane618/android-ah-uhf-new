@@ -122,6 +122,7 @@ public class LocationHelper {
         }*/
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setGpsFirst(false);
         mLocationOption.setOnceLocation(true);     //只定位一次
         mLocationOption.setLocationCacheEnable(false); //可选，设置是否使用缓存定位，默认为true
         mLocationOption.setHttpTimeOut(5 * 1000);
