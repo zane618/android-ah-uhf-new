@@ -25,10 +25,12 @@ class DefectInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
     private val QX_ARR_1 = arrayOf("(1)计量箱具、印缺头;","(2)计量箱内存在杂物;","(3)计量箱视窗发黄、不清晰;","(4) 计量箱视窗破损、缺失;","(5)计量箱锁具损杯;","(6)计查相外观存在污垢。")
     private val QX_ARR_2 = arrayOf("(1)计量箱无法加锁;","(2)计量箱变形;","(3)计量箱锁具损坏;","(4)计量箱轻微破损或者局部锈蚀，可修复后，正常使用。")
-    private val QX_ARR_3 = arrayOf("(1)计量装置饺链断裂;","(2)计量安装不牢固;","(3)计量箱门无法关闭;","(4)金属表箱严重锈性，无法修复;","(5)金属计量箱未地;","(6)计量箱门被焊技，无法打开;")
+    private val QX_ARR_3 = arrayOf("(1)计量装置饺链断裂;","(2)计量安装不牢固;","(3)计量箱门无法关闭;","(4)金属表箱严重锈性，无法修复;","(5)金属计量箱未地;","(6)计量箱门被焊技，无法打开;"
+        ,"(7)计置门、底缺失;","(8)计量箱进水","(9)塑料表箱严重老化，部分位置已开始资他风化;","(10)计量箱严重破损，无法修等或无修复价信")
 
 
-        init {
+
+    init {
             LayoutInflater.from(context).inflate(R.layout.layout_defect_input, this)
             radioGroup_qx = findViewById(R.id.radioGroup_qx)
             qx_dj_0 = findViewById(R.id.qx_dj_0)
