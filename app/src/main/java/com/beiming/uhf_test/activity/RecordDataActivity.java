@@ -46,6 +46,7 @@ import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
+import com.beiming.uhf_test.view.DefectInputLayout;
 import com.beiming.uhf_test.view.DoorInfoInputLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
 
@@ -95,26 +96,14 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     EditText tv_xiang_kuan;//宽
     @BindView(R.id.recycleview)
     RecyclerView recycleview;
-    @BindView(R.id.radioGroup_qx)
-    RadioGroup radioGroup_qx;
-    @BindView(R.id.ll_quexian)
-    LinearLayout ll_quexian;
-    @BindView(R.id.jiaolian_y)
-    RadioButton jiaolian_y; //铰链
-    @BindView(R.id.laogu_y)
-    RadioButton laogu_y; //牢固
-    @BindView(R.id.suo_y)
-    RadioButton suo_y; //锁
-    @BindView(R.id.zawu_y)
-    RadioButton zawu_y; //杂物
-    @BindView(R.id.rb_qx_you)
-    RadioButton rb_qx_you; //缺陷
     @BindView(R.id.rg_caizhi)
     RadioGroup rg_caizhi;
     @BindView(R.id.tv_x_luru)
     TextView tv_x_luru;
     @BindView(R.id.doorInfoLayout)
     DoorInfoInputLayout doorInfoInputLayout;
+    @BindView(R.id.defect)
+    DefectInputLayout defect;
 
     private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
     private AttachmentAdapter attachmentAdapter;
@@ -139,17 +128,6 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         recycleview.setHasFixedSize(true);
         recycleview.setLayoutManager(new LinearLayoutManager(context));
         recycleview.setAdapter(rdAdapter);
-        radioGroup_qx.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (R.id.rb_qx_you == i) {
-                    //有缺陷
-                    ll_quexian.setVisibility(View.VISIBLE);
-                } else {//无缺陷
-                    ll_quexian.setVisibility(View.GONE);
-                }
-            }
-        });
         rg_caizhi.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -278,11 +256,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         }
 
         boxBean.setNote(etNote.getText().toString());
-        boxBean.setHasQx(rb_qx_you.isChecked() ? "有" : "无");
-        boxBean.setQxJiaolian(jiaolian_y.isChecked() ? "是" : "否");
-        boxBean.setQxLaogu(laogu_y.isChecked() ? "是" : "否");
-        boxBean.setQxSuo(suo_y.isChecked() ? "是" : "否");
-        boxBean.setQxZawu(zawu_y.isChecked() ? "是" : "否");
+        boxBean.setHasQx(defect.getDj());
+        boxBean.setQxDetail(defect.getKindsDetail());
         boxBean.setCaizhi(caizhi);
         //四门尺寸
         boxBean.setZsGao(doorInfoInputLayout.getZsGao());

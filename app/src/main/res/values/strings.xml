@@ -1500,4 +1500,19 @@
     <string name="suggest_submit">提交反馈</string>
     <string name="btn_zc">召测</string>
     <string name="uhf_msg_tab_local_data">本地数据</string>
+
+    <!--  录入页面  -->
+    <string name="qx_first">(1)计量箱具、印缺头;\n(2)计量箱内存在杂物;\n(3)计量箱视窗发黄、不清晰;\n(4) 计量箱视窗破损、缺失;\n(5)计量箱锁具损杯;\n(6)计查相外观存在污垢。</string>
+    <string name="qx_second">(1)计量箱无法加锁;\n
+(2)计量箱变形;\n
+(3)计量箱锁具损坏;\n
+(4)计量箱轻微破损或者局部锈蚀，可修复后，正常使用。
+</string>
+    <string name="qx_third">(1)计量装置饺链断裂;\n
+(2)计量安装不牢固;\n
+(3)计量箱门无法关闭;\n
+(4)金属表箱严重锈性，无法修复;\n
+(5)金属计量箱未地;\n
+(6)计量箱门被焊技，无法打开;
+</string>
 </resources>

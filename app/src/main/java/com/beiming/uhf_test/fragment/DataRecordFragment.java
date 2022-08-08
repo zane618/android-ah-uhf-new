@@ -77,15 +77,9 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     TextView tv_kuan;
     @BindView(R.id.tv_caizhi)
     TextView tv_caizhi;
+    @BindView(R.id.tv_qx_detail) //缺陷详情
+    TextView tv_qx_detail;
 
-    @BindView(R.id.tv_jiaolian)
-    TextView tv_jiaolian;
-    @BindView(R.id.tv_laogu)
-    TextView tv_laogu;
-    @BindView(R.id.tv_suo)
-    TextView tv_suo;
-    @BindView(R.id.tv_zawu)
-    TextView tv_zawu;
     @BindView(R.id.content)
     LinearLayout content;
 
@@ -239,10 +233,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             if (!TextUtils.isEmpty(measBoxBean.getNote())) {
                 tvNote.setText(measBoxBean.getNote());
             }
-            tv_jiaolian.setText(measBoxBean.getQxJiaolian());
-            tv_laogu.setText(measBoxBean.getQxLaogu());
-            tv_suo.setText(measBoxBean.getQxSuo());
-            tv_zawu.setText(measBoxBean.getQxZawu());
+            tv_qx_detail.setText(measBoxBean.getQxDetail());
             doorInfoLayout.setDatas(measBoxBean);
 
         }
