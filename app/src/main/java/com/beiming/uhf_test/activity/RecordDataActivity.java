@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +29,6 @@ import com.beiming.uhf_test.activity.pic.PhotoPickerActivity;
 import com.beiming.uhf_test.activity.pic.PreviewPhotoActivity;
 import com.beiming.uhf_test.adapter.pic.AttachmentAdapter;
 import com.beiming.uhf_test.base.BaseActivity;
-import com.beiming.uhf_test.bean.LocationBean;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.pic.AttachmentUpdate;
@@ -38,6 +36,7 @@ import com.beiming.uhf_test.bean.pic.PhotoBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
+import com.beiming.uhf_test.helper.map.LocationHelper;
 import com.beiming.uhf_test.listener.OnHintDialogClicklistener;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.DialogUtils;
@@ -203,18 +202,29 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData() {
-        //展示定位数据
-        LocationBean lastLocationBean = (LocationBean) SharedPreferencesUtil.getInstance().getObjectFromShare(ConstantUtil.LAST_LOCATION);
-        if (lastLocationBean != null && lastLocationBean.getAddress() != null) {
-            tvAddr.setText(lastLocationBean.getAddress());
-            boxBean.setInstAddr(lastLocationBean.getAddress());
-            boxBean.setGps_X(lastLocationBean.getLongitude());
-            boxBean.setGps_Y(lastLocationBean.getLatitude());
-            boxBean.setGps_Z("");
-        } else {
-            tvAddr.setText("暂未获取到定位信息");
-        }
         tv_xiang_bh.setText(boxBean.getBarCode());
+
+        //展示定位数据
+        new LocationHelper().setListener(locationBean -> {
+            if (null != locationBean) {
+                LogPrintUtil.zhangshi("定位成功 getNewAppLocation:" + FastJson.toJSONString(locationBean));
+                SharedPreferencesUtil.getInstance().setObjectToShare(ConstantUtil.LAST_LOCATION, locationBean);
+
+                if (locationBean != null && locationBean.getAddress() != null) {
+                    tvAddr.setText(locationBean.getAddress());
+                    boxBean.setInstAddr(locationBean.getAddress());
+                    boxBean.setGps_X(locationBean.getLongitude());
+                    boxBean.setGps_Y(locationBean.getLatitude());
+                    boxBean.setGps_Z(locationBean.getAltitude());
+                } else {
+                    tvAddr.setText("暂未获取到定位信息");
+                }
+            } else {
+                //定位失败
+                tvAddr.setText("暂未获取到定位信息");
+                LogPrintUtil.zhangshi("定位失败 getNewAppLocation:" + FastJson.toJSONString(locationBean));
+            }
+        }).startLocation();
     }
 
     @Override

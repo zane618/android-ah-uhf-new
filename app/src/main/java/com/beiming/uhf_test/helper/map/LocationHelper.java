@@ -1,5 +1,9 @@
 package com.beiming.uhf_test.helper.map;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -18,6 +22,7 @@ public class LocationHelper {
     public AMapLocationClientOption mLocationOption = null;
     //声明定位回调监听器
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
             LogPrintUtil.zhangshi("onLocationChanged");
@@ -42,7 +47,7 @@ public class LocationHelper {
                     bean.setTime(aMapLocation.getTime() + "");
                     bean.setCityCode(aMapLocation.getCityCode());
                     bean.setAdCode(aMapLocation.getAdCode());
-
+                    bean.setAltitude(aMapLocation.getAltitude() + "");
                     if (mListener != null) {
                         mListener.onLocationChanged(bean);
                     }

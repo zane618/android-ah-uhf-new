@@ -217,7 +217,6 @@
                     android:paddingTop="7dp"
                     android:paddingRight="@dimen/text_size_13"
                     android:paddingBottom="7dp"
-                    android:text="无"
                     android:textColor="@color/gray_333"
                     android:textSize="13sp" />
                 <!--       备注         -->

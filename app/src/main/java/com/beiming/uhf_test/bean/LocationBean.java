@@ -26,6 +26,7 @@ public class LocationBean implements Serializable {
     private String time;//获取定位的时间
     private String cityCode;//城市区号
     private String adCode;//行政区号
+    private String altitude;//海拔高度
 
     private String errorInfo;                //定位失败信息
 
@@ -36,6 +37,14 @@ public class LocationBean implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.address = address;
+    }
+
+    public String getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(String altitude) {
+        this.altitude = altitude;
     }
 
     @Override
