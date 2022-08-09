@@ -49,10 +49,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private LoginBeanDao loginBeanDao;
 
     @Override
-    protected int onCreateView() {
+    protected void setContentView() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        return R.layout.activity_register;
+        setContentView(R.layout.activity_register);
     }
 
 
@@ -82,10 +82,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-    @Override
-    protected void initToolbar() {
-
-    }
+    
 
     @Override
     protected void initListener() {

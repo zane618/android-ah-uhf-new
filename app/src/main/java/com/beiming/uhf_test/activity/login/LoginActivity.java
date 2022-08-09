@@ -50,8 +50,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
      **/
 //    HashMap<String, IUniMP> mUniMPCaches = new HashMap<>();
     @Override
-    protected int onCreateView() {
-        return R.layout.activity_login;
+    protected void setContentView() {
+        setContentView(R.layout.activity_login);
     }
 
     @Override
@@ -122,10 +122,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         return returnMap;
     }
 
-    @Override
-    protected void initToolbar() {
-
-    }
+    
 
     @Override
     protected void initListener() {

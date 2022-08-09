@@ -42,6 +42,7 @@ public class MeasBoxBean implements Serializable {
     private boolean isExsit;//本地是否存在
     private String hasQx; //是否缺陷，无，I级，II级，III级
     private String qxDetail; //缺陷详情, 逗号分割
+    private String fenzhixCode; //分支箱编码
     private String caizhi = "金属"; //金属，非金属
     private String chang = ""; //长
     private String kuan = ""; //宽
@@ -61,14 +62,14 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 950134916)
+    @Generated(hash = 2066149534)
     public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
             String gps_X, String gps_Y, String gps_Z, String instAddr, String instLoc,
             String describe, String tmnlAddr, String tgName, String boxRows, String boxCols,
-            String note, boolean isExsit, String hasQx, String qxDetail, String caizhi,
-            String chang, String kuan, String zsGao, String zsKuan, String zxGao,
-            String zxKuan, String ysGao, String ysKuan, String yxGao, String yxKuan,
-            List<MeterBean> meters, List<PhotoBean> boxImages) {
+            String note, boolean isExsit, String hasQx, String qxDetail, String fenzhixCode,
+            String caizhi, String chang, String kuan, String zsGao, String zsKuan,
+            String zxGao, String zxKuan, String ysGao, String ysKuan, String yxGao,
+            String yxKuan, List<MeterBean> meters, List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
         this.barCode = barCode;
         this.measAssetNo = measAssetNo;
@@ -87,6 +88,7 @@ public class MeasBoxBean implements Serializable {
         this.isExsit = isExsit;
         this.hasQx = hasQx;
         this.qxDetail = qxDetail;
+        this.fenzhixCode = fenzhixCode;
         this.caizhi = caizhi;
         this.chang = chang;
         this.kuan = kuan;
@@ -104,6 +106,14 @@ public class MeasBoxBean implements Serializable {
 
     @Generated(hash = 1045529700)
     public MeasBoxBean() {
+    }
+
+    public String getFenzhixCode() {
+        return fenzhixCode;
+    }
+
+    public void setFenzhixCode(String fenzhixCode) {
+        this.fenzhixCode = fenzhixCode;
     }
 
     public String getQxDetail() {

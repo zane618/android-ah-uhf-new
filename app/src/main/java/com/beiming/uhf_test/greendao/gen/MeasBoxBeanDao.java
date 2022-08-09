@@ -46,19 +46,20 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         public final static Property IsExsit = new Property(15, boolean.class, "isExsit", false, "IS_EXSIT");
         public final static Property HasQx = new Property(16, String.class, "hasQx", false, "HAS_QX");
         public final static Property QxDetail = new Property(17, String.class, "qxDetail", false, "QX_DETAIL");
-        public final static Property Caizhi = new Property(18, String.class, "caizhi", false, "CAIZHI");
-        public final static Property Chang = new Property(19, String.class, "chang", false, "CHANG");
-        public final static Property Kuan = new Property(20, String.class, "kuan", false, "KUAN");
-        public final static Property ZsGao = new Property(21, String.class, "zsGao", false, "ZS_GAO");
-        public final static Property ZsKuan = new Property(22, String.class, "zsKuan", false, "ZS_KUAN");
-        public final static Property ZxGao = new Property(23, String.class, "zxGao", false, "ZX_GAO");
-        public final static Property ZxKuan = new Property(24, String.class, "zxKuan", false, "ZX_KUAN");
-        public final static Property YsGao = new Property(25, String.class, "ysGao", false, "YS_GAO");
-        public final static Property YsKuan = new Property(26, String.class, "ysKuan", false, "YS_KUAN");
-        public final static Property YxGao = new Property(27, String.class, "yxGao", false, "YX_GAO");
-        public final static Property YxKuan = new Property(28, String.class, "yxKuan", false, "YX_KUAN");
-        public final static Property Meters = new Property(29, String.class, "meters", false, "METERS");
-        public final static Property BoxImages = new Property(30, String.class, "boxImages", false, "BOX_IMAGES");
+        public final static Property FenzhixCode = new Property(18, String.class, "fenzhixCode", false, "FENZHIX_CODE");
+        public final static Property Caizhi = new Property(19, String.class, "caizhi", false, "CAIZHI");
+        public final static Property Chang = new Property(20, String.class, "chang", false, "CHANG");
+        public final static Property Kuan = new Property(21, String.class, "kuan", false, "KUAN");
+        public final static Property ZsGao = new Property(22, String.class, "zsGao", false, "ZS_GAO");
+        public final static Property ZsKuan = new Property(23, String.class, "zsKuan", false, "ZS_KUAN");
+        public final static Property ZxGao = new Property(24, String.class, "zxGao", false, "ZX_GAO");
+        public final static Property ZxKuan = new Property(25, String.class, "zxKuan", false, "ZX_KUAN");
+        public final static Property YsGao = new Property(26, String.class, "ysGao", false, "YS_GAO");
+        public final static Property YsKuan = new Property(27, String.class, "ysKuan", false, "YS_KUAN");
+        public final static Property YxGao = new Property(28, String.class, "yxGao", false, "YX_GAO");
+        public final static Property YxKuan = new Property(29, String.class, "yxKuan", false, "YX_KUAN");
+        public final static Property Meters = new Property(30, String.class, "meters", false, "METERS");
+        public final static Property BoxImages = new Property(31, String.class, "boxImages", false, "BOX_IMAGES");
     }
 
     private final MeterBeanConverter metersConverter = new MeterBeanConverter();
@@ -94,19 +95,20 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
                 "\"IS_EXSIT\" INTEGER NOT NULL ," + // 15: isExsit
                 "\"HAS_QX\" TEXT," + // 16: hasQx
                 "\"QX_DETAIL\" TEXT," + // 17: qxDetail
-                "\"CAIZHI\" TEXT," + // 18: caizhi
-                "\"CHANG\" TEXT," + // 19: chang
-                "\"KUAN\" TEXT," + // 20: kuan
-                "\"ZS_GAO\" TEXT," + // 21: zsGao
-                "\"ZS_KUAN\" TEXT," + // 22: zsKuan
-                "\"ZX_GAO\" TEXT," + // 23: zxGao
-                "\"ZX_KUAN\" TEXT," + // 24: zxKuan
-                "\"YS_GAO\" TEXT," + // 25: ysGao
-                "\"YS_KUAN\" TEXT," + // 26: ysKuan
-                "\"YX_GAO\" TEXT," + // 27: yxGao
-                "\"YX_KUAN\" TEXT," + // 28: yxKuan
-                "\"METERS\" TEXT," + // 29: meters
-                "\"BOX_IMAGES\" TEXT);"); // 30: boxImages
+                "\"FENZHIX_CODE\" TEXT," + // 18: fenzhixCode
+                "\"CAIZHI\" TEXT," + // 19: caizhi
+                "\"CHANG\" TEXT," + // 20: chang
+                "\"KUAN\" TEXT," + // 21: kuan
+                "\"ZS_GAO\" TEXT," + // 22: zsGao
+                "\"ZS_KUAN\" TEXT," + // 23: zsKuan
+                "\"ZX_GAO\" TEXT," + // 24: zxGao
+                "\"ZX_KUAN\" TEXT," + // 25: zxKuan
+                "\"YS_GAO\" TEXT," + // 26: ysGao
+                "\"YS_KUAN\" TEXT," + // 27: ysKuan
+                "\"YX_GAO\" TEXT," + // 28: yxGao
+                "\"YX_KUAN\" TEXT," + // 29: yxKuan
+                "\"METERS\" TEXT," + // 30: meters
+                "\"BOX_IMAGES\" TEXT);"); // 31: boxImages
     }
 
     /** Drops the underlying database table. */
@@ -205,69 +207,74 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
             stmt.bindString(18, qxDetail);
         }
  
+        String fenzhixCode = entity.getFenzhixCode();
+        if (fenzhixCode != null) {
+            stmt.bindString(19, fenzhixCode);
+        }
+ 
         String caizhi = entity.getCaizhi();
         if (caizhi != null) {
-            stmt.bindString(19, caizhi);
+            stmt.bindString(20, caizhi);
         }
  
         String chang = entity.getChang();
         if (chang != null) {
-            stmt.bindString(20, chang);
+            stmt.bindString(21, chang);
         }
  
         String kuan = entity.getKuan();
         if (kuan != null) {
-            stmt.bindString(21, kuan);
+            stmt.bindString(22, kuan);
         }
  
         String zsGao = entity.getZsGao();
         if (zsGao != null) {
-            stmt.bindString(22, zsGao);
+            stmt.bindString(23, zsGao);
         }
  
         String zsKuan = entity.getZsKuan();
         if (zsKuan != null) {
-            stmt.bindString(23, zsKuan);
+            stmt.bindString(24, zsKuan);
         }
  
         String zxGao = entity.getZxGao();
         if (zxGao != null) {
-            stmt.bindString(24, zxGao);
+            stmt.bindString(25, zxGao);
         }
  
         String zxKuan = entity.getZxKuan();
         if (zxKuan != null) {
-            stmt.bindString(25, zxKuan);
+            stmt.bindString(26, zxKuan);
         }
  
         String ysGao = entity.getYsGao();
         if (ysGao != null) {
-            stmt.bindString(26, ysGao);
+            stmt.bindString(27, ysGao);
         }
  
         String ysKuan = entity.getYsKuan();
         if (ysKuan != null) {
-            stmt.bindString(27, ysKuan);
+            stmt.bindString(28, ysKuan);
         }
  
         String yxGao = entity.getYxGao();
         if (yxGao != null) {
-            stmt.bindString(28, yxGao);
+            stmt.bindString(29, yxGao);
         }
  
         String yxKuan = entity.getYxKuan();
         if (yxKuan != null) {
-            stmt.bindString(29, yxKuan);
+            stmt.bindString(30, yxKuan);
         }
  
         List meters = entity.getMeters();
         if (meters != null) {
-            stmt.bindString(30, metersConverter.convertToDatabaseValue(meters));
+            stmt.bindString(31, metersConverter.convertToDatabaseValue(meters));
         }
  
         List boxImages = entity.getBoxImages();
         if (boxImages != null) {
-            stmt.bindString(31, boxImagesConverter.convertToDatabaseValue(boxImages));
+            stmt.bindString(32, boxImagesConverter.convertToDatabaseValue(boxImages));
         }
     }
 
@@ -361,69 +368,74 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
             stmt.bindString(18, qxDetail);
         }
  
+        String fenzhixCode = entity.getFenzhixCode();
+        if (fenzhixCode != null) {
+            stmt.bindString(19, fenzhixCode);
+        }
+ 
         String caizhi = entity.getCaizhi();
         if (caizhi != null) {
-            stmt.bindString(19, caizhi);
+            stmt.bindString(20, caizhi);
         }
  
         String chang = entity.getChang();
         if (chang != null) {
-            stmt.bindString(20, chang);
+            stmt.bindString(21, chang);
         }
  
         String kuan = entity.getKuan();
         if (kuan != null) {
-            stmt.bindString(21, kuan);
+            stmt.bindString(22, kuan);
         }
  
         String zsGao = entity.getZsGao();
         if (zsGao != null) {
-            stmt.bindString(22, zsGao);
+            stmt.bindString(23, zsGao);
         }
  
         String zsKuan = entity.getZsKuan();
         if (zsKuan != null) {
-            stmt.bindString(23, zsKuan);
+            stmt.bindString(24, zsKuan);
         }
  
         String zxGao = entity.getZxGao();
         if (zxGao != null) {
-            stmt.bindString(24, zxGao);
+            stmt.bindString(25, zxGao);
         }
  
         String zxKuan = entity.getZxKuan();
         if (zxKuan != null) {
-            stmt.bindString(25, zxKuan);
+            stmt.bindString(26, zxKuan);
         }
  
         String ysGao = entity.getYsGao();
         if (ysGao != null) {
-            stmt.bindString(26, ysGao);
+            stmt.bindString(27, ysGao);
         }
  
         String ysKuan = entity.getYsKuan();
         if (ysKuan != null) {
-            stmt.bindString(27, ysKuan);
+            stmt.bindString(28, ysKuan);
         }
  
         String yxGao = entity.getYxGao();
         if (yxGao != null) {
-            stmt.bindString(28, yxGao);
+            stmt.bindString(29, yxGao);
         }
  
         String yxKuan = entity.getYxKuan();
         if (yxKuan != null) {
-            stmt.bindString(29, yxKuan);
+            stmt.bindString(30, yxKuan);
         }
  
         List meters = entity.getMeters();
         if (meters != null) {
-            stmt.bindString(30, metersConverter.convertToDatabaseValue(meters));
+            stmt.bindString(31, metersConverter.convertToDatabaseValue(meters));
         }
  
         List boxImages = entity.getBoxImages();
         if (boxImages != null) {
-            stmt.bindString(31, boxImagesConverter.convertToDatabaseValue(boxImages));
+            stmt.bindString(32, boxImagesConverter.convertToDatabaseValue(boxImages));
         }
     }
 
@@ -453,19 +465,20 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
             cursor.getShort(offset + 15) != 0, // isExsit
             cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // hasQx
             cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // qxDetail
-            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // caizhi
-            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // chang
-            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // kuan
-            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // zsGao
-            cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22), // zsKuan
-            cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23), // zxGao
-            cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // zxKuan
-            cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25), // ysGao
-            cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26), // ysKuan
-            cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27), // yxGao
-            cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28), // yxKuan
-            cursor.isNull(offset + 29) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 29)), // meters
-            cursor.isNull(offset + 30) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 30)) // boxImages
+            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // fenzhixCode
+            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // caizhi
+            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // chang
+            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // kuan
+            cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22), // zsGao
+            cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23), // zsKuan
+            cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // zxGao
+            cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25), // zxKuan
+            cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26), // ysGao
+            cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27), // ysKuan
+            cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28), // yxGao
+            cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29), // yxKuan
+            cursor.isNull(offset + 30) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 30)), // meters
+            cursor.isNull(offset + 31) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 31)) // boxImages
         );
         return entity;
     }
@@ -490,19 +503,20 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         entity.setIsExsit(cursor.getShort(offset + 15) != 0);
         entity.setHasQx(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
         entity.setQxDetail(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
-        entity.setCaizhi(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
-        entity.setChang(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
-        entity.setKuan(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
-        entity.setZsGao(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
-        entity.setZsKuan(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
-        entity.setZxGao(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
-        entity.setZxKuan(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));
-        entity.setYsGao(cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25));
-        entity.setYsKuan(cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26));
-        entity.setYxGao(cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27));
-        entity.setYxKuan(cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28));
-        entity.setMeters(cursor.isNull(offset + 29) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 29)));
-        entity.setBoxImages(cursor.isNull(offset + 30) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 30)));
+        entity.setFenzhixCode(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
+        entity.setCaizhi(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
+        entity.setChang(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
+        entity.setKuan(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
+        entity.setZsGao(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
+        entity.setZsKuan(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
+        entity.setZxGao(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));
+        entity.setZxKuan(cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25));
+        entity.setYsGao(cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26));
+        entity.setYsKuan(cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27));
+        entity.setYxGao(cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28));
+        entity.setYxKuan(cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29));
+        entity.setMeters(cursor.isNull(offset + 30) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 30)));
+        entity.setBoxImages(cursor.isNull(offset + 31) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 31)));
      }
     
     @Override

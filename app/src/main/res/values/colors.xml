@@ -140,4 +140,8 @@
     <color name="gray_ccc">#cccccc</color>
     <color name="gray_text_content">#fa333333</color>
     <color name="gray_text_uploaded">#fabdbdbd</color>
+
+    <!--    运单头部滑动字体选中-->
+    <color name="waybill_top_txt_sel">#FFBA00</color>
+    <color name="waybill_top_txt_nol">#1ACFDB</color>
 </resources>

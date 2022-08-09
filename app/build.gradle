@@ -42,6 +42,10 @@ android {
         multiDexEnabled true
     }
 
+    viewBinding{
+        enabled = true
+    }
+
     //添加下面这句
     dexOptions {
         javaMaxHeapSize "4g"
@@ -161,6 +165,7 @@ dependencies {
     implementation files('libs/scans.jar')
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.shizhefei:ViewPagerIndicator:1.1.9.androidx'
 
 }
 allprojects {

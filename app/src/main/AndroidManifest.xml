@@ -30,8 +30,7 @@
         <activity
             android:name=".activity.login.LoginActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +41,7 @@
 <!--            android:name=".TestActivity"-->
 <!--            android:label="@string/app_name"-->
 <!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >-->
+<!--           >-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
@@ -50,18 +49,16 @@
 <!--            </intent-filter>-->
 <!--        </activity>-->
         <activity
-            android:name=".activity.RecordDataActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".activity.RecordDataActivity" />
         <activity
-            android:name=".activity.pic.PhotoPickerActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".activity.FenzhixActivity" />
         <activity
-            android:name=".activity.pic.PreviewPhotoActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activity.UHFMainActivity" />
+            android:name=".activity.pic.PhotoPickerActivity" />
         <activity
-            android:name=".activity.login.RegisterActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".activity.pic.PreviewPhotoActivity" />
+        <activity android:name=".activity.UHFMainActivity"/>
+        <activity
+            android:name=".activity.login.RegisterActivity" />
 
         <service android:name="com.amap.api.location.APSService" />
 

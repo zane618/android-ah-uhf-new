@@ -1,8 +1,10 @@
 package com.beiming.uhf_test.activity;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.adapter.ViewPagerAdapter;
+import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.fragment.KeyDwonFragment;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.widget.NoScrollViewPager;
@@ -32,7 +35,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015-03-10.
  */
-public abstract class BaseTabFragmentActivity extends FragmentActivity {
+public abstract class BaseTabFragmentActivity extends BaseActivity {
 
     private final int offscreenPage = 4; //����ViewPager���ڵļ���ҳ��
 
@@ -67,7 +70,7 @@ public abstract class BaseTabFragmentActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActionBar = getActionBar();
+        mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowTitleEnabled(true);
         mActionBar.setDisplayShowHomeEnabled(true);
         mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -117,6 +120,31 @@ public abstract class BaseTabFragmentActivity extends FragmentActivity {
     protected ActionBar.TabListener mTabListener = new ActionBar.TabListener() {
 
         @Override
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+            long start = TimeUtils.beginTime();
+            if (mActionBar.getTabCount() > 3 && tab.getPosition() != 3) {
+                mActionBar.removeTabAt(3);
+            }
+            if (tab.getPosition() == 3) {
+                mViewPager.setCurrentItem(index, false);
+            } else {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+            long end = TimeUtils.beginTime();
+            Log.i("CMCC", "时间差=" + (end - start));
+        }
+
+        @Override
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+        }
+
+        @Override
+        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+        }
+
+        /*@Override
         public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
             long start = TimeUtils.beginTime();
             if (mActionBar.getTabCount() > 3 && tab.getPosition() != 3) {
@@ -139,7 +167,7 @@ public abstract class BaseTabFragmentActivity extends FragmentActivity {
         @Override
         public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
 
-        }
+        }*/
     };
 
     @Override

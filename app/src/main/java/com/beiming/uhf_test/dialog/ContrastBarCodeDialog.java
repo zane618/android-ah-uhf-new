@@ -1,11 +1,15 @@
 package com.beiming.uhf_test.dialog;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -46,6 +50,12 @@ public class ContrastBarCodeDialog extends BaseDialog implements View.OnClickLis
 
     public ContrastBarCodeDialog(Context context, List<MeterBean> exsitMeterList, String selectBarCode) {
         super(context);
+        Window window = this.getWindow() ;
+        //设置window背景，默认的背景会有Padding值，不能全屏。当然不一定要是透明，你可以设置其他背景，替换默认的背景即可。
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //一定要在setContentView之后调用，否则无效
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
         this.context = context;
         this.selectBarCode = selectBarCode;
         this.exsitMeterList = exsitMeterList;

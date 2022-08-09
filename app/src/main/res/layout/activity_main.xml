@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:clipToPadding="false"
     android:fitsSystemWindows="true" >
 
-    <com.beiming.uhf_test.widget.NoScrollViewPager
-        android:id="@+id/pager"
+    <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.beiming.uhf_test.widget.NoScrollViewPager>
-    <!--
-    <LinearLayout 
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"></LinearLayout>
-    -->
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="高频扫码"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <com.shizhefei.view.indicator.ScrollIndicatorView
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/ll"
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/indicator" />
+
+
+</RelativeLayout>

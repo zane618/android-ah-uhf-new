@@ -85,6 +85,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
 
     @BindView(R.id.doorInfoLayout)
     DoorInfoShowLayout doorInfoLayout;
+    private TextView tv_fenzhix_tianjia;
+    private TextView tv_fenzhix_bianma;
 
 
     private UHFMainActivity mContext;
@@ -106,7 +108,16 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         Log.i("CMCC", Tag + ":" + System.currentTimeMillis());
         View view = inflater.inflate(R.layout.activity_data_record, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initViews(view);
         return view;
+    }
+
+    private void initViews(View view) {
+        tv_fenzhix_tianjia = view.findViewById(R.id.tv_fenzhix_tianjia);
+        tv_fenzhix_tianjia.setOnClickListener(v -> { //添加分支箱
+
+        });
+        tv_fenzhix_bianma = view.findViewById(R.id.tv_fenzhix_bianma);
     }
 
     @Override

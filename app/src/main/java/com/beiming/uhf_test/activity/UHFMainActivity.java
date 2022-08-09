@@ -4,6 +4,7 @@ package com.beiming.uhf_test.activity;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.AsyncTask;
@@ -12,8 +13,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -21,7 +27,10 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.beiming.uhf_test.R;
+import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
+import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.bean.LocationBean;
+import com.beiming.uhf_test.databinding.ActivityMainBinding;
 import com.beiming.uhf_test.fragment.DataRecordFragment;
 import com.beiming.uhf_test.fragment.ExportExcelFragment;
 import com.beiming.uhf_test.fragment.UHFReadTagFragment;
@@ -30,11 +39,16 @@ import com.beiming.uhf_test.helper.map.LocationHelper;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
+import com.beiming.uhf_test.utils.MyOnTransitionTextListener;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.TimeUtils;
 import com.hc.pda.HcPowerCtrl;
 import com.kongzue.baseframework.util.SettingsUtil;
 import com.pow.api.cls.RfidPower;
+import com.shizhefei.view.indicator.Indicator;
+import com.shizhefei.view.indicator.IndicatorViewPager;
+import com.shizhefei.view.indicator.slidebar.ColorBar;
+import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.uhf.api.cls.Reader;
 
 import java.util.ArrayList;
@@ -58,9 +72,13 @@ import pub.devrel.easypermissions.EasyPermissions;
  *
  * @author 更新于 2016年8月9日
  */
-public class UHFMainActivity extends BaseTabFragmentActivity implements EasyPermissions.PermissionCallbacks {
+
+public class UHFMainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+
+    private ActivityMainBinding binding;
 
     private final static String TAG = "UHFMainActivity:";
+    public UHFMainActivity context;
 
     public boolean inventoryEpc = false;//盘存模式，EPC 或 TID
     public ArrayList<HashMap<String, String>> tagList;
@@ -74,15 +92,19 @@ public class UHFMainActivity extends BaseTabFragmentActivity implements EasyPerm
 //		appContext.playSound(id);
 //	}
 
+    //合并新版本后添加的变量
+    HcPowerCtrl ctrl;
+    RfidPower power;
+    public Reader uhfReader;
+
+    public MutableLiveData<Boolean> initState = new MutableLiveData<>();
+    public boolean isR2000 = true;
+    public SettingsUtil settingsUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//			appContext = (AppContext) getApplication();
-        initViewPageData();
-        initViewPager();
-        initTabs();
-
+        context = this;
         // 非小程序进程（这里的unimp 关键字 可以根据宿主的具体情况进行调整）
         if (!RuningAcitvityUtil.getAppName(getBaseContext()).contains("unimp")) {
             //请在此处初始化其他三方SDK
@@ -122,21 +144,6 @@ public class UHFMainActivity extends BaseTabFragmentActivity implements EasyPerm
         ctrl.identityPower(0);
         uhfReader.CloseReader();
         uhfReader = null;
-    }
-
-    @Override
-    protected void initViewPageData() {
-        lstFrg.add(new UHFReadTagFragment());
-        lstFrg.add(new DataRecordFragment());
-        lstFrg.add(new ExportExcelFragment());
-        lstFrg.add(new UHFSetFragment());
-
-
-        lstTitles.add(getString(R.string.uhf_msg_tab_scan));
-        lstTitles.add(getString(R.string.uhf_msg_tab_local_data));
-        lstTitles.add(getString(R.string.uhf_msg_tab_export));
-        lstTitles.add(getString(R.string.uhf_msg_tab_set));
-
     }
 
     @Override
@@ -220,24 +227,68 @@ public class UHFMainActivity extends BaseTabFragmentActivity implements EasyPerm
     }
 
 
-    private void showToast(String string) {
+    public void showToast(String string) {
         Toast.makeText(UHFMainActivity.this, string, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         exitUHF();
+    }
+
+    @Override
+    protected void setContentView() {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+    }
+
+    private IndicatorViewPager indicatorViewPager;
+    private MainViewPagerAdapter mAdapter;
+
+    @Override
+    protected void initView() {
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new UHFReadTagFragment());
+        fragments.add(new DataRecordFragment());
+        fragments.add(new ExportExcelFragment());
+        fragments.add(new UHFSetFragment());
+
+        String[] names = {getString(R.string.uhf_msg_tab_scan), getString(R.string.uhf_msg_tab_local_data),
+                getString(R.string.uhf_msg_tab_export), getString(R.string.uhf_msg_tab_set)};
+        binding.indicator.setOnTransitionListener(getOnTabTransitionTextListener());
+//        binding.indicator.setOnTransitionListener(new OnTransitionTextListener().setColor(0xFF2196F3, Color.GRAY).setSize(13, (float) (13*1.3)));
+        binding.indicator.setScrollBar(new ColorBar(this, 0xFF0B7671, 4));
+        indicatorViewPager = new IndicatorViewPager(binding.indicator, binding.viewpager);
+        mAdapter = new MainViewPagerAdapter(this, getSupportFragmentManager(), fragments, names);
+        indicatorViewPager.setAdapter(mAdapter);
+//        indicatorViewPager.setOnIndicatorItemClickListener(getOnIndicatorItemClickLis());
+//        indicatorViewPager.setOnIndicatorPageChangeListener(getOnIndicatorPageChangeLis());
+        indicatorViewPager.setPageOffscreenLimit(3);
+        indicatorViewPager.setCurrentItem(0, false);    //默认显示tab
+    }
+
+    /**
+     * 设置切换文字颜色
+     */
+    private Indicator.OnTransitionListener getOnTabTransitionTextListener() {
+        return new MyOnTransitionTextListener() {
+            @Override
+            public TextView getTextView(View tabItemView, int position) {
+
+                return (TextView) tabItemView.findViewById(R.id.tv);
+            }
+        }.setColor(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.black1));
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     /**

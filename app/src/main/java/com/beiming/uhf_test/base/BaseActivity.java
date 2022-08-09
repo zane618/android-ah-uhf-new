@@ -2,7 +2,6 @@ package com.beiming.uhf_test.base;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.dialog.LoadingDialog;
+import com.beiming.uhf_test.tools.AppManager;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -36,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private App mApplication;
     private Unbinder bind;
-    public Context context;
+    public BaseActivity activity;
     //是否允许旋转屏幕
     private boolean isAllowScreenRoate = true;
     //封装Toast对象
@@ -54,22 +54,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 添加Activity到堆栈
+        AppManager.getAppManager().addActivity(this);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD,
-//                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-//                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(onCreateView());
+        setContentView();
         /**
          *  所有的Activity都依附于一个Application，在Activity中只要通过 getApplication（）方法，就能拿到当前应用中的Application对象
          *
          */
-        context = this;
-//        mApplication = (MyApplication) getApplication();
-//        mApplication.addActivity(this);
-
+        activity = this;
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCancelable(false);
         bind = ButterKnife.bind(this);
@@ -81,8 +75,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         //初始化控件
         initView();
-        //初始化标题栏
-        initToolbar();
         //初始化监听
         initListener();
         //设置数据
@@ -91,6 +83,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        hideBottomUIMenu();
         //设置软键盘弹出遮盖其他布局
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        // 结束Activity&从堆栈中移除
+        AppManager.getAppManager().finishActivity(this);
     }
 
     /**
@@ -137,17 +136,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @return 资源ID
      */
-    protected abstract int onCreateView();
+    protected abstract void setContentView();
 
     /**
      * 初始化控件
      */
     protected abstract void initView();
-
-    /**
-     * 初始化标题栏
-     */
-    protected abstract void initToolbar();
 
     /**
      * 初始化监听
@@ -209,11 +203,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showToast(String msg) {
         try {
             if (null == toast) {
-                toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
             } else {
                 View view = toast.getView();
                 toast.cancel();
-                toast = new Toast(context);
+                toast = new Toast(activity);
                 toast.setView(view);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setText(msg);
@@ -228,7 +222,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
             //解决在子线程中调用Toast的异常情况处理
             Looper.prepare();
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
             Looper.loop();
         }
     }

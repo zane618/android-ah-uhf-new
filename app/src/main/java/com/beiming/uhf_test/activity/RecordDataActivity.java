@@ -114,8 +114,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     private String caizhi = "金属";
 
     @Override
-    protected int onCreateView() {
-        return R.layout.activity_record_data;
+    protected void setContentView() {
+        setContentView(R.layout.activity_record_data);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         rdAdapter = new RdAdapter(boxBean.getMeters());
         recycleview.setNestedScrollingEnabled(false);
         recycleview.setHasFixedSize(true);
-        recycleview.setLayoutManager(new LinearLayoutManager(context));
+        recycleview.setLayoutManager(new LinearLayoutManager(activity));
         recycleview.setAdapter(rdAdapter);
         rg_caizhi.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -138,19 +138,17 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
             }
         });
         tv_x_luru.setOnClickListener(this);
+        tvTitleName.setText("现场信息录入");
     }
 
     private void initAdapter() {
         //选择的图片列表
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        attachmentAdapter = new AttachmentAdapter(context, photoBeanList, CHOOSE_PIC_MAX, 0);
+        attachmentAdapter = new AttachmentAdapter(activity, photoBeanList, CHOOSE_PIC_MAX, 0);
         noScrollgridview.setAdapter(attachmentAdapter);
     }
 
-    @Override
-    protected void initToolbar() {
-        tvTitleName.setText("现场信息录入");
-    }
+    
 
     private int creatOrDetails = 0;
 
@@ -170,13 +168,13 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
                         choosePic();
                     }
                 } else {
-                    Intent intent = new Intent(context, PreviewPhotoActivity.class);
+                    Intent intent = new Intent(activity, PreviewPhotoActivity.class);
                     intent.putExtra("ID", i);
                     intent.putExtra(ConstantUtil.CREAT_OR_DETAILS, creatOrDetails);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(ConstantUtil.PHOTO_BEAN_LIST, (Serializable) photoBeanList);
                     intent.putExtras(bundle);
-                    context.startActivity(intent);
+                    activity.startActivity(intent);
                 }
             }
         });
@@ -187,16 +185,16 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         if (CHOOSE_PIC_MAX > havePicSize) {
             int chooseNum = CHOOSE_PIC_MAX - havePicSize;
             //选择图片
-            Intent intent = new Intent(context, PhotoPickerActivity.class);
+            Intent intent = new Intent(activity, PhotoPickerActivity.class);
             intent.putExtra(PhotoPickerActivity.EXTRA_SHOW_CAMERA, true);
             intent.putExtra(PhotoPickerActivity.EXTRA_SELECT_MODE, PhotoPickerActivity.MODE_MULTI);
             intent.putExtra(PhotoPickerActivity.EXTRA_MAX_MUN, chooseNum);
 
             // 总共选择的图片数量
-            context.startActivity(intent);
+            activity.startActivity(intent);
 
         } else {
-            ToastUtils.showToast(context, "选择已经达到上限");
+            ToastUtils.showToast(activity, "选择已经达到上限");
         }
     }
 

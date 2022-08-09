@@ -43,11 +43,62 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
+                <!--        箱表数据        -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="箱表信息"
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tv_fenzhix_tianjia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:padding="5dp"
+                        android:layout_gravity="right"
+                        android:textSize="11sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/sel_01"
+                        android:text="添加分支箱"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="分支箱编码："
+                        android:textColor="#ff4d4d4d"
+                        android:textSize="13sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_fenzhix_bianma"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0000000000000000000000"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="7dp"
                     android:orientation="horizontal">
                     <ImageView
                         android:layout_width="18dp"
