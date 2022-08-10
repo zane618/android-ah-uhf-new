@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beiming.uhf_test.R;
-import com.beiming.uhf_test.activity.UHFMainActivity;
+import com.beiming.uhf_test.activity.MainActivity;
 import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
@@ -41,7 +41,7 @@ public class ExportExcelFragment extends KeyDwonFragment implements View.OnClick
     TextView tvFileName;
     @BindView(R.id.bt_export)
     Button btExport;
-    private UHFMainActivity mContext;
+    private MainActivity mContext;
     private List<MeasBoxBean> allBoxBeanList;
     Unbinder unbinder;
     private int MY_PERMISSIONS_REQUEST_FOR_EXCLE = 0x11;
@@ -61,7 +61,7 @@ public class ExportExcelFragment extends KeyDwonFragment implements View.OnClick
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mContext = (UHFMainActivity) getActivity();
+        mContext = (MainActivity) getActivity();
         initAdapter();
         initListener();
     }

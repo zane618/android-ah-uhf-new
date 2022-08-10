@@ -56,7 +56,7 @@
             android:name=".activity.pic.PhotoPickerActivity" />
         <activity
             android:name=".activity.pic.PreviewPhotoActivity" />
-        <activity android:name=".activity.UHFMainActivity"/>
+        <activity android:name=".activity.MainActivity"/>
         <activity
             android:name=".activity.login.RegisterActivity" />
 

@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beiming.uhf_test.R;
-import com.beiming.uhf_test.activity.UHFMainActivity;
+import com.beiming.uhf_test.activity.MainActivity;
 import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.activity.pic.PreviewPhotoActivity;
 import com.beiming.uhf_test.adapter.BoxListAdapter;
@@ -89,7 +89,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     private TextView tv_fenzhix_bianma;
 
 
-    private UHFMainActivity mContext;
+    private MainActivity mContext;
     private List<MeasBoxBean> boxBeanList;
     private List<MeterBean> meterBeanList;
     private List<String> boxBarCodeList;//用来记录电表查询时遍历添加的箱，作用用于去重
@@ -123,7 +123,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mContext = (UHFMainActivity) getActivity();
+        mContext = (MainActivity) getActivity();
         initAdapter();
         initListener();
         getData();

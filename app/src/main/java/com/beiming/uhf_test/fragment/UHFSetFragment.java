@@ -3,8 +3,6 @@ package com.beiming.uhf_test.fragment;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.beiming.uhf_test.R;
-import com.beiming.uhf_test.activity.UHFMainActivity;
+import com.beiming.uhf_test.activity.MainActivity;
 import com.kongzue.baseframework.interfaces.BindView;
 import com.lidroid.xutils.ViewUtils;
 import com.uhf.api.cls.Reader;
@@ -42,7 +40,7 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
     @BindView(R.id.bt_setFrequency)
     Button bt_setFrequency;
     int power = 3000;
-    private UHFMainActivity mContext;
+    private MainActivity mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +55,7 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mContext = (UHFMainActivity) getActivity();
+        mContext = (MainActivity) getActivity();
         sp_frequency_band = getView().findViewById(R.id.sp_setWorkBand);
         sp_set_power = getView().findViewById(R.id.sp_setPower);
         bt_setPower = getView().findViewById(R.id.bt_setPower);
@@ -153,7 +151,7 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
                 getPower();
             }
         });
-        getPower();
+//        getPower();
     }
 
     @Override

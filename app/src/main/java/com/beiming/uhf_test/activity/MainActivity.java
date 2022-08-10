@@ -4,7 +4,6 @@ package com.beiming.uhf_test.activity;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.AsyncTask;
@@ -22,33 +21,27 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
 import com.beiming.uhf_test.base.BaseActivity;
-import com.beiming.uhf_test.bean.LocationBean;
 import com.beiming.uhf_test.databinding.ActivityMainBinding;
 import com.beiming.uhf_test.fragment.DataRecordFragment;
 import com.beiming.uhf_test.fragment.ExportExcelFragment;
 import com.beiming.uhf_test.fragment.UHFReadTagFragment;
 import com.beiming.uhf_test.fragment.UHFSetFragment;
 import com.beiming.uhf_test.helper.map.LocationHelper;
+import com.beiming.uhf_test.tools.rfid.RfidHelper;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.MyOnTransitionTextListener;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
-import com.beiming.uhf_test.utils.TimeUtils;
 import com.hc.pda.HcPowerCtrl;
 import com.kongzue.baseframework.util.SettingsUtil;
 import com.pow.api.cls.RfidPower;
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
-import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.uhf.api.cls.Reader;
 
 import java.util.ArrayList;
@@ -73,24 +66,16 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @author 更新于 2016年8月9日
  */
 
-public class UHFMainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 
     private ActivityMainBinding binding;
 
     private final static String TAG = "UHFMainActivity:";
-    public UHFMainActivity context;
+    public MainActivity context;
 
     public boolean inventoryEpc = false;//盘存模式，EPC 或 TID
     public ArrayList<HashMap<String, String>> tagList;
     public HashMap<String, String> map;
-//	public AppContext appContext;// ȫ��Context
-//
-    // public Reader mReader;
-//	public RFIDWithUHF mReader;
-
-//	public void playSound(int id) {
-//		appContext.playSound(id);
-//	}
 
     //合并新版本后添加的变量
     HcPowerCtrl ctrl;
@@ -113,8 +98,9 @@ public class UHFMainActivity extends BaseActivity implements EasyPermissions.Per
         //初始化uhf
         settingsUtil = new SettingsUtil("uhf");
         inventoryEpc = settingsUtil.getBoolean("inventory", false);
-        initUHF();
-        initSound();
+//        initUHF();
+//        initSound();
+        RfidHelper.getInstance();
     }
 
     @Override
@@ -122,28 +108,6 @@ public class UHFMainActivity extends BaseActivity implements EasyPermissions.Per
         super.onResume();
         Log.i(TAG, "onResume");
 
-    }
-
-    private void initUHF() {
-        ctrl = new HcPowerCtrl();
-        ctrl.identityPower(1);
-        if (uhfReader == null) {
-            uhfReader = new Reader();
-            new InitUHFTask().execute();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "onPause");
-    }
-
-    private void exitUHF() {
-        power.PowerDown();
-        ctrl.identityPower(0);
-        uhfReader.CloseReader();
-        uhfReader = null;
     }
 
     @Override
@@ -154,33 +118,6 @@ public class UHFMainActivity extends BaseActivity implements EasyPermissions.Per
     @Override
     public void onPermissionsDenied(int i, @NonNull List<String> list) {
 
-    }
-
-    HashMap<Integer, Integer> soundMap = new HashMap<Integer, Integer>();
-    private SoundPool soundPool;
-
-    private void initSound() {
-        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);
-        soundMap.put(1, soundPool.load(this, R.raw.beeper_short, 1));
-        soundMap.put(2, soundPool.load(this, R.raw.beeper, 1));
-        soundMap.put(3, soundPool.load(this, R.raw.scan_buzzer, 1));
-        soundMap.put(4, soundPool.load(this, R.raw.beep330, 1));
-        soundMap.put(5, soundPool.load(this, R.raw.scan_new, 1));
-        soundMap.put(6, soundPool.load(this, R.raw.beep333, 1));
-    }
-
-    /**
-     * 播放提示音
-     *
-     * @param id 成功1，失败2
-     */
-    public void playSound(int id) {
-        soundPool.play(soundMap.get(id), 1, // 左声道音量
-                1, // 右声道音量
-                1, // 优先级，0为最低
-                0, // 循环次数，0无不循环，-1无永远循环
-                1 // 回放速度 ，该值在0.5-2.0之间，1为正常速度
-        );
     }
 
     private static final int MY_PERMISSIONS_REQUEST_CALL_LOCATION = 1;
@@ -228,13 +165,13 @@ public class UHFMainActivity extends BaseActivity implements EasyPermissions.Per
 
 
     public void showToast(String string) {
-        Toast.makeText(UHFMainActivity.this, string, Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, string, Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        exitUHF();
+        RfidHelper.getInstance().exitUHF();
     }
 
     @Override
@@ -327,78 +264,6 @@ public class UHFMainActivity extends BaseActivity implements EasyPermissions.Per
         }
     }
 
-    public class InitUHFTask extends AsyncTask<String, Integer, Boolean> {
-        ProgressDialog mypDialog;
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            power = new RfidPower(RfidPower.PDATYPE.NONE, getApplicationContext());
-            if (power.PowerUp()) {
-//                Reader.READER_ERR reader_err = uhfReader.InitReader_Notype("/dev/ttyS1", 1);
-                Reader.READER_ERR reader_err = uhfReader.InitReader_Notype("/dev/ttysWK1", 1);
-                Log.e(TAG, "doInBackground: " + reader_err);
-                if (reader_err == Reader.READER_ERR.MT_OK_ERR) {
-                    initState.postValue(true);
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            mypDialog.cancel();
-            if (result) {
-                Reader.AntPowerConf apcf = uhfReader.new AntPowerConf();
-                apcf.antcnt = 1;
-                Reader.AntPowerConf apcf2 = uhfReader.new AntPowerConf();
-                //获取功率
-                uhfReader.ParamGet(Reader.Mtr_Param.MTR_PARAM_RF_ANTPOWER, apcf2);
-                int session = settingsUtil.getInt("session", 1);
-                //设置session 值
-                uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_POTL_GEN2_SESSION, new int[]{session});
-                //设置附加数据内容,如果纯盘EPC 就传null
-//                if (inventoryEpc) {
-                uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_TAG_EMBEDEDDATA, null);
-//                } else {
-//                    Reader.EmbededData_ST subjoinSet = uhfReader.new EmbededData_ST();//如果不用附加数据时 需将此参数设null ,否则会影响读取效率
-//                    subjoinSet.bank = 2;//附加数据的块区，值位 0,1,2,3 对应Gen2 标签的4个区
-//                    subjoinSet.startaddr = 0;//附加数据的起始读地址，字节为单位
-//                    subjoinSet.bytecnt = 12;//附近数据的读取长度地址，字节为单位
-//                    subjoinSet.accesspwd = null;//不用密码的时候置空
-//                    uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_TAG_EMBEDEDDATA, subjoinSet);
-//                }
-                Reader.HardwareDetails val = uhfReader.new HardwareDetails();
-                uhfReader.GetHardwareDetails(val);
-                if (val.module.toString().equals("MODOULE_SLR5300")) {
-                    isR2000 = false;
-                } else {
-                    isR2000 = true;
-                }
-                Log.e(TAG, "模块: " + val.module.toString());
-                Toast.makeText(getApplicationContext(), " 初始化成功,功率 " + apcf2.Powers[0].readPower / 100 + "db", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "初始化失败", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-            mypDialog = new ProgressDialog(UHFMainActivity.this);
-            mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mypDialog.setMessage("初始化...");
-            mypDialog.setCanceledOnTouchOutside(false);
-            mypDialog.show();
-
-        }
-    }
 
     //获取模块温度
     public int getModuleTemperature() {

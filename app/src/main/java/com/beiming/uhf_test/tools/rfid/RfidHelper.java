@@ -1,4 +1,4 @@
-package com.beiming.uhf_test.tools;
+package com.beiming.uhf_test.tools.rfid;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 
 import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.R;
+import com.beiming.uhf_test.tools.AppManager;
+import com.beiming.uhf_test.tools.UIHelper;
+import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.hc.pda.HcPowerCtrl;
 import com.kongzue.baseframework.util.SettingsUtil;
 import com.pow.api.cls.RfidPower;
@@ -28,6 +31,11 @@ import java.util.HashMap;
 public class RfidHelper implements ReadListener {
     private static RfidHelper instance = null;
     private Context context;
+    private IRfidListener listener;
+
+    public void setListener(IRfidListener listener) {
+        this.listener = listener;
+    }
 
     public static RfidHelper getInstance() {
         if (instance == null) {
@@ -43,6 +51,7 @@ public class RfidHelper implements ReadListener {
     private RfidHelper() {
         context = App.getContext();
         initUHF();
+        initSound();
     }
 
 
@@ -53,7 +62,7 @@ public class RfidHelper implements ReadListener {
     public boolean inventoryEpc = false;//盘存模式，EPC 或 TID
 
     boolean isReading = false;//是否正在扫描
-    String TAG = "TAG";
+    String TAG = "RfidHelper";
     boolean isSetStop = false;//读取时长后停止
     public boolean isR2000 = true;
 
@@ -62,6 +71,9 @@ public class RfidHelper implements ReadListener {
      * 初始化
      */
     private void initUHF() {
+        //初始化uhf
+        settingsUtil = new SettingsUtil("uhf");
+        inventoryEpc = settingsUtil.getBoolean("inventory", false);
         ctrl = new HcPowerCtrl();
         ctrl.identityPower(1);
         if (uhfReader == null) {
@@ -150,9 +162,17 @@ public class RfidHelper implements ReadListener {
     }
 
 
+    public void startScan(IRfidListener listener) {
+        this.listener = listener;
+        if (isR2000) {
+            startScanToR2000();
+        } else {
+            startScanTo5300();
+        }
+    }
 
 
-    private void startScanTo5300() {
+    public void startScanTo5300() {
         isReading = true;
 //        bt_stopScan.setEnabled(true);
 //        bt_startScan.setEnabled(false);
@@ -194,13 +214,16 @@ public class RfidHelper implements ReadListener {
             isReading = false;
             Reader.READER_ERR reader_err = uhfReader.AsyncStopReading();
             if (reader_err == Reader.READER_ERR.MT_OK_ERR) {
-//                btnShibie.setText(mContext.getString(R.string.btInventory));
-//                setViewEnabled(true);
+                //回调出去
+                if (listener != null) {
+                    listener.onStop();
+                }
             } else {
                 UIHelper.ToastMessage(AppManager.getAppManager().getTopActivity(),
                         R.string.uhf_msg_inventory_stop_fail);
             }
         }
+
     }
 
     public class InventoryRawThread extends Thread {
@@ -291,7 +314,10 @@ public class RfidHelper implements ReadListener {
         public boolean handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1:
-//                    addEPCToList(msg.obj.toString()); //往外抛
+                    if (listener != null) {
+                        listener.onRfidResult(msg.obj.toString());
+                    }
+                    LogPrintUtil.zhangshi(TAG + msg.obj);
                     break;
                 case 3:
                     break;
@@ -326,5 +352,18 @@ public class RfidHelper implements ReadListener {
                 0, // 循环次数，0无不循环，-1无永远循环
                 1 // 回放速度 ，该值在0.5-2.0之间，1为正常速度
         );
+    }
+
+    public void exitUHF() {
+        if (power != null) {
+            power.PowerDown();
+        }
+        if (ctrl != null) {
+            ctrl.identityPower(0);
+        }
+        if (uhfReader != null) {
+            uhfReader.CloseReader();
+            uhfReader = null;
+        }
     }
 }

@@ -16,7 +16,7 @@ import android.widget.EditText;
 
 import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.R;
-import com.beiming.uhf_test.activity.UHFMainActivity;
+import com.beiming.uhf_test.activity.MainActivity;
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.bean.LoginBean;
 import com.beiming.uhf_test.bean.UserBean;
@@ -57,7 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-        startActivity(new Intent(LoginActivity.this, UHFMainActivity.class));
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
 
@@ -146,7 +146,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     edit.putString("userName", name);
                     edit.putString("password", pwd);
                     edit.commit();
-                    startActivity(new Intent(LoginActivity.this, UHFMainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }
                 break;
