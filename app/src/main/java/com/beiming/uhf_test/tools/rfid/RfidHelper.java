@@ -354,6 +354,18 @@ public class RfidHelper implements ReadListener {
         );
     }
 
+    //获取模块温度
+    public int getModuleTemperature() {
+        int[] val = new int[1];
+        Reader.READER_ERR er = uhfReader.ParamGet(
+                Reader.Mtr_Param.MTR_PARAM_RF_TEMPERATURE, val);
+        if (er == Reader.READER_ERR.MT_OK_ERR) {
+            return val[0];
+        } else {
+            return -1;
+        }
+    }
+
     public void exitUHF() {
         if (power != null) {
             power.PowerDown();

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.MainActivity;
+import com.beiming.uhf_test.tools.rfid.RfidHelper;
 import com.kongzue.baseframework.interfaces.BindView;
 import com.lidroid.xutils.ViewUtils;
 import com.uhf.api.cls.Reader;
@@ -102,7 +103,7 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
         bt_getT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                et_T.setText(mContext.getModuleTemperature()+"");
+                et_T.setText(RfidHelper.getInstance().getModuleTemperature()+"");
             }
         });
 
@@ -116,31 +117,31 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
             }
         });
 
-        rg_module.check(mContext.inventoryEpc ? R.id.rb_epc : R.id.rb_tid);
+        rg_module.check(RfidHelper.getInstance().inventoryEpc ? R.id.rb_epc : R.id.rb_tid);
         rg_module.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_epc:
-                        mContext.inventoryEpc = true;
+                        RfidHelper.getInstance().inventoryEpc = true;
                         break;
                     case R.id.rb_tid:
-                        mContext.inventoryEpc = false;
+                        RfidHelper.getInstance().inventoryEpc = false;
                         break;
                 }
 
                 //设置附加数据内容,如果纯盘EPC 就传null
-                if (mContext.inventoryEpc) {
-                    Reader.READER_ERR subjoinErr = mContext.uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_TAG_EMBEDEDDATA, null);
+                if (RfidHelper.getInstance().inventoryEpc) {
+                    Reader.READER_ERR subjoinErr = RfidHelper.getInstance().uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_TAG_EMBEDEDDATA, null);
                 } else {
-                    Reader.EmbededData_ST subjoinSet = mContext.uhfReader.new EmbededData_ST();//如果不用附加数据时 需将此参数设null ,否则会影响读取效率
+                    Reader.EmbededData_ST subjoinSet = RfidHelper.getInstance().uhfReader.new EmbededData_ST();//如果不用附加数据时 需将此参数设null ,否则会影响读取效率
                     subjoinSet.bank = 2;//附加数据的块区，值位 0,1,2,3 对应Gen2 标签的4个区
                     subjoinSet.startaddr = 0;//附加数据的起始读地址，字节为单位
                     subjoinSet.bytecnt = 12;//附近数据的读取长度地址，字节为单位
                     subjoinSet.accesspwd = null;//不用密码的时候置空
-                    Reader.READER_ERR subjoinErr = mContext.uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_TAG_EMBEDEDDATA, subjoinSet);
+                    Reader.READER_ERR subjoinErr = RfidHelper.getInstance().uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_TAG_EMBEDEDDATA, subjoinSet);
                 }
-                mContext.settingsUtil.commit("inventory", mContext.inventoryEpc);
+                RfidHelper.getInstance().settingsUtil.commit("inventory", RfidHelper.getInstance().inventoryEpc);
                 showToast("设置成功");
             }
         });
@@ -151,7 +152,7 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
                 getPower();
             }
         });
-//        getPower();
+        getPower();
     }
 
     @Override
@@ -159,7 +160,7 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
 
     private void getFrequency() {
         Reader.Region_Conf[] rcf2 = new Reader.Region_Conf[1];
-        Reader.READER_ERR er = mContext.uhfReader.ParamGet(
+        Reader.READER_ERR er = RfidHelper.getInstance().uhfReader.ParamGet(
                 Reader.Mtr_Param.MTR_PARAM_FREQUENCY_REGION, rcf2);
         if (er == Reader.READER_ERR.MT_OK_ERR) {
             switch (rcf2[0]) {
@@ -233,7 +234,7 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
                 break;
         }
 
-        Reader.READER_ERR er = mContext.uhfReader.ParamSet(
+        Reader.READER_ERR er = RfidHelper.getInstance().uhfReader.ParamSet(
                 Reader.Mtr_Param.MTR_PARAM_FREQUENCY_REGION, rre);
         if (er == Reader.READER_ERR.MT_OK_ERR) {
             showToast("设置成功");
@@ -244,8 +245,8 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
 
     //获取功率
     public void getPower() {
-        Reader.AntPowerConf apcf2 = mContext.uhfReader.new AntPowerConf();
-        Reader.READER_ERR er = mContext.uhfReader.ParamGet(
+        Reader.AntPowerConf apcf2 = RfidHelper.getInstance().uhfReader.new AntPowerConf();
+        Reader.READER_ERR er = RfidHelper.getInstance().uhfReader.ParamGet(
                 Reader.Mtr_Param.MTR_PARAM_RF_ANTPOWER, apcf2);
         if (er == Reader.READER_ERR.MT_OK_ERR) {
             int select = (apcf2.Powers[0].readPower - 500) / 100;
@@ -262,14 +263,14 @@ public class UHFSetFragment extends KeyDwonFragment implements View.OnClickListe
 
     //设置功率
     public void setPower(int setPower) {
-        Reader.AntPowerConf apcf = mContext.uhfReader.new AntPowerConf();
+        Reader.AntPowerConf apcf = RfidHelper.getInstance().uhfReader.new AntPowerConf();
         apcf.antcnt = 1;
-        Reader.AntPower jaap = mContext.uhfReader.new AntPower();
+        Reader.AntPower jaap = RfidHelper.getInstance().uhfReader.new AntPower();
         jaap.antid = 1;
         jaap.readPower = (short) setPower;
         jaap.writePower = (short) setPower;
         apcf.Powers[0] = jaap;
-        Reader.READER_ERR powerSet = mContext.uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_RF_ANTPOWER, apcf);
+        Reader.READER_ERR powerSet = RfidHelper.getInstance().uhfReader.ParamSet(Reader.Mtr_Param.MTR_PARAM_RF_ANTPOWER, apcf);
         if (powerSet == Reader.READER_ERR.MT_OK_ERR) {
             showToast("设置成功");
         } else {
