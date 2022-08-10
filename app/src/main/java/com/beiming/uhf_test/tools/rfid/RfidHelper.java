@@ -314,6 +314,7 @@ public class RfidHelper implements ReadListener {
         public boolean handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1:
+                    LogPrintUtil.zhangshi("rfid: s: " + msg.obj);
                     if (listener != null) {
                         listener.onRfidResult(msg.obj.toString());
                     }

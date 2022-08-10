@@ -15,6 +15,7 @@ public class BarCodeBean implements Serializable {
     private String tagRssi;//标签扫描所用的时间
     private String scanTime;//扫描时间
     private boolean isExsit;//本地是否存在
+    private boolean select; //是否选中
 
     public BarCodeBean() {
     }
@@ -26,6 +27,15 @@ public class BarCodeBean implements Serializable {
         this.tagCount = tagCount;
         this.tagRssi = tagRssi;
         this.scanTime = scanTime;
+    }
+
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
     }
 
     public String getTagUii() {

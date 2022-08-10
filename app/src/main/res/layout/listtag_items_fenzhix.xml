@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    android:id="@+id/item"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/tv_tag_uii"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        tools:text="分支箱：34932488302239820840"
+        android:layout_weight="5"/>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="15dp"
+        android:src="@drawable/rb_sel"/>
+
+</LinearLayout>

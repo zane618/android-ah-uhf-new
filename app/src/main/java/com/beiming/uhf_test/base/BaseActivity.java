@@ -54,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getData();
         // 添加Activity到堆栈
         AppManager.getAppManager().addActivity(this);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -83,6 +84,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        hideBottomUIMenu();
         //设置软键盘弹出遮盖其他布局
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
+
+    protected void getData(){
+
     }
 
     @Override

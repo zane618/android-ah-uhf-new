@@ -15,7 +15,7 @@ public abstract class KeyDwonFragment extends Fragment {
      * 封装Toast对象
      */
     private static Toast toast;
-    public Context context;
+    public Context mContext;
     public boolean isFirstVisible = true;//是否第一次加载
 
     public void myOnKeyDwon() {
@@ -25,7 +25,7 @@ public abstract class KeyDwonFragment extends Fragment {
     @Override
     public void onAttach(Context ctx) {
         super.onAttach(ctx);
-        context = ctx;
+        mContext = ctx;
     }
 
     @Override
@@ -55,11 +55,11 @@ public abstract class KeyDwonFragment extends Fragment {
     public void showToast(String msg) {
         try {
             if (null == toast) {
-                toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
             } else {
                 View view = toast.getView();
                 toast.cancel();
-                toast = new Toast(context);
+                toast = new Toast(mContext);
                 toast.setView(view);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setText(msg);

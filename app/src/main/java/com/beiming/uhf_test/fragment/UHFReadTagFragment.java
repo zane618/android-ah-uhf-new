@@ -405,7 +405,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
             btnShibie.setText(mContext.getString(R.string.title_stop_Inventory));
             RfidHelper.getInstance().startScan(new IRfidListener() {
                 @Override
-                public void onRfidResult(@NonNull String s) {
+                public void onRfidResult(String s) {
                     LogPrintUtil.zhangshi("thread: " + Thread.currentThread().getName()
                             + "  s: " + s);
                     addEPCToList(s);

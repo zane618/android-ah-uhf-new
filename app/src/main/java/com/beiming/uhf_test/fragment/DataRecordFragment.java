@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.MainActivity;
+import com.beiming.uhf_test.activity.fenzhix.FenzhixActivity;
 import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.activity.pic.PreviewPhotoActivity;
 import com.beiming.uhf_test.adapter.BoxListAdapter;
@@ -31,6 +32,7 @@ import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.pic.AttachmentUpdate;
 import com.beiming.uhf_test.bean.pic.PhotoBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
+import com.beiming.uhf_test.greendao.gen.DaoSession;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.utils.ConstantUtil;
@@ -115,7 +117,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     private void initViews(View view) {
         tv_fenzhix_tianjia = view.findViewById(R.id.tv_fenzhix_tianjia);
         tv_fenzhix_tianjia.setOnClickListener(v -> { //添加分支箱
-
+            MeasBoxBean boxBean = boxListAdapter.getData().get(boxListAdapter.getSelectedPosition());
+            FenzhixActivity.Companion.startActivity(mContext, boxBean);
         });
         tv_fenzhix_bianma = view.findViewById(R.id.tv_fenzhix_bianma);
     }
@@ -159,13 +162,13 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
                         choosePic();
                     }*/
                 } else {
-                    Intent intent = new Intent(context, PreviewPhotoActivity.class);
+                    Intent intent = new Intent(DataRecordFragment.this.mContext, PreviewPhotoActivity.class);
                     intent.putExtra("ID", i);
                     intent.putExtra(ConstantUtil.CREAT_OR_DETAILS, creatOrDetails);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(ConstantUtil.PHOTO_BEAN_LIST, (Serializable) photoBeanList);
                     intent.putExtras(bundle);
-                    context.startActivity(intent);
+                    DataRecordFragment.this.mContext.startActivity(intent);
                 }
             }
         });
@@ -221,7 +224,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         //图片列表
         //选择的图片列表
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        attachmentAdapter = new AttachmentAdapter(context, photoBeanList, CHOOSE_PIC_MAX, -1);
+        attachmentAdapter = new AttachmentAdapter(this.mContext, photoBeanList, CHOOSE_PIC_MAX, -1);
         noScrollgridview.setAdapter(attachmentAdapter);
     }
 
@@ -245,6 +248,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
                 tvNote.setText(measBoxBean.getNote());
             }
             tv_qx_detail.setText(measBoxBean.getQxDetail());
+            tv_fenzhix_bianma.setText(measBoxBean.getFenzhixCode());
             doorInfoLayout.setDatas(measBoxBean);
 
         }
@@ -322,7 +326,12 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         if (ConstantUtil.CLEAR_READ_TAG_DATA.equals(attachmentUpdate.getTag())) {
             //todo 本地保存成功，此处清除数据数据
             boxListAdapter.setSelectedPosition(0);
-            queryMeterData(etSearch.getText().toString().trim());
+            if (attachmentUpdate.getData() != null) { //修改分支箱后，只需要同步分支箱编码
+                MeasBoxBean data = (MeasBoxBean) attachmentUpdate.getData();
+                tv_fenzhix_bianma.setText(data.getFenzhixCode());
+            } else {
+                queryMeterData(etSearch.getText().toString().trim());
+            }
         }
     }
 }

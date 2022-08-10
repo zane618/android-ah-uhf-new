@@ -5,7 +5,7 @@ package com.beiming.uhf_test.tools.rfid
  */
 interface IRfidListener {
 
-    fun onRfidResult(s: String)
+    fun onRfidResult(s: String?)
 
     fun onStop()
 
