@@ -76,7 +76,7 @@ class FenzhixActivity : BaseActivity() {
                                         barCode.length - 15,
                                         barCode.length - 1
                                     )
-                                    if (assetNo.startsWith("15")) {
+                                    if (barCode.startsWith("05", 5)) {
                                         var barCodeBean = BarCodeBean()
                                         barCodeBean.barCode = barCode
                                         barCodeBeanList.add(barCodeBean)
@@ -125,5 +125,10 @@ class FenzhixActivity : BaseActivity() {
     }
 
     override fun initData() {
+    }
+
+    override fun onPause() {
+        super.onPause()
+        RfidHelper.getInstance().stopScan()
     }
 }

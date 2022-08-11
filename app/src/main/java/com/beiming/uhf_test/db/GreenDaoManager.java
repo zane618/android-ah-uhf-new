@@ -50,7 +50,7 @@ public class GreenDaoManager {
         return mDaoSession;
     }
     public DaoSession getNewSession() {
-        mDaoSession = mDaoMaster.newSession();
+//        mDaoSession = mDaoMaster.newSession();
         return mDaoSession;
     }
 

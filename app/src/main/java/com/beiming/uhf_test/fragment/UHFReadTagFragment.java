@@ -317,9 +317,11 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
             barCode = epc.substring(0, epc.length() - 2);
             assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1); //第7位开始，共14位
             ////第8、9位 箱表类型
-            if (assetNo.startsWith("18"))//表
+            //正确的是第6、7位 代表资产类型
+
+            if (barCode.startsWith("01", 5))//表
                 barCodeType = "1";
-            else if (assetNo.startsWith("15"))//箱
+            else if (barCode.startsWith("05", 5))//箱
                 barCodeType = "0";
             else
                 barCodeType = "-1";

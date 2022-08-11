@@ -326,12 +326,12 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         if (ConstantUtil.CLEAR_READ_TAG_DATA.equals(attachmentUpdate.getTag())) {
             //todo 本地保存成功，此处清除数据数据
             boxListAdapter.setSelectedPosition(0);
-            if (attachmentUpdate.getData() != null) { //修改分支箱后，只需要同步分支箱编码
-                MeasBoxBean data = (MeasBoxBean) attachmentUpdate.getData();
-                tv_fenzhix_bianma.setText(data.getFenzhixCode());
-            } else {
+//            if (attachmentUpdate.getData() != null) { //修改分支箱后，只需要同步分支箱编码
+//                MeasBoxBean data = (MeasBoxBean) attachmentUpdate.getData();
+//                tv_fenzhix_bianma.setText(data.getFenzhixCode());
+//            } else {
                 queryMeterData(etSearch.getText().toString().trim());
-            }
+//            }
         }
     }
 }
