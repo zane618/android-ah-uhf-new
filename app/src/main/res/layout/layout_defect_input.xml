@@ -47,7 +47,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:drawableLeft="@drawable/radiobutton_bg"
-                android:drawablePadding="10dp"
+                android:drawablePadding="8dp"
                 android:gravity="center_horizontal"
                 android:text="无"
                 android:textColor="#333333" />
@@ -59,9 +59,9 @@
                 android:layout_marginLeft="20dp"
                 android:button="@null"
                 android:drawableLeft="@drawable/radiobutton_bg"
-                android:drawablePadding="10dp"
+                android:drawablePadding="8dp"
                 android:gravity="center_horizontal"
-                android:text="Ⅰ级"
+                android:text="一般"
                 android:textColor="#333333" />
 
             <RadioButton
@@ -71,9 +71,9 @@
                 android:layout_marginLeft="5dp"
                 android:button="@null"
                 android:drawableLeft="@drawable/radiobutton_bg"
-                android:drawablePadding="10dp"
+                android:drawablePadding="8dp"
                 android:gravity="center_horizontal"
-                android:text="Ⅱ级"
+                android:text="严重"
                 android:textColor="#333333" />
 
             <RadioButton
@@ -83,9 +83,9 @@
                 android:layout_marginLeft="5dp"
                 android:button="@null"
                 android:drawableLeft="@drawable/radiobutton_bg"
-                android:drawablePadding="10dp"
+                android:drawablePadding="8dp"
                 android:gravity="center_horizontal"
-                android:text="Ⅲ级"
+                android:text="危急"
                 android:textColor="#333333" />
 
         </RadioGroup>
