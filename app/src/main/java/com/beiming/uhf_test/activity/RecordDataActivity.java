@@ -45,6 +45,7 @@ import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
+import com.beiming.uhf_test.view.BoxSizeInputLayout;
 import com.beiming.uhf_test.view.DefectInputLayout;
 import com.beiming.uhf_test.view.DoorInfoInputLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
@@ -89,10 +90,6 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     FrameLayout ivBack;
     @BindView(R.id.tv_xiang_bh)//箱号
     TextView tv_xiang_bh;
-    @BindView(R.id.et_xiang_chang)
-    EditText et_xiang_chang;//长
-    @BindView(R.id.tv_xiang_kuan)
-    EditText tv_xiang_kuan;//宽
     @BindView(R.id.recycleview)
     RecyclerView recycleview;
     @BindView(R.id.rg_caizhi)
@@ -112,6 +109,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     private MeasBoxBean boxBean;
     private RdAdapter rdAdapter;
     private String caizhi = "金属";
+    private BoxSizeInputLayout boxSizeInputLayout;
 
     @Override
     protected void setContentView() {
@@ -120,6 +118,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initView() {
+        boxSizeInputLayout = findViewById(R.id.boxSizeInputLayout);
         boxBean = (MeasBoxBean) getIntent().getSerializableExtra("box");
         initAdapter();
         rdAdapter = new RdAdapter(boxBean.getMeters());
@@ -277,15 +276,15 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         boxBean.setYxGao(doorInfoInputLayout.getYxGao());
         boxBean.setYxKuan(doorInfoInputLayout.getYxKuan());
         boxBean.setBoxImages(photoBeanList);
-        if (TextUtils.isEmpty(et_xiang_chang.getText().toString())) {
+        if (TextUtils.isEmpty(boxSizeInputLayout.getGao())) {
             boxBean.setChang("未填写");
         } else {
-            boxBean.setChang(et_xiang_chang.getText().toString());
+            boxBean.setChang(boxSizeInputLayout.getGao());
         }
-        if (TextUtils.isEmpty(tv_xiang_kuan.getText().toString())) {
+        if (TextUtils.isEmpty(boxSizeInputLayout.getKuan())) {
             boxBean.setKuan("未填写");
         } else {
-            boxBean.setKuan(tv_xiang_kuan.getText().toString());
+            boxBean.setKuan(boxSizeInputLayout.getKuan());
         }
         //保存箱
         MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();

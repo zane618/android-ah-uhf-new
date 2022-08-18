@@ -58,72 +58,10 @@
                     android:layout_height="1px"
                     android:background="#F3F3F3" />
 
-                <LinearLayout
+                <com.beiming.uhf_test.view.BoxSizeInputLayout
+                    android:id="@+id/boxSizeInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="计量箱长度(cm)："
-                        android:textColor="#ff333333"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/et_xiang_chang"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:hint="请点击输入"
-                        android:inputType="number"
-                        android:textColor="#4D4D4D"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="#F3F3F3" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="计量箱宽度(cm)："
-                        android:textColor="#ff333333"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/tv_xiang_kuan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:hint="请点击输入"
-                        android:background="@null"
-                        android:inputType="number"
-                        android:textColor="#4D4D4D"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:layout_height="wrap_content" />
 
                 <com.beiming.uhf_test.view.DoorInfoInputLayout
                     android:id="@+id/doorInfoLayout"
@@ -245,7 +183,8 @@
                 <EditText
                     android:id="@+id/et_note"
                     android:layout_width="match_parent"
-                    android:layout_height="123dp"
+                    android:layout_height="wrap_content"
+                    android:lines="3"
                     android:background="@color/white"
                     android:gravity="top"
                     android:hint="请写下您的备注"
