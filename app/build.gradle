@@ -27,7 +27,7 @@ android {
         }
     }
 
-    compileSdkVersion 29
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.beiming.uhf_test"
         minSdkVersion 21
@@ -166,6 +166,14 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.shizhefei:ViewPagerIndicator:1.1.9.androidx'
+    // PictureSelector 基础 (必须)
+    implementation 'io.github.lucksiege:pictureselector:v3.10.6'
+    // 图片压缩 (按需引入)
+    implementation 'io.github.lucksiege:compress:v3.10.6'
+    // 图片裁剪 (按需引入)
+    implementation 'io.github.lucksiege:ucrop:v3.10.6'
+    // 自定义相机 (按需引入)
+    implementation 'io.github.lucksiege:camerax:v3.10.6'
 
 }
 allprojects {
