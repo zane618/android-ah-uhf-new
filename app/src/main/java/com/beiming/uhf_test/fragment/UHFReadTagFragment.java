@@ -310,7 +310,8 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         String barCode = "";
         String assetNo = "";
         String barCodeType = "-1";
-        String scanTime = TimeUtils.getTime();
+        long ts = System.currentTimeMillis();
+        String scanTime = TimeUtils.getTime(ts);
 
         //去除扫到表的后两位
         if (epc.length() == 24) {
@@ -336,6 +337,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                     measBoxBean.setBarCode(barCode);
                     measBoxBean.setMeasAssetNo(assetNo);
                     measBoxBean.setScanTime(scanTime);
+                    measBoxBean.setTs(ts);
                     List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
                             MeasBoxBeanDao.Properties.BarCode.eq(barCode)).build().list();
                     if (boxBarCodelist.size() > 0) {
@@ -351,6 +353,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                     meterBean.setBarCode(barCode);//电表条形码
                     meterBean.setMeterAssetNo(assetNo);
                     meterBean.setScanTime(scanTime);
+                    meterBean.setTs(ts);
                     List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
                             MeterBeanDao.Properties.BarCode.eq(barCode))
                             .build().list();

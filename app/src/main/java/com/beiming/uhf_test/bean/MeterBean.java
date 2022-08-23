@@ -23,6 +23,7 @@ public class MeterBean implements Serializable {
     private String measAssetNo;//电表箱资产编号
     private String measBarCode;//电表箱条形码
     private String scanTime;//扫描时间
+    private long ts; //同上，时间戳
     private String gps_X;//GPS经度,Longitude
     private String gps_Y;//GPS纬度,Latitude
     private String gps_Z;//GPS海拔
@@ -30,17 +31,18 @@ public class MeterBean implements Serializable {
     private String gpsLongitude;//GPS经度
     private boolean isExsit;//本地是否存在
     private String phase = "";//电表接入的相位信息，有四种值：a，b，c，空
-    @Generated(hash = 1903856073)
+    @Generated(hash = 259251093)
     public MeterBean(Long meterId, String barCode, String meterAssetNo,
-            String measAssetNo, String measBarCode, String scanTime, String gps_X,
-            String gps_Y, String gps_Z, String gpsLatitude, String gpsLongitude,
-            boolean isExsit, String phase) {
+            String measAssetNo, String measBarCode, String scanTime, long ts,
+            String gps_X, String gps_Y, String gps_Z, String gpsLatitude,
+            String gpsLongitude, boolean isExsit, String phase) {
         this.meterId = meterId;
         this.barCode = barCode;
         this.meterAssetNo = meterAssetNo;
         this.measAssetNo = measAssetNo;
         this.measBarCode = measBarCode;
         this.scanTime = scanTime;
+        this.ts = ts;
         this.gps_X = gps_X;
         this.gps_Y = gps_Y;
         this.gps_Z = gps_Z;
@@ -52,6 +54,15 @@ public class MeterBean implements Serializable {
     @Generated(hash = 2099306990)
     public MeterBean() {
     }
+
+    public long getTs() {
+        return ts;
+    }
+
+    public void setTs(long ts) {
+        this.ts = ts;
+    }
+
     public Long getMeterId() {
         return this.meterId;
     }

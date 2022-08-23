@@ -30,13 +30,14 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
         public final static Property MeasAssetNo = new Property(3, String.class, "measAssetNo", false, "MEAS_ASSET_NO");
         public final static Property MeasBarCode = new Property(4, String.class, "measBarCode", false, "MEAS_BAR_CODE");
         public final static Property ScanTime = new Property(5, String.class, "scanTime", false, "SCAN_TIME");
-        public final static Property Gps_X = new Property(6, String.class, "gps_X", false, "GPS__X");
-        public final static Property Gps_Y = new Property(7, String.class, "gps_Y", false, "GPS__Y");
-        public final static Property Gps_Z = new Property(8, String.class, "gps_Z", false, "GPS__Z");
-        public final static Property GpsLatitude = new Property(9, String.class, "gpsLatitude", false, "GPS_LATITUDE");
-        public final static Property GpsLongitude = new Property(10, String.class, "gpsLongitude", false, "GPS_LONGITUDE");
-        public final static Property IsExsit = new Property(11, boolean.class, "isExsit", false, "IS_EXSIT");
-        public final static Property Phase = new Property(12, String.class, "phase", false, "PHASE");
+        public final static Property Ts = new Property(6, long.class, "ts", false, "TS");
+        public final static Property Gps_X = new Property(7, String.class, "gps_X", false, "GPS__X");
+        public final static Property Gps_Y = new Property(8, String.class, "gps_Y", false, "GPS__Y");
+        public final static Property Gps_Z = new Property(9, String.class, "gps_Z", false, "GPS__Z");
+        public final static Property GpsLatitude = new Property(10, String.class, "gpsLatitude", false, "GPS_LATITUDE");
+        public final static Property GpsLongitude = new Property(11, String.class, "gpsLongitude", false, "GPS_LONGITUDE");
+        public final static Property IsExsit = new Property(12, boolean.class, "isExsit", false, "IS_EXSIT");
+        public final static Property Phase = new Property(13, String.class, "phase", false, "PHASE");
     }
 
 
@@ -58,13 +59,14 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
                 "\"MEAS_ASSET_NO\" TEXT," + // 3: measAssetNo
                 "\"MEAS_BAR_CODE\" TEXT," + // 4: measBarCode
                 "\"SCAN_TIME\" TEXT," + // 5: scanTime
-                "\"GPS__X\" TEXT," + // 6: gps_X
-                "\"GPS__Y\" TEXT," + // 7: gps_Y
-                "\"GPS__Z\" TEXT," + // 8: gps_Z
-                "\"GPS_LATITUDE\" TEXT," + // 9: gpsLatitude
-                "\"GPS_LONGITUDE\" TEXT," + // 10: gpsLongitude
-                "\"IS_EXSIT\" INTEGER NOT NULL ," + // 11: isExsit
-                "\"PHASE\" TEXT);"); // 12: phase
+                "\"TS\" INTEGER NOT NULL ," + // 6: ts
+                "\"GPS__X\" TEXT," + // 7: gps_X
+                "\"GPS__Y\" TEXT," + // 8: gps_Y
+                "\"GPS__Z\" TEXT," + // 9: gps_Z
+                "\"GPS_LATITUDE\" TEXT," + // 10: gpsLatitude
+                "\"GPS_LONGITUDE\" TEXT," + // 11: gpsLongitude
+                "\"IS_EXSIT\" INTEGER NOT NULL ," + // 12: isExsit
+                "\"PHASE\" TEXT);"); // 13: phase
     }
 
     /** Drops the underlying database table. */
@@ -106,36 +108,37 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
         if (scanTime != null) {
             stmt.bindString(6, scanTime);
         }
+        stmt.bindLong(7, entity.getTs());
  
         String gps_X = entity.getGps_X();
         if (gps_X != null) {
-            stmt.bindString(7, gps_X);
+            stmt.bindString(8, gps_X);
         }
  
         String gps_Y = entity.getGps_Y();
         if (gps_Y != null) {
-            stmt.bindString(8, gps_Y);
+            stmt.bindString(9, gps_Y);
         }
  
         String gps_Z = entity.getGps_Z();
         if (gps_Z != null) {
-            stmt.bindString(9, gps_Z);
+            stmt.bindString(10, gps_Z);
         }
  
         String gpsLatitude = entity.getGpsLatitude();
         if (gpsLatitude != null) {
-            stmt.bindString(10, gpsLatitude);
+            stmt.bindString(11, gpsLatitude);
         }
  
         String gpsLongitude = entity.getGpsLongitude();
         if (gpsLongitude != null) {
-            stmt.bindString(11, gpsLongitude);
+            stmt.bindString(12, gpsLongitude);
         }
-        stmt.bindLong(12, entity.getIsExsit() ? 1L: 0L);
+        stmt.bindLong(13, entity.getIsExsit() ? 1L: 0L);
  
         String phase = entity.getPhase();
         if (phase != null) {
-            stmt.bindString(13, phase);
+            stmt.bindString(14, phase);
         }
     }
 
@@ -172,36 +175,37 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
         if (scanTime != null) {
             stmt.bindString(6, scanTime);
         }
+        stmt.bindLong(7, entity.getTs());
  
         String gps_X = entity.getGps_X();
         if (gps_X != null) {
-            stmt.bindString(7, gps_X);
+            stmt.bindString(8, gps_X);
         }
  
         String gps_Y = entity.getGps_Y();
         if (gps_Y != null) {
-            stmt.bindString(8, gps_Y);
+            stmt.bindString(9, gps_Y);
         }
  
         String gps_Z = entity.getGps_Z();
         if (gps_Z != null) {
-            stmt.bindString(9, gps_Z);
+            stmt.bindString(10, gps_Z);
         }
  
         String gpsLatitude = entity.getGpsLatitude();
         if (gpsLatitude != null) {
-            stmt.bindString(10, gpsLatitude);
+            stmt.bindString(11, gpsLatitude);
         }
  
         String gpsLongitude = entity.getGpsLongitude();
         if (gpsLongitude != null) {
-            stmt.bindString(11, gpsLongitude);
+            stmt.bindString(12, gpsLongitude);
         }
-        stmt.bindLong(12, entity.getIsExsit() ? 1L: 0L);
+        stmt.bindLong(13, entity.getIsExsit() ? 1L: 0L);
  
         String phase = entity.getPhase();
         if (phase != null) {
-            stmt.bindString(13, phase);
+            stmt.bindString(14, phase);
         }
     }
 
@@ -219,13 +223,14 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // measAssetNo
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // measBarCode
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // scanTime
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // gps_X
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // gps_Y
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // gps_Z
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // gpsLatitude
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // gpsLongitude
-            cursor.getShort(offset + 11) != 0, // isExsit
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // phase
+            cursor.getLong(offset + 6), // ts
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // gps_X
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // gps_Y
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // gps_Z
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // gpsLatitude
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // gpsLongitude
+            cursor.getShort(offset + 12) != 0, // isExsit
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // phase
         );
         return entity;
     }
@@ -238,13 +243,14 @@ public class MeterBeanDao extends AbstractDao<MeterBean, Long> {
         entity.setMeasAssetNo(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setMeasBarCode(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setScanTime(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setGps_X(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setGps_Y(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setGps_Z(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setGpsLatitude(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setGpsLongitude(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setIsExsit(cursor.getShort(offset + 11) != 0);
-        entity.setPhase(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setTs(cursor.getLong(offset + 6));
+        entity.setGps_X(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setGps_Y(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setGps_Z(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setGpsLatitude(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setGpsLongitude(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setIsExsit(cursor.getShort(offset + 12) != 0);
+        entity.setPhase(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
      }
     
     @Override

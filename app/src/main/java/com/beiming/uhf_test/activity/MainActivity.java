@@ -3,6 +3,7 @@ package com.beiming.uhf_test.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beiming.uhf_test.R;
+import com.beiming.uhf_test.TestActivity;
 import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.databinding.ActivityMainBinding;
@@ -71,25 +73,16 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private ActivityMainBinding binding;
 
     private final static String TAG = "UHFMainActivity:";
-    public MainActivity context;
 
     public boolean inventoryEpc = false;//盘存模式，EPC 或 TID
     public ArrayList<HashMap<String, String>> tagList;
     public HashMap<String, String> map;
 
-    //合并新版本后添加的变量
-    HcPowerCtrl ctrl;
-    RfidPower power;
-    public Reader uhfReader;
-
-    public MutableLiveData<Boolean> initState = new MutableLiveData<>();
-    public boolean isR2000 = true;
     public SettingsUtil settingsUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         // 非小程序进程（这里的unimp 关键字 可以根据宿主的具体情况进行调整）
         if (!RuningAcitvityUtil.getAppName(getBaseContext()).contains("unimp")) {
             //请在此处初始化其他三方SDK
@@ -98,8 +91,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         //初始化uhf
         settingsUtil = new SettingsUtil("uhf");
         inventoryEpc = settingsUtil.getBoolean("inventory", false);
-//        initUHF();
-//        initSound();
         RfidHelper.getInstance();
     }
 
@@ -203,6 +194,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 //        indicatorViewPager.setOnIndicatorPageChangeListener(getOnIndicatorPageChangeLis());
         indicatorViewPager.setPageOffscreenLimit(3);
         indicatorViewPager.setCurrentItem(0, false);    //默认显示tab
+
+        startActivity(new Intent(activity, TestActivity.class));
     }
 
     /**

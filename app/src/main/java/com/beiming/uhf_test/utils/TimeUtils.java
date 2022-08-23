@@ -2,9 +2,12 @@ package com.beiming.uhf_test.utils;
 
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class TimeUtils {
@@ -34,6 +37,29 @@ public class TimeUtils {
     public static String getTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(currentTime());
+    }
+
+    public static String getTime(long ts) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(currentTime());
+    }
+    public static String formatDate(int year, int monthOfYear, int dayOfMonth) {
+        return year + "-" + String.format(Locale.getDefault(), "%02d-%02d", monthOfYear, dayOfMonth);
+    }
+
+    /**
+     * 字符串转时间戳
+     */
+    public static long toTs(String sData) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        long ts = 0;
+        try {
+            Date date = sdf.parse(sData);
+            ts = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ts;
     }
 
     public static String getY_M_D_Time() {

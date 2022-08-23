@@ -6,22 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".TestActivity">
 
-    <com.beiming.uhf_test.view.DefectInputLayout
-        android:id="@+id/xx"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 
     <Button
-        android:id="@+id/b1"
+        android:id="@+id/b1111"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="sfsf"
         android:layout_alignParentBottom="true"/>
     <Button
         android:id="@+id/b2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:text="22222"/>
 
 </RelativeLayout>

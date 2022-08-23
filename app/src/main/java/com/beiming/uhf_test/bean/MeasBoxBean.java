@@ -28,6 +28,7 @@ public class MeasBoxBean implements Serializable {
     private String barCode;//电表箱条形码编号
     private String measAssetNo;//电表箱资产编号
     private String scanTime;//扫描时间
+    private long ts; //同上，时间戳
     private String gps_X;//GPS经度,Longitude
     private String gps_Y;//GPS纬度,Latitude
     private String gps_Z;//GPS海拔
@@ -62,18 +63,19 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 2066149534)
+    @Generated(hash = 1191340297)
     public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
-            String gps_X, String gps_Y, String gps_Z, String instAddr, String instLoc,
-            String describe, String tmnlAddr, String tgName, String boxRows, String boxCols,
-            String note, boolean isExsit, String hasQx, String qxDetail, String fenzhixCode,
-            String caizhi, String chang, String kuan, String zsGao, String zsKuan,
-            String zxGao, String zxKuan, String ysGao, String ysKuan, String yxGao,
-            String yxKuan, List<MeterBean> meters, List<PhotoBean> boxImages) {
+            long ts, String gps_X, String gps_Y, String gps_Z, String instAddr,
+            String instLoc, String describe, String tmnlAddr, String tgName, String boxRows,
+            String boxCols, String note, boolean isExsit, String hasQx, String qxDetail,
+            String fenzhixCode, String caizhi, String chang, String kuan, String zsGao,
+            String zsKuan, String zxGao, String zxKuan, String ysGao, String ysKuan,
+            String yxGao, String yxKuan, List<MeterBean> meters, List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
         this.barCode = barCode;
         this.measAssetNo = measAssetNo;
         this.scanTime = scanTime;
+        this.ts = ts;
         this.gps_X = gps_X;
         this.gps_Y = gps_Y;
         this.gps_Z = gps_Z;
@@ -106,6 +108,14 @@ public class MeasBoxBean implements Serializable {
 
     @Generated(hash = 1045529700)
     public MeasBoxBean() {
+    }
+
+    public long getTs() {
+        return ts;
+    }
+
+    public void setTs(long ts) {
+        this.ts = ts;
     }
 
     public String getFenzhixCode() {
