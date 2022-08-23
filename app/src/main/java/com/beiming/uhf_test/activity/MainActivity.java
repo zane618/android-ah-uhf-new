@@ -74,11 +74,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     private final static String TAG = "UHFMainActivity:";
 
-    public boolean inventoryEpc = false;//盘存模式，EPC 或 TID
     public ArrayList<HashMap<String, String>> tagList;
     public HashMap<String, String> map;
-
-    public SettingsUtil settingsUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +85,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             //请在此处初始化其他三方SDK
             initLocation();
         }
-        //初始化uhf
-        settingsUtil = new SettingsUtil("uhf");
-        inventoryEpc = settingsUtil.getBoolean("inventory", false);
         RfidHelper.getInstance();
     }
 
