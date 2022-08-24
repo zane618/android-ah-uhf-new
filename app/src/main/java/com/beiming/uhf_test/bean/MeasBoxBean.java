@@ -41,11 +41,11 @@ public class MeasBoxBean implements Serializable {
     private String boxCols;//列数
     private String note = "无备注";//备注
     private boolean isExsit;//本地是否存在
-    private String hasQx; //是否缺陷，无，I级，II级，III级
+    private String hasQx; //是否缺陷，无，一般、严重、危急
     private String qxDetail; //缺陷详情, 逗号分割
     private String fenzhixCode; //分支箱编码
     private String caizhi = "金属"; //金属，非金属
-    private String chang = ""; //长
+    private String gao = ""; //长
     private String kuan = ""; //宽
     private String zsGao = "";
     private String zsKuan = "";
@@ -63,12 +63,12 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 1191340297)
+    @Generated(hash = 667085099)
     public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
             long ts, String gps_X, String gps_Y, String gps_Z, String instAddr,
             String instLoc, String describe, String tmnlAddr, String tgName, String boxRows,
             String boxCols, String note, boolean isExsit, String hasQx, String qxDetail,
-            String fenzhixCode, String caizhi, String chang, String kuan, String zsGao,
+            String fenzhixCode, String caizhi, String gao, String kuan, String zsGao,
             String zsKuan, String zxGao, String zxKuan, String ysGao, String ysKuan,
             String yxGao, String yxKuan, List<MeterBean> meters, List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
@@ -92,7 +92,7 @@ public class MeasBoxBean implements Serializable {
         this.qxDetail = qxDetail;
         this.fenzhixCode = fenzhixCode;
         this.caizhi = caizhi;
-        this.chang = chang;
+        this.gao = gao;
         this.kuan = kuan;
         this.zsGao = zsGao;
         this.zsKuan = zsKuan;
@@ -134,12 +134,12 @@ public class MeasBoxBean implements Serializable {
         this.qxDetail = qxDetail;
     }
 
-    public String getChang() {
-        return chang;
+    public String getGao() {
+        return gao;
     }
 
-    public void setChang(String chang) {
-        this.chang = chang;
+    public void setGao(String gao) {
+        this.gao = gao;
     }
 
     public String getKuan() {

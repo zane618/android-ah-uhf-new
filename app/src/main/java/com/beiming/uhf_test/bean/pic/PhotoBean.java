@@ -26,18 +26,22 @@ public class PhotoBean implements Serializable {
 
     private String picName;//图片名称
 
-    public PhotoBean() {
-    }
+    private String add; //1 == 1时是添加按钮
 
-    @Generated(hash = 951037234)
+    private int type; //图片类型
+
+    @Generated(hash = 788672481)
     public PhotoBean(Long photoBeanId, String measAssetBarCode, String createTime,
-            String describe, String imageSrc, String picName) {
+            String describe, String imageSrc, String picName, String add,
+            int type) {
         this.photoBeanId = photoBeanId;
         this.measAssetBarCode = measAssetBarCode;
         this.createTime = createTime;
         this.describe = describe;
         this.imageSrc = imageSrc;
         this.picName = picName;
+        this.add = add;
+        this.type = type;
     }
 
     @Override
@@ -51,6 +55,27 @@ public class PhotoBean implements Serializable {
                 ", picName='" + picName + '\'' +
                 '}';
     }
+
+    public PhotoBean(int type) {
+        this.type = type;
+    }
+
+    public PhotoBean() {
+    }
+
+
+    public void setAdd(String add) {
+        this.add = add;
+    }
+
+    public String getAdd() {
+        return add;
+    }
+
+    public boolean isAdd() {
+        return "1".equals(add);
+    }
+
 
     public Long getPhotoBeanId() {
         return photoBeanId;
@@ -98,5 +123,13 @@ public class PhotoBean implements Serializable {
 
     public void setPicName(String picName) {
         this.picName = picName;
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

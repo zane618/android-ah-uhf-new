@@ -30,6 +30,8 @@ public class PhotoBeanDao extends AbstractDao<PhotoBean, Long> {
         public final static Property Describe = new Property(3, String.class, "describe", false, "DESCRIBE");
         public final static Property ImageSrc = new Property(4, String.class, "imageSrc", false, "IMAGE_SRC");
         public final static Property PicName = new Property(5, String.class, "picName", false, "PIC_NAME");
+        public final static Property Add = new Property(6, String.class, "add", false, "ADD");
+        public final static Property Type = new Property(7, int.class, "type", false, "TYPE");
     }
 
 
@@ -50,7 +52,9 @@ public class PhotoBeanDao extends AbstractDao<PhotoBean, Long> {
                 "\"CREATE_TIME\" TEXT," + // 2: createTime
                 "\"DESCRIBE\" TEXT," + // 3: describe
                 "\"IMAGE_SRC\" TEXT," + // 4: imageSrc
-                "\"PIC_NAME\" TEXT);"); // 5: picName
+                "\"PIC_NAME\" TEXT," + // 5: picName
+                "\"ADD\" TEXT," + // 6: add
+                "\"TYPE\" INTEGER NOT NULL );"); // 7: type
     }
 
     /** Drops the underlying database table. */
@@ -92,6 +96,12 @@ public class PhotoBeanDao extends AbstractDao<PhotoBean, Long> {
         if (picName != null) {
             stmt.bindString(6, picName);
         }
+ 
+        String add = entity.getAdd();
+        if (add != null) {
+            stmt.bindString(7, add);
+        }
+        stmt.bindLong(8, entity.getType());
     }
 
     @Override
@@ -127,6 +137,12 @@ public class PhotoBeanDao extends AbstractDao<PhotoBean, Long> {
         if (picName != null) {
             stmt.bindString(6, picName);
         }
+ 
+        String add = entity.getAdd();
+        if (add != null) {
+            stmt.bindString(7, add);
+        }
+        stmt.bindLong(8, entity.getType());
     }
 
     @Override
@@ -142,7 +158,9 @@ public class PhotoBeanDao extends AbstractDao<PhotoBean, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // createTime
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // describe
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // imageSrc
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // picName
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // picName
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // add
+            cursor.getInt(offset + 7) // type
         );
         return entity;
     }
@@ -155,6 +173,8 @@ public class PhotoBeanDao extends AbstractDao<PhotoBean, Long> {
         entity.setDescribe(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setImageSrc(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setPicName(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setAdd(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setType(cursor.getInt(offset + 7));
      }
     
     @Override

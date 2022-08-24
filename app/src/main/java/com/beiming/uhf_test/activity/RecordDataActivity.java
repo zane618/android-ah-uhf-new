@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +49,10 @@ import com.beiming.uhf_test.utils.ToastUtils;
 import com.beiming.uhf_test.view.BoxSizeInputLayout;
 import com.beiming.uhf_test.view.DefectInputLayout;
 import com.beiming.uhf_test.view.DoorInfoInputLayout;
+import com.beiming.uhf_test.view.picinput.PictureInputLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
+import com.luck.picture.lib.basic.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -80,10 +84,6 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     TextView tvAddr;
     @BindView(R.id.et_note)
     EditText etNote;
-    @BindView(R.id.noScrollgridview)
-    ScrollGridView noScrollgridview;
-    @BindView(R.id.ll_pic_show)
-    LinearLayout llPicShow;
     @BindView(R.id.bt_save)
     Button btSave;
     @BindView(R.id.iv_back)
@@ -100,9 +100,10 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     DoorInfoInputLayout doorInfoInputLayout;
     @BindView(R.id.defect)
     DefectInputLayout defect;
+    @BindView(R.id.picture_input_layout)
+    PictureInputLayout pictureInputLayout;
 
     private List<PhotoBean> photoBeanList = new ArrayList<>();//图片集合
-    private AttachmentAdapter attachmentAdapter;
     private static final int CHOOSE_PIC_MAX = 10;
     private int MY_PERMISSIONS_REQUEST = 10011;//图片请求码
     private static final int PICK_PHOTO = 101;
@@ -120,7 +121,6 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     protected void initView() {
         boxSizeInputLayout = findViewById(R.id.boxSizeInputLayout);
         boxBean = (MeasBoxBean) getIntent().getSerializableExtra("box");
-        initAdapter();
         rdAdapter = new RdAdapter(boxBean.getMeters());
         recycleview.setNestedScrollingEnabled(false);
         recycleview.setHasFixedSize(true);
@@ -140,43 +140,12 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         tvTitleName.setText("现场信息录入");
     }
 
-    private void initAdapter() {
-        //选择的图片列表
-        noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        attachmentAdapter = new AttachmentAdapter(activity, photoBeanList, CHOOSE_PIC_MAX, 0);
-        noScrollgridview.setAdapter(attachmentAdapter);
-    }
-
-    
-
     private int creatOrDetails = 0;
 
     @Override
     protected void initListener() {
         btSave.setOnClickListener(this);
         ivBack.setOnClickListener(this);
-
-        noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                creatOrDetails = 0;
-                if (i == photoBeanList.size()) {
-                    if (!PermissionUtils.isPermissionsGranted(RecordDataActivity.this)) {
-                        PermissionUtils.getPermissions(RecordDataActivity.this, MY_PERMISSIONS_REQUEST);
-                    } else {
-                        choosePic();
-                    }
-                } else {
-                    Intent intent = new Intent(activity, PreviewPhotoActivity.class);
-                    intent.putExtra("ID", i);
-                    intent.putExtra(ConstantUtil.CREAT_OR_DETAILS, creatOrDetails);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(ConstantUtil.PHOTO_BEAN_LIST, (Serializable) photoBeanList);
-                    intent.putExtras(bundle);
-                    activity.startActivity(intent);
-                }
-            }
-        });
     }
 
     private void choosePic() {
@@ -257,11 +226,11 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
      * 本地保存
      */
     private void saveData() {
-        if (photoBeanList == null || photoBeanList.size() == 0) {
-            showToast("图片不能为空");
+        if (null == pictureInputLayout.getPhotoBeans()) {
             return;
         }
-
+        photoBeanList.clear();
+        photoBeanList.addAll(pictureInputLayout.getPhotoBeans());
         boxBean.setNote(etNote.getText().toString());
         boxBean.setHasQx(defect.getDj());
         boxBean.setQxDetail(defect.getKindsDetail());
@@ -277,9 +246,9 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         boxBean.setYxKuan(doorInfoInputLayout.getYxKuan());
         boxBean.setBoxImages(photoBeanList);
         if (TextUtils.isEmpty(boxSizeInputLayout.getGao())) {
-            boxBean.setChang("未填写");
+            boxBean.setGao("未填写");
         } else {
-            boxBean.setChang(boxSizeInputLayout.getGao());
+            boxBean.setGao(boxSizeInputLayout.getGao());
         }
         if (TextUtils.isEmpty(boxSizeInputLayout.getKuan())) {
             boxBean.setKuan("未填写");
@@ -313,16 +282,12 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         for (MeterBean item : biao) {
             LogPrintUtil.zhangshi("表:" + item.toString());
         }
-
-
         finish();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        EventBus.getDefault().register(this);
         DCUniMPSDK.getInstance().setOnUniMPEventCallBack(new IOnUniMPEventCallBack() {
             @Override
             public void onUniMPEventReceive(String appid, String event, Object data, DCUniMPJSCallback callback) {
@@ -352,34 +317,6 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
 
             }
         });
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    //用eventBus接收电表bean
-    @Subscribe
-    public void onRefreshList(AttachmentUpdate attachmentUpdate) {
-        if (ConstantUtil.REFRESH_PIC_RES_LIST_FROM_CAMERA.equals(attachmentUpdate.getTag())) {
-            //todo 此处刷新数据
-            if (photoBeanList == null)
-                photoBeanList = new ArrayList<>();
-            for (PhotoBean photoBean : attachmentUpdate.getPhotoBeans()) {
-                photoBeanList.add(photoBean);
-            }
-            attachmentAdapter.modifyData(photoBeanList);
-        }
-        //图片预览界面返回
-        if (ConstantUtil.REFRESH_PIC_DES_LIST_FROM_PREVIEW.equals(attachmentUpdate.getTag())) {
-            //todo 此处刷新数据
-            photoBeanList.clear();
-            photoBeanList.addAll(attachmentUpdate.getPhotoBeans());
-            attachmentAdapter.modifyData(photoBeanList);
-        }
     }
 
     @Override

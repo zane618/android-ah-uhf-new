@@ -2,19 +2,14 @@ package com.beiming.uhf_test.activity;
 
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,25 +21,21 @@ import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.TestActivity;
 import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
 import com.beiming.uhf_test.base.BaseActivity;
+import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.databinding.ActivityMainBinding;
 import com.beiming.uhf_test.fragment.DataRecordFragment;
 import com.beiming.uhf_test.fragment.ExportExcelFragment;
 import com.beiming.uhf_test.fragment.UHFReadTagFragment;
 import com.beiming.uhf_test.fragment.UHFSetFragment;
 import com.beiming.uhf_test.helper.map.LocationHelper;
-import com.beiming.uhf_test.tools.rfid.RfidHelper;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.MyOnTransitionTextListener;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
-import com.hc.pda.HcPowerCtrl;
-import com.kongzue.baseframework.util.SettingsUtil;
-import com.pow.api.cls.RfidPower;
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
-import com.uhf.api.cls.Reader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,7 +76,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             //请在此处初始化其他三方SDK
             initLocation();
         }
-        RfidHelper.getInstance();
+        // TODO: 2022/8/23 虚拟机屏蔽
+//        RfidHelper.getInstance();
     }
 
     @Override
@@ -93,6 +85,34 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         super.onResume();
         Log.i(TAG, "onResume");
 
+//        startActivity(new Intent(activity, TestActivity.class));
+        MeasBoxBean boxBean = new MeasBoxBean();
+        boxBean.setBarCode("barcode010209129299");
+        boxBean.setScanTime("2022-08.15");
+        boxBean.setTs(System.currentTimeMillis());
+        boxBean.setGps_X("100010001000100011");
+        boxBean.setGps_Y("200020002000200022");
+        boxBean.setInstAddr("安装地址，当前定位信息");
+        boxBean.setInstLoc("安装位置");
+        boxBean.setDescribe("描述");
+        boxBean.setTmnlAddr("终端地址");
+        boxBean.setTgName("台区名称");
+        boxBean.setBoxRows("列数");
+        boxBean.setBoxCols("行数");
+        boxBean.setNote("备注");
+        boxBean.setHasQx("危急");
+        boxBean.setQxDetail("(1)计量箱锁具、封印损坏或缺失;\n" +
+                "(2)计量箱内存在杂物;\n" +
+                "(3)计量箱视窗发黄、不清晰;\n" +
+                "(4)计量箱内部接线零乱;\n" +
+                "(5)计量箱安装位置不符合要求。\n");
+        boxBean.setFenzhixCode("分支箱资产编号");
+        boxBean.setCaizhi("非金属");
+        boxBean.setGao("888");
+        boxBean.setKuan("666");
+        Intent intent = new Intent(activity, RecordDataActivity.class);
+        intent.putExtra("box", boxBean);
+        startActivity(intent);
     }
 
     @Override
@@ -156,7 +176,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RfidHelper.getInstance().exitUHF();
+        // TODO: 2022/8/23 虚拟机屏蔽
+//        RfidHelper.getInstance().exitUHF();
     }
 
     @Override
@@ -188,8 +209,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 //        indicatorViewPager.setOnIndicatorPageChangeListener(getOnIndicatorPageChangeLis());
         indicatorViewPager.setPageOffscreenLimit(3);
         indicatorViewPager.setCurrentItem(0, false);    //默认显示tab
-
-        startActivity(new Intent(activity, TestActivity.class));
     }
 
     /**

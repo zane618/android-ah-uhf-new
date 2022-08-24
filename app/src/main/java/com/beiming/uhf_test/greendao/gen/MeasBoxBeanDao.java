@@ -49,7 +49,7 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         public final static Property QxDetail = new Property(18, String.class, "qxDetail", false, "QX_DETAIL");
         public final static Property FenzhixCode = new Property(19, String.class, "fenzhixCode", false, "FENZHIX_CODE");
         public final static Property Caizhi = new Property(20, String.class, "caizhi", false, "CAIZHI");
-        public final static Property Chang = new Property(21, String.class, "chang", false, "CHANG");
+        public final static Property Gao = new Property(21, String.class, "gao", false, "GAO");
         public final static Property Kuan = new Property(22, String.class, "kuan", false, "KUAN");
         public final static Property ZsGao = new Property(23, String.class, "zsGao", false, "ZS_GAO");
         public final static Property ZsKuan = new Property(24, String.class, "zsKuan", false, "ZS_KUAN");
@@ -99,7 +99,7 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
                 "\"QX_DETAIL\" TEXT," + // 18: qxDetail
                 "\"FENZHIX_CODE\" TEXT," + // 19: fenzhixCode
                 "\"CAIZHI\" TEXT," + // 20: caizhi
-                "\"CHANG\" TEXT," + // 21: chang
+                "\"GAO\" TEXT," + // 21: gao
                 "\"KUAN\" TEXT," + // 22: kuan
                 "\"ZS_GAO\" TEXT," + // 23: zsGao
                 "\"ZS_KUAN\" TEXT," + // 24: zsKuan
@@ -220,9 +220,9 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
             stmt.bindString(21, caizhi);
         }
  
-        String chang = entity.getChang();
-        if (chang != null) {
-            stmt.bindString(22, chang);
+        String gao = entity.getGao();
+        if (gao != null) {
+            stmt.bindString(22, gao);
         }
  
         String kuan = entity.getKuan();
@@ -382,9 +382,9 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
             stmt.bindString(21, caizhi);
         }
  
-        String chang = entity.getChang();
-        if (chang != null) {
-            stmt.bindString(22, chang);
+        String gao = entity.getGao();
+        if (gao != null) {
+            stmt.bindString(22, gao);
         }
  
         String kuan = entity.getKuan();
@@ -472,7 +472,7 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
             cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // qxDetail
             cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // fenzhixCode
             cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // caizhi
-            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // chang
+            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // gao
             cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22), // kuan
             cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23), // zsGao
             cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // zsKuan
@@ -511,7 +511,7 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         entity.setQxDetail(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
         entity.setFenzhixCode(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
         entity.setCaizhi(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
-        entity.setChang(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
+        entity.setGao(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
         entity.setKuan(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
         entity.setZsGao(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
         entity.setZsKuan(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));

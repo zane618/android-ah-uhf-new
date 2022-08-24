@@ -32,7 +32,6 @@ import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.pic.AttachmentUpdate;
 import com.beiming.uhf_test.bean.pic.PhotoBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
-import com.beiming.uhf_test.greendao.gen.DaoSession;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.utils.ConstantUtil;
@@ -241,13 +240,13 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             photoBeanList.addAll(measBoxBean.getBoxImages());
 
             tvAddr.setText(measBoxBean.getInstAddr());
-            tv_chang.setText(measBoxBean.getChang());
+            tv_chang.setText(measBoxBean.getGao());
             tv_kuan.setText(measBoxBean.getKuan());
             tv_caizhi.setText(measBoxBean.getCaizhi());
             if (!TextUtils.isEmpty(measBoxBean.getNote())) {
                 tvNote.setText(measBoxBean.getNote());
             }
-            tv_qx_detail.setText(measBoxBean.getQxDetail());
+            tv_qx_detail.setText(measBoxBean.getHasQx() + "\n" + measBoxBean.getQxDetail());
             tv_fenzhix_bianma.setText(measBoxBean.getFenzhixCode());
             doorInfoLayout.setDatas(measBoxBean);
 

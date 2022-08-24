@@ -258,47 +258,15 @@
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="电表箱照片"
-                        android:textColor="@color/gray_333"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="（扫描录入完成电表信息后对电表箱拍照上传）"
-                        android:textColor="@color/gray_333"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_f8f8f8" />
-                //==================图片选择布局=====================
 
-                <LinearLayout
-                    android:id="@+id/ll_pic_show"
+                <com.beiming.uhf_test.view.picinput.PictureInputLayout
+                    android:id="@+id/picture_input_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/item_gradview" />
-
-                </LinearLayout>
+                    android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/bt_save"

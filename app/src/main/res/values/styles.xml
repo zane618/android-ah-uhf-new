@@ -24,12 +24,15 @@
         <item name="android:textColor">@drawable/check_text_color</item>
     </style>
 
-    <style name="Theme.AppCompat.Light.NoActionBar" parent="@style/Theme.AppCompat.Light">
-        <item name="android:windowNoTitle">true</item>
-    </style>
-    
-    
     <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:configChanges">screenSize</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+    <style name="Picture.Theme.Translucent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:screenOrientation">portrait</item>
@@ -106,5 +109,11 @@
         <item name="android:textSize">@dimen/text_size_2</item>
         <item name="android:drawableBottom">@drawable/line_gray</item>
         <item name="android:background">@null</item>
+    </style>
+    <style name="Theme_dialog" parent="@android:style/Theme.Dialog">
+        <!--弹窗背景是否变暗-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>
