@@ -54,6 +54,8 @@
         <activity
             android:name=".activity.fenzhix.FenzhixActivity" />
         <activity
+            android:name=".activity.fenzhix.ReadFzxActivity" />
+        <activity
             android:name=".activity.pic.PhotoPickerActivity" />
         <activity
             android:name=".activity.pic.PreviewPhotoActivity" />

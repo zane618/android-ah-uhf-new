@@ -21,6 +21,7 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
+        FenzhiBoxBeanDao.createTable(db, ifNotExists);
         FileBeanDao.createTable(db, ifNotExists);
         LoginBeanDao.createTable(db, ifNotExists);
         MeasBoxBeanDao.createTable(db, ifNotExists);
@@ -30,6 +31,7 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
+        FenzhiBoxBeanDao.dropTable(db, ifExists);
         FileBeanDao.dropTable(db, ifExists);
         LoginBeanDao.dropTable(db, ifExists);
         MeasBoxBeanDao.dropTable(db, ifExists);
@@ -53,6 +55,7 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
+        registerDaoClass(FenzhiBoxBeanDao.class);
         registerDaoClass(FileBeanDao.class);
         registerDaoClass(LoginBeanDao.class);
         registerDaoClass(MeasBoxBeanDao.class);

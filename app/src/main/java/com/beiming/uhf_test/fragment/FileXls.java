@@ -7,7 +7,7 @@ import com.beiming.uhf_test.App;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.pic.PhotoBean;
-import com.beiming.uhf_test.utils.contant;
+import com.beiming.uhf_test.utils.Contant;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -251,8 +251,8 @@ public class FileXls {
         if (isTableTitle) {
             //表头
             //i+j是行号
-            for (int k = 0; k < contant.tableTitleList.size(); k++) {
-                Label label = new Label(k, rowNumber, contant.tableTitleList.get(k));
+            for (int k = 0; k < Contant.tableTitleList.size(); k++) {
+                Label label = new Label(k, rowNumber, Contant.tableTitleList.get(k));
                 sheet.addCell(label);
             }
         } else {
@@ -260,7 +260,7 @@ public class FileXls {
             for (int j = 0; j < table.size(); j++) {
                 rowNumber = i + j;
                 MeasBoxBean measBoxBean = (MeasBoxBean) table.get(j);
-                for (int colNumber = 0; colNumber < contant.tableTitleList.size(); colNumber++) {
+                for (int colNumber = 0; colNumber < Contant.tableTitleList.size(); colNumber++) {
                     content = "";
                     switch (colNumber) {
                         case 0:

@@ -18,10 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beiming.uhf_test.R;
-import com.beiming.uhf_test.TestActivity;
+import com.beiming.uhf_test.activity.fenzhix.ReadFzxActivity;
 import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
 import com.beiming.uhf_test.base.BaseActivity;
-import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.databinding.ActivityMainBinding;
 import com.beiming.uhf_test.fragment.DataRecordFragment;
 import com.beiming.uhf_test.fragment.ExportExcelFragment;
@@ -86,33 +85,36 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         Log.i(TAG, "onResume");
 
 //        startActivity(new Intent(activity, TestActivity.class));
-        MeasBoxBean boxBean = new MeasBoxBean();
-        boxBean.setBarCode("barcode010209129299");
-        boxBean.setScanTime("2022-08.15");
-        boxBean.setTs(System.currentTimeMillis());
-        boxBean.setGps_X("100010001000100011");
-        boxBean.setGps_Y("200020002000200022");
-        boxBean.setInstAddr("安装地址，当前定位信息");
-        boxBean.setInstLoc("安装位置");
-        boxBean.setDescribe("描述");
-        boxBean.setTmnlAddr("终端地址");
-        boxBean.setTgName("台区名称");
-        boxBean.setBoxRows("列数");
-        boxBean.setBoxCols("行数");
-        boxBean.setNote("备注");
-        boxBean.setHasQx("危急");
-        boxBean.setQxDetail("(1)计量箱锁具、封印损坏或缺失;\n" +
-                "(2)计量箱内存在杂物;\n" +
-                "(3)计量箱视窗发黄、不清晰;\n" +
-                "(4)计量箱内部接线零乱;\n" +
-                "(5)计量箱安装位置不符合要求。\n");
-        boxBean.setFenzhixCode("分支箱资产编号");
-        boxBean.setCaizhi("非金属");
-        boxBean.setGao("888");
-        boxBean.setKuan("666");
-        Intent intent = new Intent(activity, RecordDataActivity.class);
-        intent.putExtra("box", boxBean);
-        startActivity(intent);
+
+//        MeasBoxBean boxBean = new MeasBoxBean();
+//        boxBean.setBarCode("barcode010209129299");
+//        boxBean.setScanTime("2022-08.15");
+//        boxBean.setTs(System.currentTimeMillis());
+//        boxBean.setGps_X("100010001000100011");
+//        boxBean.setGps_Y("200020002000200022");
+//        boxBean.setInstAddr("安装地址，当前定位信息");
+//        boxBean.setInstLoc("安装位置");
+//        boxBean.setDescribe("描述");
+//        boxBean.setTmnlAddr("终端地址");
+//        boxBean.setTgName("台区名称");
+//        boxBean.setBoxRows("列数");
+//        boxBean.setBoxCols("行数");
+//        boxBean.setNote("备注");
+//        boxBean.setHasQx("危急");
+//        boxBean.setQxDetail("(1)计量箱锁具、封印损坏或缺失;\n" +
+//                "(2)计量箱内存在杂物;\n" +
+//                "(3)计量箱视窗发黄、不清晰;\n" +
+//                "(4)计量箱内部接线零乱;\n" +
+//                "(5)计量箱安装位置不符合要求。\n");
+//        boxBean.setFenzhixCode("分支箱资产编号");
+//        boxBean.setCaizhi("非金属");
+//        boxBean.setGao("888");
+//        boxBean.setKuan("666");
+//        Intent intent = new Intent(activity, RecordDataActivity.class);
+//        intent.putExtra("box", boxBean);
+//        startActivity(intent);
+
+        startActivity(new Intent(activity, ReadFzxActivity.class));
     }
 
     @Override

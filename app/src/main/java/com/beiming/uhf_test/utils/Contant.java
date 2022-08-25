@@ -7,7 +7,7 @@ import java.util.List;
  * Created by htj on 2020/7/10.
  */
 
-public class contant {
+public class Contant {
     //调试状态成功或失败的状态码
     public static List<String> tableTitleList = new ArrayList<>();
 

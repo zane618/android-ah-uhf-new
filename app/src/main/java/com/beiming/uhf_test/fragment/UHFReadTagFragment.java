@@ -338,8 +338,9 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                     measBoxBean.setMeasAssetNo(assetNo);
                     measBoxBean.setScanTime(scanTime);
                     measBoxBean.setTs(ts);
+                    //当前是否存储过这个箱
                     List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
-                            MeasBoxBeanDao.Properties.BarCode.eq(barCode)).build().list();
+                            MeasBoxBeanDao.Properties.BarCode.eq(barCode), MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
                     if (boxBarCodelist.size() > 0) {
                         measBoxBean.setIsExsit(true);
                         barCodeBean.setExsit(true);
@@ -354,8 +355,9 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                     meterBean.setMeterAssetNo(assetNo);
                     meterBean.setScanTime(scanTime);
                     meterBean.setTs(ts);
+                    //当前是否存储过这个电能表
                     List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
-                            MeterBeanDao.Properties.BarCode.eq(barCode))
+                            MeterBeanDao.Properties.BarCode.eq(barCode), MeterBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time())))
                             .build().list();
                     if (meterBarCodelist.size() > 0) {
                         meterBean.setIsExsit(true);

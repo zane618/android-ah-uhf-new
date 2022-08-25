@@ -48,7 +48,7 @@ class FenzhixActivity : BaseActivity() {
         boxBean.let {
             binding.tvXiang.text = "箱：${boxBean.barCode}"
         }
-        fzxAdapter = FzxBarCodeAdpater(barCodeBeanList)
+//        fzxAdapter = FzxBarCodeAdpater(barCodeBeanList)
         binding.rvBox.layoutManager = LinearLayoutManager(this)
         binding.rvBox.adapter = fzxAdapter
 
