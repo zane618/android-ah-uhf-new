@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="45dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
     <LinearLayout
@@ -73,8 +74,16 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content" />
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="10dp"
+            android:gravity="center"
+            android:textColor="@drawable/title_tv_color_selector"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="确认挂接"
+            />
 
     </LinearLayout>
 </RelativeLayout>

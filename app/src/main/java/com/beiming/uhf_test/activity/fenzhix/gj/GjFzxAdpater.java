@@ -1,26 +1,17 @@
-package com.beiming.uhf_test.activity.fenzhix;
+package com.beiming.uhf_test.activity.fenzhix.gj;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.beiming.uhf_test.R;
-import com.beiming.uhf_test.bean.BarCodeBean;
 import com.beiming.uhf_test.bean.FenzhiBoxBean;
-import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.dialog.InputDialog;
-import com.beiming.uhf_test.utils.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnInputConfirmListener;
-import com.lxj.xpopup.interfaces.SimpleCallback;
 
 import java.util.List;
 
@@ -28,12 +19,11 @@ import java.util.List;
  * 扫描条形码的适配器,分支箱 显示勾选
  */
 
-public class FzxBarCodeAdpater extends BaseQuickAdapter<FenzhiBoxBean, BaseViewHolder> {
+public class GjFzxAdpater extends BaseQuickAdapter<FenzhiBoxBean, BaseViewHolder> {
 
-    public FzxBarCodeAdpater(@Nullable List<FenzhiBoxBean> data) {
-        super(R.layout.listtag_items_fenzhix, data);
+    public GjFzxAdpater(@Nullable List<FenzhiBoxBean> data) {
+        super(R.layout.gj_fenzhix_adapter, data);
     }
-
 
     @Override
     protected void convert(BaseViewHolder helper, FenzhiBoxBean item) {
@@ -48,24 +38,28 @@ public class FzxBarCodeAdpater extends BaseQuickAdapter<FenzhiBoxBean, BaseViewH
             helper.setTextColor(R.id.tv_tag_uii, mContext.getResources().getColor(R.color.black));
         }
 
-        TextView tvInput = helper.getView(R.id.tv_input);
+        /*TextView tvInput = helper.getView(R.id.tv_input);
         tvInput.setOnClickListener(view -> {
+            new InputDialog(mContext, note -> {
+                item.setNote("备注：" + note);
+                notifyDataSetChanged();
+            }).show();
+        });*/
+        ImageView ivCheckbox = helper.getView(R.id.iv_checkbox);
+        if (item.isChecked()) {
+            ivCheckbox.setImageResource(R.drawable.rb_sel);
+        } else {
+            ivCheckbox.setImageResource(R.drawable.rb_nol);
+        }
+        View view = helper.getView(R.id.item);
 
-            new XPopup.Builder(mContext)
-                    .hasStatusBarShadow(false)
-                    .isDestroyOnDismiss(true) //对于只使用一次的弹窗对象，推荐设置这个
-                    .autoOpenSoftInput(true)
-                    .isDarkTheme(true)
-                    .hasStatusBarShadow(true)
-                    .setPopupCallback(new SimpleCallback())
-                    .asInputConfirm("备注", null, null, "请输入备注信息",
-                            text -> {
-                                if (!TextUtils.isEmpty(text)) {
-                                    item.setNote("备注：" + text);
-                                    notifyDataSetChanged();
-                                }
-                            }, null, R.layout.my_confim_popup)
-                    .show();
+        view.setOnClickListener(layout -> {
+            boolean b = item.isChecked();
+            for (FenzhiBoxBean boxBean : mData) {
+                boxBean.setChecked(false);
+            }
+            item.setChecked(!b);
+            notifyDataSetChanged();
         });
 
         TextView tvLocation = helper.getView(R.id.tv_location);
@@ -79,9 +73,9 @@ public class FzxBarCodeAdpater extends BaseQuickAdapter<FenzhiBoxBean, BaseViewH
         TextView tvNote = helper.getView(R.id.tv_note);
         if ("未备注".equals(item.getNote())) {
             tvNote.setText(item.getNote());
-            tvInput.setVisibility(View.VISIBLE);
+//            tvInput.setVisibility(View.VISIBLE);
         } else {
-            tvInput.setVisibility(View.GONE);
+//            tvInput.setVisibility(View.GONE);
             tvNote.setText(item.getNote());
         }
 

@@ -231,6 +231,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         }
         photoBeanList.clear();
         photoBeanList.addAll(pictureInputLayout.getPhotoBeans());
+        long ts = System.currentTimeMillis();
+        boxBean.setTs(ts);
         boxBean.setNote(etNote.getText().toString());
         boxBean.setHasQx(defect.getDj());
         boxBean.setQxDetail(defect.getKindsDetail());
@@ -271,6 +273,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
                 meters.get(i).setMeterId((long) 0);
             }
             meters.get(i).setMeasBarCode(boxBean.getBarCode());
+            meters.get(i).setTs(ts);
             meterBeanDao.insert(meters.get(i));
         }
         AttachmentUpdate attachmentUpdate = new AttachmentUpdate();

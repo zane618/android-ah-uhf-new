@@ -39,6 +39,7 @@ public class FenzhiBoxBeanDao extends AbstractDao<FenzhiBoxBean, Long> {
         public final static Property Note = new Property(9, String.class, "note", false, "NOTE");
         public final static Property MeasboxBars = new Property(10, String.class, "measboxBars", false, "MEASBOX_BARS");
         public final static Property Exsit = new Property(11, boolean.class, "exsit", false, "EXSIT");
+        public final static Property Checked = new Property(12, boolean.class, "checked", false, "CHECKED");
     }
 
     private final StringConverter measboxBarsConverter = new StringConverter();
@@ -66,7 +67,8 @@ public class FenzhiBoxBeanDao extends AbstractDao<FenzhiBoxBean, Long> {
                 "\"INST_ADDR\" TEXT," + // 8: instAddr
                 "\"NOTE\" TEXT," + // 9: note
                 "\"MEASBOX_BARS\" TEXT," + // 10: measboxBars
-                "\"EXSIT\" INTEGER NOT NULL );"); // 11: exsit
+                "\"EXSIT\" INTEGER NOT NULL ," + // 11: exsit
+                "\"CHECKED\" INTEGER NOT NULL );"); // 12: checked
     }
 
     /** Drops the underlying database table. */
@@ -130,6 +132,7 @@ public class FenzhiBoxBeanDao extends AbstractDao<FenzhiBoxBean, Long> {
             stmt.bindString(11, measboxBarsConverter.convertToDatabaseValue(measboxBars));
         }
         stmt.bindLong(12, entity.getExsit() ? 1L: 0L);
+        stmt.bindLong(13, entity.getChecked() ? 1L: 0L);
     }
 
     @Override
@@ -187,6 +190,7 @@ public class FenzhiBoxBeanDao extends AbstractDao<FenzhiBoxBean, Long> {
             stmt.bindString(11, measboxBarsConverter.convertToDatabaseValue(measboxBars));
         }
         stmt.bindLong(12, entity.getExsit() ? 1L: 0L);
+        stmt.bindLong(13, entity.getChecked() ? 1L: 0L);
     }
 
     @Override
@@ -208,7 +212,8 @@ public class FenzhiBoxBeanDao extends AbstractDao<FenzhiBoxBean, Long> {
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // instAddr
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // note
             cursor.isNull(offset + 10) ? null : measboxBarsConverter.convertToEntityProperty(cursor.getString(offset + 10)), // measboxBars
-            cursor.getShort(offset + 11) != 0 // exsit
+            cursor.getShort(offset + 11) != 0, // exsit
+            cursor.getShort(offset + 12) != 0 // checked
         );
         return entity;
     }
@@ -227,6 +232,7 @@ public class FenzhiBoxBeanDao extends AbstractDao<FenzhiBoxBean, Long> {
         entity.setNote(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setMeasboxBars(cursor.isNull(offset + 10) ? null : measboxBarsConverter.convertToEntityProperty(cursor.getString(offset + 10)));
         entity.setExsit(cursor.getShort(offset + 11) != 0);
+        entity.setChecked(cursor.getShort(offset + 12) != 0);
      }
     
     @Override

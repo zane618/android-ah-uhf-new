@@ -11,6 +11,8 @@ import java.util.Locale;
 
 
 public class TimeUtils {
+    public static long ssc = 86400000; //一天的时间戳量
+
     public static long beginTime;
 
     public static long endTime;

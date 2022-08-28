@@ -38,11 +38,13 @@ public class FenzhiBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = StringConverter.class)
     private List<String> measboxBars; //箱子标号集合
     private boolean exsit;//本地是否存在
+    private boolean checked; //tmp 本地使用 是否选中
 
-    @Generated(hash = 2013136131)
+    @Generated(hash = 345641021)
     public FenzhiBoxBean(Long FenzhiId, String barCode, String assetNo,
             String scanTime, long ts, String gps_X, String gps_Y, String gps_Z,
-            String instAddr, String note, List<String> measboxBars, boolean exsit) {
+            String instAddr, String note, List<String> measboxBars, boolean exsit,
+            boolean checked) {
         this.FenzhiId = FenzhiId;
         this.barCode = barCode;
         this.assetNo = assetNo;
@@ -55,10 +57,19 @@ public class FenzhiBoxBean implements Serializable {
         this.note = note;
         this.measboxBars = measboxBars;
         this.exsit = exsit;
+        this.checked = checked;
     }
 
     @Generated(hash = 1699667973)
     public FenzhiBoxBean() {
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public Long getFenzhiId() {
@@ -159,5 +170,9 @@ public class FenzhiBoxBean implements Serializable {
 
     public boolean getExsit() {
         return this.exsit;
+    }
+
+    public boolean getChecked() {
+        return this.checked;
     }
 }

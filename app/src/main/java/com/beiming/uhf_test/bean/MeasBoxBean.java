@@ -39,7 +39,7 @@ public class MeasBoxBean implements Serializable {
     private String tgName;  //台区名称
     private String boxRows;//行数
     private String boxCols;//列数
-    private String note = "无备注";//备注
+    private String note = "未备注";//备注
     private boolean isExsit;//本地是否存在
     private String hasQx; //是否缺陷，无，一般、严重、危急
     private String qxDetail; //缺陷详情, 逗号分割
@@ -55,6 +55,7 @@ public class MeasBoxBean implements Serializable {
     private String ysKuan = "";
     private String yxGao = "";
     private String yxKuan = "";
+    private boolean checked; //tmp 本地使用 是否选中
 
 
     @Convert(columnType = String.class, converter = MeterBeanConverter.class)
@@ -63,14 +64,15 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 667085099)
+    @Generated(hash = 981788611)
     public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
             long ts, String gps_X, String gps_Y, String gps_Z, String instAddr,
             String instLoc, String describe, String tmnlAddr, String tgName, String boxRows,
             String boxCols, String note, boolean isExsit, String hasQx, String qxDetail,
             String fenzhixCode, String caizhi, String gao, String kuan, String zsGao,
             String zsKuan, String zxGao, String zxKuan, String ysGao, String ysKuan,
-            String yxGao, String yxKuan, List<MeterBean> meters, List<PhotoBean> boxImages) {
+            String yxGao, String yxKuan, boolean checked, List<MeterBean> meters,
+            List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
         this.barCode = barCode;
         this.measAssetNo = measAssetNo;
@@ -102,12 +104,21 @@ public class MeasBoxBean implements Serializable {
         this.ysKuan = ysKuan;
         this.yxGao = yxGao;
         this.yxKuan = yxKuan;
+        this.checked = checked;
         this.meters = meters;
         this.boxImages = boxImages;
     }
 
     @Generated(hash = 1045529700)
     public MeasBoxBean() {
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public long getTs() {
@@ -406,5 +417,9 @@ public class MeasBoxBean implements Serializable {
 
     public void setYxKuan(String yxKuan) {
         this.yxKuan = yxKuan;
+    }
+
+    public boolean getChecked() {
+        return this.checked;
     }
 }

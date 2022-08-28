@@ -69,7 +69,7 @@
                         android:textSize="11sp"
                         android:textColor="@color/white"
                         android:background="@drawable/sel_01"
-                        android:text="添加分支箱"/>
+                        android:text="挂接分支箱"/>
 
                 </LinearLayout>
                 <LinearLayout

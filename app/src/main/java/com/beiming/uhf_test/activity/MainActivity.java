@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.fenzhix.ReadFzxActivity;
+import com.beiming.uhf_test.activity.fenzhix.gj.GjFzxActivity;
 import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.databinding.ActivityMainBinding;
@@ -32,6 +35,10 @@ import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.MyOnTransitionTextListener;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
+import com.beiming.uhf_test.utils.ToastUtils;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.impl.AttachListPopupView;
+import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
@@ -66,6 +73,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     public ArrayList<HashMap<String, String>> tagList;
     public HashMap<String, String> map;
+    private AttachListPopupView attachListPopupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +122,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 //        intent.putExtra("box", boxBean);
 //        startActivity(intent);
 
-        startActivity(new Intent(activity, ReadFzxActivity.class));
+//        startActivity(new Intent(activity, ReadFzxActivity.class));
     }
 
     @Override
@@ -211,6 +219,25 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 //        indicatorViewPager.setOnIndicatorPageChangeListener(getOnIndicatorPageChangeLis());
         indicatorViewPager.setPageOffscreenLimit(3);
         indicatorViewPager.setCurrentItem(0, false);    //默认显示tab
+        binding.tvMenu.setOnClickListener(view -> {
+            attachListPopupView = new XPopup.Builder(activity)
+                    .hasShadowBg(false)
+                    .isCenterHorizontal(false)
+                    .atView(binding.tvMenu)  // 依附于所点击的View，内部会自动判断在上方或者下方显示
+                    .autoDismiss(false)
+                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "库房盘整"},
+                            new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher},
+                            (position, text) -> attachListPopupView.dismissWith(() -> {
+                                ToastUtils.showToast(text);
+                                if ("扫描分支箱".equals(text)) {
+                                    startActivity(new Intent(activity, ReadFzxActivity.class));
+                                } else if ("挂接分支箱".equals(text)) {
+                                    GjFzxActivity.Companion.startActivity(activity);
+                                }
+                            }), 0, 0, Gravity.LEFT);
+            attachListPopupView.show();
+        });
+
     }
 
     /**

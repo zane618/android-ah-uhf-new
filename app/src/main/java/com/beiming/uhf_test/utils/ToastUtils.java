@@ -2,6 +2,7 @@ package com.beiming.uhf_test.utils;
 
 import android.content.Context;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -63,6 +64,7 @@ public class ToastUtils {
                 toast = new Toast(App.getContext());
                 toast.setView(view);
                 toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.setText(msg);
             }
             toast.show();

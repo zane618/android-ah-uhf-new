@@ -59,8 +59,9 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         public final static Property YsKuan = new Property(28, String.class, "ysKuan", false, "YS_KUAN");
         public final static Property YxGao = new Property(29, String.class, "yxGao", false, "YX_GAO");
         public final static Property YxKuan = new Property(30, String.class, "yxKuan", false, "YX_KUAN");
-        public final static Property Meters = new Property(31, String.class, "meters", false, "METERS");
-        public final static Property BoxImages = new Property(32, String.class, "boxImages", false, "BOX_IMAGES");
+        public final static Property Checked = new Property(31, boolean.class, "checked", false, "CHECKED");
+        public final static Property Meters = new Property(32, String.class, "meters", false, "METERS");
+        public final static Property BoxImages = new Property(33, String.class, "boxImages", false, "BOX_IMAGES");
     }
 
     private final MeterBeanConverter metersConverter = new MeterBeanConverter();
@@ -109,8 +110,9 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
                 "\"YS_KUAN\" TEXT," + // 28: ysKuan
                 "\"YX_GAO\" TEXT," + // 29: yxGao
                 "\"YX_KUAN\" TEXT," + // 30: yxKuan
-                "\"METERS\" TEXT," + // 31: meters
-                "\"BOX_IMAGES\" TEXT);"); // 32: boxImages
+                "\"CHECKED\" INTEGER NOT NULL ," + // 31: checked
+                "\"METERS\" TEXT," + // 32: meters
+                "\"BOX_IMAGES\" TEXT);"); // 33: boxImages
     }
 
     /** Drops the underlying database table. */
@@ -269,15 +271,16 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         if (yxKuan != null) {
             stmt.bindString(31, yxKuan);
         }
+        stmt.bindLong(32, entity.getChecked() ? 1L: 0L);
  
         List meters = entity.getMeters();
         if (meters != null) {
-            stmt.bindString(32, metersConverter.convertToDatabaseValue(meters));
+            stmt.bindString(33, metersConverter.convertToDatabaseValue(meters));
         }
  
         List boxImages = entity.getBoxImages();
         if (boxImages != null) {
-            stmt.bindString(33, boxImagesConverter.convertToDatabaseValue(boxImages));
+            stmt.bindString(34, boxImagesConverter.convertToDatabaseValue(boxImages));
         }
     }
 
@@ -431,15 +434,16 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         if (yxKuan != null) {
             stmt.bindString(31, yxKuan);
         }
+        stmt.bindLong(32, entity.getChecked() ? 1L: 0L);
  
         List meters = entity.getMeters();
         if (meters != null) {
-            stmt.bindString(32, metersConverter.convertToDatabaseValue(meters));
+            stmt.bindString(33, metersConverter.convertToDatabaseValue(meters));
         }
  
         List boxImages = entity.getBoxImages();
         if (boxImages != null) {
-            stmt.bindString(33, boxImagesConverter.convertToDatabaseValue(boxImages));
+            stmt.bindString(34, boxImagesConverter.convertToDatabaseValue(boxImages));
         }
     }
 
@@ -482,8 +486,9 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
             cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28), // ysKuan
             cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29), // yxGao
             cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30), // yxKuan
-            cursor.isNull(offset + 31) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 31)), // meters
-            cursor.isNull(offset + 32) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 32)) // boxImages
+            cursor.getShort(offset + 31) != 0, // checked
+            cursor.isNull(offset + 32) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 32)), // meters
+            cursor.isNull(offset + 33) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 33)) // boxImages
         );
         return entity;
     }
@@ -521,8 +526,9 @@ public class MeasBoxBeanDao extends AbstractDao<MeasBoxBean, Long> {
         entity.setYsKuan(cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28));
         entity.setYxGao(cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29));
         entity.setYxKuan(cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30));
-        entity.setMeters(cursor.isNull(offset + 31) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 31)));
-        entity.setBoxImages(cursor.isNull(offset + 32) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 32)));
+        entity.setChecked(cursor.getShort(offset + 31) != 0);
+        entity.setMeters(cursor.isNull(offset + 32) ? null : metersConverter.convertToEntityProperty(cursor.getString(offset + 32)));
+        entity.setBoxImages(cursor.isNull(offset + 33) ? null : boxImagesConverter.convertToEntityProperty(cursor.getString(offset + 33)));
      }
     
     @Override

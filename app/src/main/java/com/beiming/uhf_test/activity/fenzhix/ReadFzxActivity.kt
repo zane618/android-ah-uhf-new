@@ -74,6 +74,7 @@ class ReadFzxActivity : BaseActivity() {
                 if (barCode.startsWith("01", 5)) {
                     val fenzhiBoxBean = FenzhiBoxBean()
                     fenzhiBoxBean.barCode = barCode
+                    fenzhiBoxBean.ts = System.currentTimeMillis()
                     mLocationBean?.let {
                         fenzhiBoxBean.instAddr = it.address
                         fenzhiBoxBean.setGps_X(it.longitude)

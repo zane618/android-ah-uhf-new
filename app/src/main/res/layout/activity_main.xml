@@ -21,6 +21,23 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="1dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical"
+            android:text="菜单"
+            android:drawableRight="@drawable/menu_iv_selector"
+            android:textColor="@drawable/menu_tv_selector"
+            android:textSize="16sp" />
+
     </LinearLayout>
 
     <com.shizhefei.view.indicator.ScrollIndicatorView

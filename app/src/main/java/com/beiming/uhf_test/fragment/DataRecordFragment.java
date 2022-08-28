@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.MainActivity;
 import com.beiming.uhf_test.activity.fenzhix.FenzhixActivity;
+import com.beiming.uhf_test.activity.fenzhix.gj.GjFzxActivity;
 import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.activity.pic.PreviewPhotoActivity;
 import com.beiming.uhf_test.adapter.BoxListAdapter;
@@ -116,8 +117,9 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     private void initViews(View view) {
         tv_fenzhix_tianjia = view.findViewById(R.id.tv_fenzhix_tianjia);
         tv_fenzhix_tianjia.setOnClickListener(v -> { //添加分支箱
-            MeasBoxBean boxBean = boxListAdapter.getData().get(boxListAdapter.getSelectedPosition());
-            FenzhixActivity.Companion.startActivity(mContext, boxBean);
+//            MeasBoxBean boxBean = boxListAdapter.getData().get(boxListAdapter.getSelectedPosition());
+//            FenzhixActivity.Companion.startActivity(mContext, boxBean);
+            GjFzxActivity.Companion.startActivity(mContext);
         });
         tv_fenzhix_bianma = view.findViewById(R.id.tv_fenzhix_bianma);
     }

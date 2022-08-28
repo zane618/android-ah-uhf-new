@@ -123,9 +123,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation fileTree(include: ['*.aar'], dir: 'libs')
     //必须添加的依赖
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.appcompat:appcompat:1.0.0"
+    implementation "androidx.appcompat:appcompat:1.3.1"
     implementation 'com.alibaba:fastjson:1.2.66'
     implementation 'com.facebook.fresco:fresco:2.5.0'
     implementation 'com.facebook.fresco:animated-gif:2.5.0'
@@ -174,6 +174,8 @@ dependencies {
     implementation 'io.github.lucksiege:ucrop:v3.10.6'
     // 自定义相机 (按需引入)
     implementation 'io.github.lucksiege:camerax:v3.10.6'
+    //xpopu
+    implementation 'com.github.li-xiaojun:XPopup:2.8.15'
 
 }
 allprojects {

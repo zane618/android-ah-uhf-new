@@ -1,6 +1,7 @@
 package com.beiming.uhf_test.view.picinput
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -344,6 +345,9 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
         val photobeans = mutableListOf<PhotoBean>()
         val time = TimeUtils.getTime()
         for (item in dataFirst) {
+            if (TextUtils.isEmpty(item.realPath)) {
+                break
+            }
             val photo = PhotoBean(PicConst.TYPE_1)
             photo.measAssetBarCode = ""
             photo.createTime = time
@@ -352,6 +356,9 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
             photobeans.add(photo)
         }
         for (item in biaoweiData) {
+            if (TextUtils.isEmpty(item.realPath)) {
+                break
+            }
             val photo = PhotoBean(PicConst.TYPE_2)
             photo.measAssetBarCode = ""
             photo.createTime = time
@@ -360,6 +367,9 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
             photobeans.add(photo)
         }
         for (item in dataFirst) {
+            if (TextUtils.isEmpty(item.realPath)) {
+                break
+            }
             val photo = PhotoBean(PicConst.TYPE_3)
             photo.measAssetBarCode = ""
             photo.createTime = time

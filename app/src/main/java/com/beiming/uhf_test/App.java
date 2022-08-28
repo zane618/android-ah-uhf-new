@@ -10,6 +10,7 @@ import com.beiming.uhf_test.nohttp.NetConsts;
 import com.beiming.uhf_test.utils.AppUtil;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.kongzue.baseframework.BaseApp;
+import com.lxj.xpopup.XPopup;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
@@ -65,6 +66,11 @@ public class App extends BaseApp<App> {
         /** 初始化 SharedPreferencesUtil  用来存储本地数据*/
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(this);
         SharedPreferencesUtil.setInstance(sharedPreferencesUtil);
+
+        //
+        XPopup.setPrimaryColor(getResources().getColor(R.color.colorPrimary));
+        XPopup.setAnimationDuration(200);
+
 
         //初始化 uni小程序SDK ----start----------
         MenuActionSheetItem item = new MenuActionSheetItem("关于", "gy");
