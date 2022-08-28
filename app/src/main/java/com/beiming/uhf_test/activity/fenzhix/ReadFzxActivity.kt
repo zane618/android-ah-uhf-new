@@ -12,10 +12,7 @@ import com.beiming.uhf_test.databinding.ActivityFenzhixReadBinding
 import com.beiming.uhf_test.db.GreenDaoManager
 import com.beiming.uhf_test.helper.map.LocationHelper
 import com.beiming.uhf_test.tools.rfid.RfidHelper
-import com.beiming.uhf_test.utils.ConstantUtil
-import com.beiming.uhf_test.utils.FastJson
-import com.beiming.uhf_test.utils.LogPrintUtil
-import com.beiming.uhf_test.utils.SharedPreferencesUtil
+import com.beiming.uhf_test.utils.*
 import kotlin.collections.ArrayList
 
 /**
@@ -57,9 +54,9 @@ class ReadFzxActivity : BaseActivity() {
 
         binding.btnSave.setOnClickListener {
             val dao = GreenDaoManager.getInstance().session.fenzhiBoxBeanDao
-            // TODO: 做个去重操作
-
             dao.insertInTx(fenzhiboxList)
+            ToastUtils.showToast("保存成功")
+            finish()
         }
         binding.inTitle.ivBack.setOnClickListener {
             finish()
