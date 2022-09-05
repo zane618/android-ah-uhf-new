@@ -1,12 +1,16 @@
 package com.beiming.uhf_test.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -36,9 +40,16 @@ import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.utils.ConstantUtil;
+import com.beiming.uhf_test.utils.GlideEngine;
 import com.beiming.uhf_test.view.DoorInfoShowLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.luck.picture.lib.basic.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener;
+import com.luck.picture.lib.interfaces.OnInjectLayoutResourceListener;
+import com.luck.picture.lib.style.PictureSelectorStyle;
+import com.luck.picture.lib.style.TitleBarStyle;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -163,13 +174,53 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
                         choosePic();
                     }*/
                 } else {
-                    Intent intent = new Intent(DataRecordFragment.this.mContext, PreviewPhotoActivity.class);
-                    intent.putExtra("ID", i);
-                    intent.putExtra(ConstantUtil.CREAT_OR_DETAILS, creatOrDetails);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(ConstantUtil.PHOTO_BEAN_LIST, (Serializable) photoBeanList);
-                    intent.putExtras(bundle);
-                    DataRecordFragment.this.mContext.startActivity(intent);
+
+                    ArrayList<LocalMedia> phtos = new ArrayList<>();
+                    for (PhotoBean bean : photoBeanList) {
+                        LocalMedia media = LocalMedia.generateLocalMedia(mContext, bean.getImageSrc());
+                        phtos.add(media);
+                    }
+                    PictureSelectorStyle selectorStyle = new PictureSelectorStyle();
+                    // 头部TitleBar 风格
+                    TitleBarStyle numberTitleBarStyle = new TitleBarStyle();
+                    numberTitleBarStyle.setHideCancelButton(true);
+                    numberTitleBarStyle.setAlbumTitleRelativeLeft(true);
+                    numberTitleBarStyle.setTitleAlbumBackgroundResource(R.drawable.ps_album_bg);
+                    numberTitleBarStyle.setTitleDrawableRightResource(R.drawable.ps_ic_grey_arrow);
+                    numberTitleBarStyle.setPreviewTitleLeftBackResource(R.drawable.ps_ic_normal_back);
+                    numberTitleBarStyle.setPreviewDeleteBackgroundResource(R.drawable.ps_album_bg);
+                    selectorStyle.setTitleBarStyle(numberTitleBarStyle);
+
+
+                    PictureSelector.create(mContext)
+                            .openPreview()
+                            .setImageEngine(GlideEngine.createGlideEngine())
+//                            .setInjectLayoutResourceListener(new OnInjectLayoutResourceListener() {
+//                                @Override
+//                                public int getLayoutResourceId(Context context, int resourceSource) {
+//                                    return 0;
+//                                }
+//                            })
+                            .setSelectorUIStyle(selectorStyle)
+                            .setExternalPreviewEventListener(new OnExternalPreviewEventListener() {
+                                @Override
+                                public void onPreviewDelete(int position) {
+
+                                }
+
+                                @Override
+                                public boolean onLongPressDownload(LocalMedia media) {
+                                    return false;
+                                }
+                            }).startActivityPreview(i, true, phtos);
+
+//                    Intent intent = new Intent(DataRecordFragment.this.mContext, PreviewPhotoActivity.class);
+//                    intent.putExtra("ID", i);
+//                    intent.putExtra(ConstantUtil.CREAT_OR_DETAILS, creatOrDetails);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable(ConstantUtil.PHOTO_BEAN_LIST, (Serializable) photoBeanList);
+//                    intent.putExtras(bundle);
+//                    DataRecordFragment.this.mContext.startActivity(intent);
                 }
             }
         });
@@ -285,7 +336,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
                         MeasBoxBeanDao.Properties.BarCode.eq(biaoList.get(i).getMeasBarCode())).build().list();
                 boxBeanList.addAll(boxList);
             }
-            Log.i("zhangshi",boxBeanList.toString());
+            Log.i("zhangshi", boxBeanList.toString());
             //查询箱列表数据
             boxBeanList.addAll(measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%")).build().list());
         } else {
@@ -331,7 +382,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
 //                MeasBoxBean data = (MeasBoxBean) attachmentUpdate.getData();
 //                tv_fenzhix_bianma.setText(data.getFenzhixCode());
 //            } else {
-                queryMeterData(etSearch.getText().toString().trim());
+            queryMeterData(etSearch.getText().toString().trim());
 //            }
         }
     }
