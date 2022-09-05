@@ -379,21 +379,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
 
     //导出excel表格
     private void ImportExcel() {
-        if (btnShibie.getText().equals(
-                mContext.getString(R.string.btInventory))) {
-            if (measBoxBeanList.size() == 0) {
-
-                UIHelper.ToastMessage(mContext, "无数据导出");
-                return;
-            }
-            boolean re = FileImport.daochu("", measBoxBeanList);
-            if (re) {
-                UIHelper.ToastMessage(mContext, "导出成功");
-                clearData();
-            }
-        } else {
-            UIHelper.ToastMessage(mContext, "请停止扫描后再导出");
-        }
     }
 
     //清楚数据

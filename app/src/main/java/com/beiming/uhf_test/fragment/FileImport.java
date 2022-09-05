@@ -18,27 +18,18 @@ import java.util.List;
 public class FileImport {
     private static String TAG = "FileImport";
 
-    public static boolean daochu(String tmpname, List<MeasBoxBean> measBoxBeans) {
+    public static boolean daochu(String fileDirString, String fileName, List<MeasBoxBean> measBoxBeans) {
 
         try {
-
-            String file = "";
-            String packgePath = ConstantUtil.EXCEL_STR + TimeUtils.getY_M_D_Time() + "/";
-            if (tmpname.isEmpty())
-                file = ConstantUtil.EXCEL_STR + TimeUtils.getY_M_D_Time() + "/"
-                        + TimeUtils.getTime() + ".xls";
-            else
-                file = ConstantUtil.EXCEL_STR + tmpname;
-
-            File packge = new File(packgePath);
-
-            if (!packge.exists()) {
-                packge.mkdirs();
+            String absoluteFilePathString = ConstantUtil.EXCEL_STR + fileDirString + "/";
+            File absoluteFileDir = new File(absoluteFilePathString);
+            if (!absoluteFileDir.exists()) {
+                absoluteFileDir.mkdirs();
                 Log.i(TAG, "文件夹不存在");
             } else {
                 Log.i(TAG, "文件夹存在");
             }
-
+            String file = absoluteFilePathString + fileName;
             //写入表头
             FileXls.writeXLS(file, null, true);
 

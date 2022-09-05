@@ -46,7 +46,7 @@ public class ExportExcelFragment extends KeyDwonFragment implements View.OnClick
     Unbinder unbinder;
     private int MY_PERMISSIONS_REQUEST_FOR_EXCLE = 0x11;
     private String fileName;
-    private String fileStr;
+    private String fileDirString;
 
     private String Tag = LoginActivity.class.getName();
     @Override
@@ -122,7 +122,7 @@ public class ExportExcelFragment extends KeyDwonFragment implements View.OnClick
             return;
         }
         fileName = TimeUtils.getTime() + ".xls";
-        fileStr = TimeUtils.getY_M_D_Time() + "/" + fileName;
+        fileDirString = TimeUtils.getY_M_D_Time();
         new exportExcelTask().execute();
     }
 
@@ -153,7 +153,7 @@ public class ExportExcelFragment extends KeyDwonFragment implements View.OnClick
         @Override
         protected Boolean doInBackground(String... params) {
             // TODO Auto-generated method stub
-            return FileImport.daochu(fileStr, allBoxBeanList);
+            return FileImport.daochu(fileDirString, fileName, allBoxBeanList);
         }
 
         @Override

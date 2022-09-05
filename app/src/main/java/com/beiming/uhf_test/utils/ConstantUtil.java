@@ -14,13 +14,8 @@ import java.io.File;
 public class ConstantUtil {
 
     public static final String NORMAL_DIR = Environment.getExternalStorageDirectory() + File.separator + "/UHF";
-    public static final String DATA_DATA_DIR_PATH = App.getInstance().getExternalFilesDir(null).getPath() + "/UHF";
     public static final String IMAGE_STR = NORMAL_DIR + "/image/";
     public static final String EXCEL_STR = NORMAL_DIR + "/excel/";
-    public static final String PRIVATE_IMAGE_STR = DATA_DATA_DIR_PATH + "/.image/";
-    public static final String PRIVATE_EXCEL_STR = DATA_DATA_DIR_PATH + "/.excel/";
-    //    public static final String IMAGE_STR = Environment.getExternalStorageDirectory() + File.separator + "Pictures/Screenshots/";
-    public static final String FILE_SRC = Environment.getExternalStorageDirectory() + File.separator + "/";
     public static final String FILE_PROVIDER = "com.beiming.uhf_test";//6.0后读写权限的内容提供者
 
     public static final String LAST_LOCATION = "lastLocation";//获取当前最后一次定位信息

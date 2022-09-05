@@ -8,6 +8,8 @@ import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.pic.PhotoBean;
 import com.beiming.uhf_test.utils.Contant;
+import com.beiming.uhf_test.utils.FileOperator;
+import com.beiming.uhf_test.utils.LogPrintUtil;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -258,8 +260,17 @@ public class FileXls {
         } else {
             //内容
             for (int j = 0; j < table.size(); j++) {
+
                 rowNumber = i + j;
                 MeasBoxBean measBoxBean = (MeasBoxBean) table.get(j);
+                //处理图片
+//                LogPrintUtil.zhangshi("file.getParent():" + file.getParent());
+//                List<PhotoBean> photoBeanList = measBoxBean.getBoxImages();
+//                for (PhotoBean photoBean : photoBeanList) {
+//                    FileOperator.moveFile(photoBean.getImageSrc(), file.getParent());
+//                }
+
+
                 for (int colNumber = 0; colNumber < Contant.tableTitleList.size(); colNumber++) {
                     content = "";
                     switch (colNumber) {

@@ -11,10 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.beiming.uhf_test.R
 import com.beiming.uhf_test.bean.pic.PhotoBean
 import com.beiming.uhf_test.dialog.GuideDlg
-import com.beiming.uhf_test.utils.GlideEngine
-import com.beiming.uhf_test.utils.LogPrintUtil
-import com.beiming.uhf_test.utils.TimeUtils
-import com.beiming.uhf_test.utils.ToastUtils
+import com.beiming.uhf_test.utils.*
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.decoration.GridSpacingItemDecoration
@@ -70,41 +67,28 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
         adapterFirst.setOnItemClickListener { adapter, view, position ->
             if (position == (adapter.data.size-1)) {
-                //添加
-//                listener?.onAdd(PicConst.TYPE_1)
                 // 单独拍照
-                /*PictureSelector.create(context)
+                PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
+                    .setOutputCameraDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
 //                    .setSelectedData()
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
                         override fun onResult(result: ArrayList<LocalMedia?>?) {
 
-                            *//*for (media in result!!) {
-                                LogPrintUtil.zhangshi(media?.realPath)
-                                media?.let {
-                                    val path = it.realPath
-                                    val photoBean = PhotoBean()
-                                    photoBean.measAssetBarCode = ""
-                                    photoBean.createTime = TimeUtils.getTime()
-                                    photoBean.imageSrc = path
-                                    photoBean.picName = it.fileName
-                                    dataFirst.add(0, photoBean)
-                                }
-                            }*//*
-
                             result?.let {
                                 for (medie in result) {
                                     dataFirst.add(0, medie!!)
-
+                                    LogPrintUtil.zhangshi("medie:" + medie.realPath)
                                 }
                                 adapterFirst.notifyDataSetChanged()
                             }
                         }
+
                         override fun onCancel() {}
-                    })*/
+                    })
 
                 //获取图片
-                PictureSelector.create(context)
+                /*PictureSelector.create(context)
                     .openGallery(SelectMimeType.ofImage())
                     .setImageEngine(GlideEngine.createGlideEngine())
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
@@ -118,7 +102,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                             }
                         }
                         override fun onCancel() {}
-                    })
+                    })*/
 
             } else{
                 val list = java.util.ArrayList<LocalMedia>()
@@ -156,41 +140,26 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
         biaoweiAdapter.setOnItemClickListener { adapter, view, position ->
             if (position == (adapter.data.size-1)) {
-                //添加
-//                listener?.onAdd(PicConst.TYPE_1)
                 // 单独拍照
-                /*PictureSelector.create(context)
+                PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
+                    .setOutputCameraDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
 //                    .setSelectedData()
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
                         override fun onResult(result: ArrayList<LocalMedia?>?) {
-
-                            *//*for (media in result!!) {
-                                LogPrintUtil.zhangshi(media?.realPath)
-                                media?.let {
-                                    val path = it.realPath
-                                    val photoBean = PhotoBean()
-                                    photoBean.measAssetBarCode = ""
-                                    photoBean.createTime = TimeUtils.getTime()
-                                    photoBean.imageSrc = path
-                                    photoBean.picName = it.fileName
-                                    dataFirst.add(0, photoBean)
-                                }
-                            }*//*
-
                             result?.let {
                                 for (medie in result) {
-                                    dataFirst.add(0, medie!!)
-
+                                    biaoweiData.add(0, medie!!)
+                                    LogPrintUtil.zhangshi("medie:" + medie.realPath)
                                 }
-                                adapterFirst.notifyDataSetChanged()
+                                biaoweiAdapter.notifyDataSetChanged()
                             }
                         }
                         override fun onCancel() {}
-                    })*/
+                    })
 
                 //获取图片
-                PictureSelector.create(context)
+                /*PictureSelector.create(context)
                     .openGallery(SelectMimeType.ofImage())
                     .setImageEngine(GlideEngine.createGlideEngine())
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
@@ -204,7 +173,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                             }
                         }
                         override fun onCancel() {}
-                    })
+                    })*/
 
             } else{
                 val list = java.util.ArrayList<LocalMedia>()
@@ -241,41 +210,26 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
         singleAdapter.setOnItemClickListener { adapter, view, position ->
             if (position == (adapter.data.size-1)) {
-                //添加
-//                listener?.onAdd(PicConst.TYPE_1)
                 // 单独拍照
-                /*PictureSelector.create(context)
+                PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
+                    .setOutputCameraDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
 //                    .setSelectedData()
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
                         override fun onResult(result: ArrayList<LocalMedia?>?) {
-
-                            *//*for (media in result!!) {
-                                LogPrintUtil.zhangshi(media?.realPath)
-                                media?.let {
-                                    val path = it.realPath
-                                    val photoBean = PhotoBean()
-                                    photoBean.measAssetBarCode = ""
-                                    photoBean.createTime = TimeUtils.getTime()
-                                    photoBean.imageSrc = path
-                                    photoBean.picName = it.fileName
-                                    dataFirst.add(0, photoBean)
-                                }
-                            }*//*
-
                             result?.let {
                                 for (medie in result) {
-                                    dataFirst.add(0, medie!!)
-
+                                    singleData.add(0, medie!!)
+                                    LogPrintUtil.zhangshi("medie:" + medie.realPath)
                                 }
-                                adapterFirst.notifyDataSetChanged()
+                                singleAdapter.notifyDataSetChanged()
                             }
                         }
                         override fun onCancel() {}
-                    })*/
+                    })
 
                 //获取图片
-                PictureSelector.create(context)
+                /*PictureSelector.create(context)
                     .openGallery(SelectMimeType.ofImage())
                     .setImageEngine(GlideEngine.createGlideEngine())
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
@@ -289,7 +243,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                             }
                         }
                         override fun onCancel() {}
-                    })
+                    })*/
 
             } else{
                 val list = java.util.ArrayList<LocalMedia>()
