@@ -44,6 +44,7 @@ public class MeasBoxBean implements Serializable {
     private String hasQx; //是否缺陷，无，一般、严重、危急
     private String qxDetail; //缺陷详情, 逗号分割
     private String fenzhixCode; //分支箱编码
+    private String fenzhixAssetNo; //分支箱资产编码
     private String caizhi = "金属"; //金属，非金属
     private String gao = ""; //长
     private String kuan = ""; //宽
@@ -64,15 +65,15 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 981788611)
+    @Generated(hash = 2071421462)
     public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
             long ts, String gps_X, String gps_Y, String gps_Z, String instAddr,
             String instLoc, String describe, String tmnlAddr, String tgName, String boxRows,
             String boxCols, String note, boolean isExsit, String hasQx, String qxDetail,
-            String fenzhixCode, String caizhi, String gao, String kuan, String zsGao,
-            String zsKuan, String zxGao, String zxKuan, String ysGao, String ysKuan,
-            String yxGao, String yxKuan, boolean checked, List<MeterBean> meters,
-            List<PhotoBean> boxImages) {
+            String fenzhixCode, String fenzhixAssetNo, String caizhi, String gao, String kuan,
+            String zsGao, String zsKuan, String zxGao, String zxKuan, String ysGao,
+            String ysKuan, String yxGao, String yxKuan, boolean checked,
+            List<MeterBean> meters, List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
         this.barCode = barCode;
         this.measAssetNo = measAssetNo;
@@ -93,6 +94,7 @@ public class MeasBoxBean implements Serializable {
         this.hasQx = hasQx;
         this.qxDetail = qxDetail;
         this.fenzhixCode = fenzhixCode;
+        this.fenzhixAssetNo = fenzhixAssetNo;
         this.caizhi = caizhi;
         this.gao = gao;
         this.kuan = kuan;
@@ -111,6 +113,14 @@ public class MeasBoxBean implements Serializable {
 
     @Generated(hash = 1045529700)
     public MeasBoxBean() {
+    }
+
+    public String getFenzhixAssetNo() {
+        return fenzhixAssetNo;
+    }
+
+    public void setFenzhixAssetNo(String fenzhixAssetNo) {
+        this.fenzhixAssetNo = fenzhixAssetNo;
     }
 
     public boolean isChecked() {

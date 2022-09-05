@@ -328,16 +328,49 @@ public class FileXls {
                                 }
                             }
                             break;
-                        case 11://登录账号
+
+
+                        case 11://材质
+                            if (!TextUtils.isEmpty(measBoxBean.getCaizhi()))
+                                content = measBoxBean.getCaizhi();
+                            break;
+                        case 12://电表箱高度
+                            if (!TextUtils.isEmpty(measBoxBean.getGao()))
+                                content = measBoxBean.getGao();
+                            break;
+                        case 13://电表箱宽度
+                            if (!TextUtils.isEmpty(measBoxBean.getKuan()))
+                                content = measBoxBean.getKuan();
+                            break;
+                        case 14://缺陷等级
+                            if (!TextUtils.isEmpty(measBoxBean.getHasQx()))
+                                content = measBoxBean.getHasQx();
+                            break;
+                        case 15://缺陷详情
+                            if (!TextUtils.isEmpty(measBoxBean.getQxDetail()))
+                                content = measBoxBean.getQxDetail();
+                            break;
+                        case 16://分支箱条形码编号
+                            if (!TextUtils.isEmpty(measBoxBean.getFenzhixCode()))
+                                content = measBoxBean.getFenzhixCode();
+                            break;
+                        case 17://分支箱资产编号
+                            if (!TextUtils.isEmpty(measBoxBean.getFenzhixCode()))
+                                content = measBoxBean.getFenzhixAssetNo();
+                            break;
+
+
+
+                        /*case 11://登录账号
                             if (App.loginBean != null)
                                 content = App.loginBean.getUserName();
                             break;
                         case 12://密码
                             if (App.loginBean != null)
                                 content = App.loginBean.getPassword();
-                            /*String generate = MD5Utils.createActionCode(SerialNumber);//对序列号进行第一次加密
+                            *//*String generate = MD5Utils.createActionCode(SerialNumber);//对序列号进行第一次加密
                             LogUtils.i("第一次加密后=" + generate);
-                            String generate1 = MD5Utils.generate(generate);//对加密过后的序列号再一次加密*/
+                            String generate1 = MD5Utils.generate(generate);//对加密过后的序列号再一次加密*//*
                             break;
                         case 13://所在项目组
                             if (App.loginBean != null)
@@ -354,7 +387,7 @@ public class FileXls {
                         case 16://答案三
                             if (App.loginBean != null)
                                 content = App.loginBean.getAnswerThree();
-                            break;
+                            break;*/
                     }
                     //i+j是行号
                     Label label = new Label(colNumber, rowNumber, content);

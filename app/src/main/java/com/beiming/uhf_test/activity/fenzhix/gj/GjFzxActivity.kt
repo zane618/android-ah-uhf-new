@@ -86,6 +86,7 @@ class GjFzxActivity : BaseActivity() {
         val fzx = fzxList.first { it.checked }
         for (box in boxList) {
             box.fenzhixCode = fzx.barCode
+            box.fenzhixAssetNo = fzx.assetNo
         }
         boxDao.updateInTx(boxList)
         finish()

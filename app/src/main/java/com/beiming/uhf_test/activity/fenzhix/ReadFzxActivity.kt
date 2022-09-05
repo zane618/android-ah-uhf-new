@@ -13,7 +13,6 @@ import com.beiming.uhf_test.db.GreenDaoManager
 import com.beiming.uhf_test.helper.map.LocationHelper
 import com.beiming.uhf_test.tools.rfid.RfidHelper
 import com.beiming.uhf_test.utils.*
-import kotlin.collections.ArrayList
 
 /**
  * created by zhangshi on 2022/8/9.
@@ -67,10 +66,12 @@ class ReadFzxActivity : BaseActivity() {
     var handler = Handler { msg ->
         when (msg.what) {
             1 -> {
-                val barCode: String = "3421101882123212321212"
+                val barCode: String = "342110188212321232121200"
                 if (barCode.startsWith("01", 5)) {
                     val fenzhiBoxBean = FenzhiBoxBean()
                     fenzhiBoxBean.barCode = barCode
+                    fenzhiBoxBean.assetNo =
+                        barCode.substring(barCode.length - 15, barCode.length - 1) //第7位开始，共14位
                     fenzhiBoxBean.ts = System.currentTimeMillis()
                     mLocationBean?.let {
                         fenzhiBoxBean.instAddr = it.address
