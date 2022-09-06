@@ -46,6 +46,7 @@ import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.PermissionUtils;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
+import com.beiming.uhf_test.view.BoxRowColLayout;
 import com.beiming.uhf_test.view.BoxSizeInputLayout;
 import com.beiming.uhf_test.view.DefectInputLayout;
 import com.beiming.uhf_test.view.DoorInfoInputLayout;
@@ -111,6 +112,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     private RdAdapter rdAdapter;
     private String caizhi = "金属";
     private BoxSizeInputLayout boxSizeInputLayout;
+    private BoxRowColLayout boxRowColLayout;
 
     @Override
     protected void setContentView() {
@@ -120,6 +122,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void initView() {
         boxSizeInputLayout = findViewById(R.id.boxSizeInputLayout);
+        boxRowColLayout = findViewById(R.id.boxRowColLayout);
         boxBean = (MeasBoxBean) getIntent().getSerializableExtra("box");
         rdAdapter = new RdAdapter(boxBean.getMeters());
         recycleview.setNestedScrollingEnabled(false);
@@ -246,6 +249,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         boxBean.setYsKuan(doorInfoInputLayout.getYsKuan());
         boxBean.setYxGao(doorInfoInputLayout.getYxGao());
         boxBean.setYxKuan(doorInfoInputLayout.getYxKuan());
+        boxBean.setBoxRows(boxRowColLayout.getRow());
+        boxBean.setBoxCols(boxRowColLayout.getCol());
         boxBean.setBoxImages(photoBeanList);
         if (TextUtils.isEmpty(boxSizeInputLayout.getGao())) {
             boxBean.setGao("未填写");

@@ -8,14 +8,14 @@
         android:id="@+id/et_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/border_search"
         android:gravity="center_vertical"
         android:hint="请输入电能表或计量箱编号"
         android:padding="10dp"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:textColor="@color/green_01A89E"
         android:textSize="14sp" />
 
@@ -35,8 +35,8 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="5dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:paddingLeft="5dp">
 
             <LinearLayout
                 android:id="@+id/content"
@@ -52,67 +52,72 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:padding="2dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:padding="2dp"
                         android:text="箱表信息"
-                        android:textStyle="bold"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tv_fenzhix_tianjia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:padding="5dp"
                         android:layout_gravity="right"
-                        android:textSize="11sp"
-                        android:textColor="@color/white"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/sel_01"
-                        android:text="挂接分支箱"/>
+                        android:padding="5dp"
+                        android:text="挂接分支箱"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分支箱编码："
                         android:textColor="#ff4d4d4d"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
+
                     <TextView
                         android:id="@+id/tv_fenzhix_bianma"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0000000000000000000000"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="7dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/icon_chicun"/>
+                        android:src="@drawable/icon_chicun" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="2dp"
                         android:layout_marginLeft="5dp"
-                        android:text="尺寸信息(单位cm)"
                         android:background="@drawable/shape_ty_bendi"
+                        android:padding="2dp"
+                        android:text="尺寸信息(单位cm)"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -121,122 +126,153 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="计量箱长度："
                         android:textColor="#ff4d4d4d"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
+
                     <TextView
                         android:id="@+id/tv_chang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="400"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="计量箱宽度："
                         android:textColor="#ff4d4d4d"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
+
                     <TextView
                         android:id="@+id/tv_kuan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="280"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
                 </LinearLayout>
-<!--                材质-->
+                <!--                材质-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="计量箱材质："
                         android:textColor="#ff4d4d4d"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
+
                     <TextView
                         android:id="@+id/tv_caizhi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="金属"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
                 </LinearLayout>
+
                 <com.beiming.uhf_test.view.DoorInfoShowLayout
                     android:id="@+id/doorInfoLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"/>
+                    android:layout_marginTop="7dp" />
+
+                <!--                行列信息-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
                     android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/icon_weizhi"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:layout_marginLeft="5dp"
-                        android:text="位置信息"
-                        android:background="@drawable/shape_ty_bendi"
+                        android:text="表位行列信息："
+                        android:textColor="#ff4d4d4d"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_row_col"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="金属"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_weizhi" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/shape_ty_bendi"
+                        android:padding="2dp"
+                        android:text="位置信息"
+                        android:textColor="#ff0b7671"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_addr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
                     android:layout_marginTop="5dp"
+                    android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="合肥市包河区南淝河路800号康源大酒店" />
-<!--备注-->
+                <!--备注-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/icon_beizhu"/>
+                        android:src="@drawable/icon_beizhu" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="2dp"
                         android:layout_marginLeft="5dp"
-                        android:text="备注"
                         android:background="@drawable/shape_ty_bendi"
+                        android:padding="2dp"
+                        android:text="备注"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <TextView
@@ -252,22 +288,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/icon_quexian"/>
+                        android:src="@drawable/icon_quexian" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="2dp"
                         android:layout_marginLeft="5dp"
-                        android:text="计量箱缺陷"
                         android:background="@drawable/shape_ty_bendi"
+                        android:padding="2dp"
+                        android:text="计量箱缺陷"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -275,37 +313,39 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/tv_qx_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:text="无"
-                        />
+                        android:text="无" />
                 </LinearLayout>
 
                 <!--表数-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/icon_biaoshu"/>
+                        android:src="@drawable/icon_biaoshu" />
+
                     <TextView
                         android:id="@+id/tv_meter_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="2dp"
                         android:layout_marginLeft="5dp"
-                        android:text="表数"
                         android:background="@drawable/shape_ty_bendi"
+                        android:padding="2dp"
+                        android:text="表数"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -319,22 +359,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/icon_tupian"/>
+                        android:src="@drawable/icon_tupian" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="2dp"
                         android:layout_marginLeft="5dp"
-                        android:text="图片信息"
                         android:background="@drawable/shape_ty_bendi"
+                        android:padding="2dp"
+                        android:text="图片信息"
                         android:textColor="#ff0b7671"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout

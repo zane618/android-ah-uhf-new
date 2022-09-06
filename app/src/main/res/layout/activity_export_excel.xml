@@ -29,7 +29,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
-            android:text="Excel导出的位置："
+            android:text="导出的位置："
             android:textStyle="bold" />
 
         <TextView
@@ -38,7 +38,15 @@
             android:paddingLeft="5dp"
             android:layout_marginLeft="10dp"
             android:paddingRight="5dp"
-            android:text="文件管理/内部共享存储空间/UHF/Excel/" />
+            android:text="Excel-> 文件管理/内部共享存储空间/UHF/Excel/" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="5dp"
+            android:text="图片-> 文件管理/内部共享存储空间/UHF/Excel/" />
 
         <TextView
             android:layout_width="match_parent"

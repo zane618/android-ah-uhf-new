@@ -5,6 +5,8 @@ package com.beiming.uhf_test.data
  */
 object ConstData {
 
+    val NUM_0X = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+
     val BOX_KIND = arrayOf("单相", "三相")
 
     val DAN_BIAO_WEI = arrayOf("未选择",

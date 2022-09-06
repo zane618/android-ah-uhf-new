@@ -24,11 +24,16 @@ import com.beiming.uhf_test.activity.fenzhix.ReadFzxActivity;
 import com.beiming.uhf_test.activity.fenzhix.gj.GjFzxActivity;
 import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
 import com.beiming.uhf_test.base.BaseActivity;
+import com.beiming.uhf_test.bean.pic.AttachmentUpdate;
 import com.beiming.uhf_test.databinding.ActivityMainBinding;
+import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.fragment.DataRecordFragment;
 import com.beiming.uhf_test.fragment.ExportExcelFragment;
 import com.beiming.uhf_test.fragment.UHFReadTagFragment;
 import com.beiming.uhf_test.fragment.UHFSetFragment;
+import com.beiming.uhf_test.greendao.gen.FenzhiBoxBeanDao;
+import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
+import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.helper.map.LocationHelper;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.FastJson;
@@ -42,6 +47,8 @@ import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -225,7 +232,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     .isCenterHorizontal(false)
                     .atView(binding.tvMenu)  // 依附于所点击的View，内部会自动判断在上方或者下方显示
                     .autoDismiss(false)
-                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "库房盘整"},
+                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "clear"},
                             new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher},
                             (position, text) -> attachListPopupView.dismissWith(() -> {
                                 ToastUtils.showToast(text);
@@ -233,6 +240,16 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                                     startActivity(new Intent(activity, ReadFzxActivity.class));
                                 } else if ("挂接分支箱".equals(text)) {
                                     GjFzxActivity.Companion.startActivity(activity);
+                                } else if ("clear".equals(text)) {
+                                    MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
+                                    measBoxBeanDao.deleteAll();
+                                    MeterBeanDao meterBeanDao = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao();
+                                    meterBeanDao.deleteAll();
+                                    FenzhiBoxBeanDao fenzhiBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getFenzhiBoxBeanDao();
+                                    fenzhiBoxBeanDao.deleteAll();
+                                    AttachmentUpdate attachmentUpdate = new AttachmentUpdate();
+                                    attachmentUpdate.setTag(ConstantUtil.CLEAR_READ_TAG_DATA);
+                                    EventBus.getDefault().post(attachmentUpdate);
                                 }
                             }), 0, 0, Gravity.LEFT);
             attachListPopupView.show();

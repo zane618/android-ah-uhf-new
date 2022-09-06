@@ -16,8 +16,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,10 +62,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <com.beiming.uhf_test.view.BoxRowColLayout
+                    android:id="@+id/boxRowColLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"/>
+
                 <com.beiming.uhf_test.view.DoorInfoInputLayout
                     android:id="@+id/doorInfoLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,9 +87,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="计量箱材质："
-                        android:textStyle="bold"
                         android:textColor="@color/gray_333"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <RadioGroup
                         android:id="@+id/rg_caizhi"
@@ -184,11 +189,11 @@
                     android:id="@+id/et_note"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="3"
                     android:background="@color/white"
                     android:gravity="top"
                     android:hint="请写下您的备注"
                     android:inputType="textMultiLine"
+                    android:lines="3"
                     android:paddingLeft="13dp"
                     android:paddingTop="16dp"
                     android:singleLine="false"
@@ -223,9 +228,9 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:text="电能表信息"
                         android:textColor="@color/gray_333"
                         android:textSize="13sp"
@@ -235,17 +240,17 @@
                         android:id="@+id/tv_x_luru"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        android:layout_marginRight="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
                         android:layout_gravity="right"
-                        android:textColor="@color/white"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/sel_01"
-                        android:text="相位录入"/>
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="相位录入"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
                 </LinearLayout>
 
@@ -268,7 +273,7 @@
                 <com.beiming.uhf_test.view.picinput.PictureInputLayout
                     android:id="@+id/picture_input_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/bt_save"
