@@ -60,6 +60,8 @@
         <activity
             android:name=".activity.pic.PhotoPickerActivity" />
         <activity
+            android:name=".library.CheckActivity" />
+        <activity
             android:name=".activity.pic.PreviewPhotoActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>

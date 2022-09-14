@@ -35,6 +35,7 @@ import com.beiming.uhf_test.greendao.gen.FenzhiBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.helper.map.LocationHelper;
+import com.beiming.uhf_test.library.CheckActivity;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
@@ -232,14 +233,16 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     .isCenterHorizontal(false)
                     .atView(binding.tvMenu)  // 依附于所点击的View，内部会自动判断在上方或者下方显示
                     .autoDismiss(false)
-                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "clear"},
-                            new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher},
+                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "库房盘点", "clear"},
+                            new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher},
                             (position, text) -> attachListPopupView.dismissWith(() -> {
                                 ToastUtils.showToast(text);
                                 if ("扫描分支箱".equals(text)) {
                                     startActivity(new Intent(activity, ReadFzxActivity.class));
                                 } else if ("挂接分支箱".equals(text)) {
                                     GjFzxActivity.Companion.startActivity(activity);
+                                } else if ("库房盘点".equals(text)) {
+                                    CheckActivity.startActivity(activity);
                                 } else if ("clear".equals(text)) {
                                     MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
                                     measBoxBeanDao.deleteAll();
