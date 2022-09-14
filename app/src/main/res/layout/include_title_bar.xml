@@ -80,7 +80,7 @@
             android:paddingRight="10dp"
             android:gravity="center"
             android:textColor="@drawable/title_tv_color_selector"
-            android:visibility="gone"
+            android:visibility="invisible"
             tools:visibility="visible"
             tools:text="确认挂接"
             />

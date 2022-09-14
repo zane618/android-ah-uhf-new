@@ -11,6 +11,7 @@ import com.beiming.uhf_test.bean.MeasBoxBean
 import com.beiming.uhf_test.databinding.ActivityFenzhixReadBinding
 import com.beiming.uhf_test.db.GreenDaoManager
 import com.beiming.uhf_test.helper.map.LocationHelper
+import com.beiming.uhf_test.tools.rfid.IRfidListener
 import com.beiming.uhf_test.tools.rfid.RfidHelper
 import com.beiming.uhf_test.utils.*
 
@@ -94,45 +95,54 @@ class ReadFzxActivity : BaseActivity() {
         binding.btnScan.setOnClickListener {
             if (!"停止扫描".equals(binding.btnScan.text)) {
                 binding.btnScan.text = "停止扫描"
-                handler.sendEmptyMessage(1)
+//                handler.sendEmptyMessage(1)
 
-//                RfidHelper.getInstance().startScan(object : IRfidListener {
-//                    override fun onRfidResult(s: String?) {
-//                        s?.let {
-//                            var exist = false
-//                            for (item in barCodeBeanList) {
-//                                if (s.startsWith(item.barCode)) {
-//                                    exist = true
-//                                    break
-//                                }
-//                            }
-//                            if (!exist) {
-//                                //不存在
-//                                if (s.length == 24) { //标准电子标签
-//                                    val barCode = s.substring(0, s.length - 2)
-//                                    val assetNo = barCode.substring(
-//                                        barCode.length - 15,
-//                                        barCode.length - 1
-//                                    )
-//                                    if (barCode.startsWith("01", 5)) {
-//                                        var barCodeBean = BarCodeBean()
-//                                        barCodeBean.barCode = barCode
-//                                        barCodeBeanList.add(barCodeBean)
-//                                        fzxAdapter.notifyDataSetChanged()
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    override fun onStop() {
-//                        binding.btnScan.text = "扫描分支箱"
-//                    }
-//
-//                })
+                RfidHelper.getInstance().startScan(object : IRfidListener {
+                    override fun onRfidResult(s: String?) {
+                        s?.let {
+                            var exist = false
+                            for (item in fenzhiboxList) {
+                                if (s.startsWith(item.barCode)) {
+                                    exist = true
+                                    break
+                                }
+                            }
+
+                            if (!exist) {
+                                //不存在
+                                if (s.length == 24) { //标准电子标签
+                                    val barCode = s.substring(0, s.length - 2)
+                                    val assetNo = barCode.substring(
+                                        barCode.length - 15,
+                                        barCode.length - 1
+                                    )
+                                    if (barCode.startsWith("01", 5)) {
+                                        val fenzhiBoxBean = FenzhiBoxBean()
+                                        fenzhiBoxBean.barCode = barCode
+                                        fenzhiBoxBean.assetNo = assetNo
+                                        fenzhiBoxBean.ts = System.currentTimeMillis()
+                                        mLocationBean?.let {
+                                            fenzhiBoxBean.instAddr = it.address
+                                            fenzhiBoxBean.setGps_X(it.longitude)
+                                            fenzhiBoxBean.setGps_Y(it.latitude)
+                                            fenzhiBoxBean.setGps_Z(it.altitude)
+                                        }
+                                        fenzhiboxList.add(fenzhiBoxBean)
+                                        fzxAdapter.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onStop() {
+                        binding.btnScan.text = "扫描分支箱"
+                    }
+
+                })
             } else {
                 binding.btnScan.text = "扫描分支箱"
-//                RfidHelper.getInstance().stopScan()
+                RfidHelper.getInstance().stopScan()
             }
         }
         binding.BtClear.setOnClickListener {
