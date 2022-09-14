@@ -1,16 +1,9 @@
 package com.beiming.uhf_test.fragment;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -23,12 +16,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.activity.MainActivity;
-import com.beiming.uhf_test.activity.fenzhix.FenzhixActivity;
 import com.beiming.uhf_test.activity.fenzhix.gj.GjFzxActivity;
 import com.beiming.uhf_test.activity.login.LoginActivity;
-import com.beiming.uhf_test.activity.pic.PreviewPhotoActivity;
 import com.beiming.uhf_test.adapter.BoxListAdapter;
 import com.beiming.uhf_test.adapter.MeterListAdapter;
 import com.beiming.uhf_test.adapter.pic.AttachmentAdapter;
@@ -47,14 +41,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.basic.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener;
-import com.luck.picture.lib.interfaces.OnInjectLayoutResourceListener;
 import com.luck.picture.lib.style.PictureSelectorStyle;
 import com.luck.picture.lib.style.TitleBarStyle;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
