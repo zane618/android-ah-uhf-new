@@ -5,7 +5,6 @@ import android.content.Intent;
 
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.databinding.ActivityCheckBinding;
-import com.lidroid.xutils.db.annotation.Check;
 
 public class CheckActivity extends BaseActivity {
 
@@ -26,7 +25,7 @@ public class CheckActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        binding.inTitle.tvTitleName.setText("关联分支箱");
+        binding.inTitle.tvTitleName.setText("库房盘点");
     }
 
     @Override
