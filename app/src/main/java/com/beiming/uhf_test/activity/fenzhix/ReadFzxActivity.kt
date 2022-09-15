@@ -64,33 +64,6 @@ class ReadFzxActivity : BaseActivity() {
 
     }
 
-    var handler = Handler { msg ->
-        when (msg.what) {
-            1 -> {
-                val barCode: String = "342110188212321232121200"
-                if (barCode.startsWith("01", 5)) {
-                    val fenzhiBoxBean = FenzhiBoxBean()
-                    fenzhiBoxBean.barCode = barCode
-                    fenzhiBoxBean.assetNo =
-                        barCode.substring(barCode.length - 15, barCode.length - 1) //第7位开始，共14位
-                    fenzhiBoxBean.ts = System.currentTimeMillis()
-                    mLocationBean?.let {
-                        fenzhiBoxBean.instAddr = it.address
-                        fenzhiBoxBean.setGps_X(it.longitude)
-                        fenzhiBoxBean.setGps_Y(it.latitude)
-                        fenzhiBoxBean.setGps_Z(it.altitude)
-                    }
-                    fenzhiboxList.add(fenzhiBoxBean)
-                    fzxAdapter.notifyDataSetChanged()
-                }
-            }
-            3 -> {}
-            else -> {}
-        }
-        false
-    }
-
-
     override fun initListener() {
         binding.btnScan.setOnClickListener {
             if (!"停止扫描".equals(binding.btnScan.text)) {
@@ -116,7 +89,7 @@ class ReadFzxActivity : BaseActivity() {
                                         barCode.length - 15,
                                         barCode.length - 1
                                     )
-                                    if (barCode.startsWith("01", 5)) {
+                                    if (barCode.startsWith("88", 5)) {
                                         val fenzhiBoxBean = FenzhiBoxBean()
                                         fenzhiBoxBean.barCode = barCode
                                         fenzhiBoxBean.assetNo = assetNo
