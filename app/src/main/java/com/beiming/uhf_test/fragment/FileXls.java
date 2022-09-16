@@ -369,6 +369,14 @@ public class FileXls {
                             if (!TextUtils.isEmpty(measBoxBean.getFenzhixCode()))
                                 content = measBoxBean.getFenzhixAssetNo();
                             break;
+                        case 18://行数
+                            if (!TextUtils.isEmpty(measBoxBean.getBoxRows()))
+                                content = measBoxBean.getBoxRows();
+                            break;
+                        case 19://列
+                            if (!TextUtils.isEmpty(measBoxBean.getBoxCols()))
+                                content = measBoxBean.getBoxCols();
+                            break;
 
 
 

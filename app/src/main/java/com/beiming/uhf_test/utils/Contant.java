@@ -31,6 +31,8 @@ public class Contant {
         tableTitleList.add("缺陷详情");
         tableTitleList.add("分支箱条形码编号");
         tableTitleList.add("分支箱资产编号");
+        tableTitleList.add("行");
+        tableTitleList.add("列");
 
 
 

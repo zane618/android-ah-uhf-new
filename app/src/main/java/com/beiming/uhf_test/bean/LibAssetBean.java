@@ -5,6 +5,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * 库房资产
@@ -25,8 +26,32 @@ public class LibAssetBean implements Serializable {
     private String barCode;//条形码编号，资产库没有这个
     private String assetNo;//资产编号
     private String state;
-    private String stateCode;
+    private String stateCode; //09合格在库，01新购暂管，20运行
     private boolean exsit;//本地是否存在
+
+
+    @Generated(hash = 317557811)
+    public LibAssetBean(Long assetId, String danwei, String danweiCode,
+            String kufang, String kufangCode, String kuqu, String kuquCode,
+            String barCode, String assetNo, String state, String stateCode,
+            boolean exsit) {
+        this.assetId = assetId;
+        this.danwei = danwei;
+        this.danweiCode = danweiCode;
+        this.kufang = kufang;
+        this.kufangCode = kufangCode;
+        this.kuqu = kuqu;
+        this.kuquCode = kuquCode;
+        this.barCode = barCode;
+        this.assetNo = assetNo;
+        this.state = state;
+        this.stateCode = stateCode;
+        this.exsit = exsit;
+    }
+
+    @Generated(hash = 1033133866)
+    public LibAssetBean() {
+    }
 
 
     public Long getAssetId() {
@@ -123,5 +148,9 @@ public class LibAssetBean implements Serializable {
 
     public void setExsit(boolean exsit) {
         this.exsit = exsit;
+    }
+
+    public boolean getExsit() {
+        return this.exsit;
     }
 }

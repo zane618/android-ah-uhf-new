@@ -10,6 +10,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 
 import com.beiming.uhf_test.bean.FenzhiBoxBean;
 import com.beiming.uhf_test.bean.FileBean;
+import com.beiming.uhf_test.bean.LibAssetBean;
 import com.beiming.uhf_test.bean.LoginBean;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.bean.MeterBean;
@@ -17,6 +18,7 @@ import com.beiming.uhf_test.bean.pic.PhotoBean;
 
 import com.beiming.uhf_test.greendao.gen.FenzhiBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.FileBeanDao;
+import com.beiming.uhf_test.greendao.gen.LibAssetBeanDao;
 import com.beiming.uhf_test.greendao.gen.LoginBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
@@ -33,6 +35,7 @@ public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig fenzhiBoxBeanDaoConfig;
     private final DaoConfig fileBeanDaoConfig;
+    private final DaoConfig libAssetBeanDaoConfig;
     private final DaoConfig loginBeanDaoConfig;
     private final DaoConfig measBoxBeanDaoConfig;
     private final DaoConfig meterBeanDaoConfig;
@@ -40,6 +43,7 @@ public class DaoSession extends AbstractDaoSession {
 
     private final FenzhiBoxBeanDao fenzhiBoxBeanDao;
     private final FileBeanDao fileBeanDao;
+    private final LibAssetBeanDao libAssetBeanDao;
     private final LoginBeanDao loginBeanDao;
     private final MeasBoxBeanDao measBoxBeanDao;
     private final MeterBeanDao meterBeanDao;
@@ -55,6 +59,9 @@ public class DaoSession extends AbstractDaoSession {
         fileBeanDaoConfig = daoConfigMap.get(FileBeanDao.class).clone();
         fileBeanDaoConfig.initIdentityScope(type);
 
+        libAssetBeanDaoConfig = daoConfigMap.get(LibAssetBeanDao.class).clone();
+        libAssetBeanDaoConfig.initIdentityScope(type);
+
         loginBeanDaoConfig = daoConfigMap.get(LoginBeanDao.class).clone();
         loginBeanDaoConfig.initIdentityScope(type);
 
@@ -69,6 +76,7 @@ public class DaoSession extends AbstractDaoSession {
 
         fenzhiBoxBeanDao = new FenzhiBoxBeanDao(fenzhiBoxBeanDaoConfig, this);
         fileBeanDao = new FileBeanDao(fileBeanDaoConfig, this);
+        libAssetBeanDao = new LibAssetBeanDao(libAssetBeanDaoConfig, this);
         loginBeanDao = new LoginBeanDao(loginBeanDaoConfig, this);
         measBoxBeanDao = new MeasBoxBeanDao(measBoxBeanDaoConfig, this);
         meterBeanDao = new MeterBeanDao(meterBeanDaoConfig, this);
@@ -76,6 +84,7 @@ public class DaoSession extends AbstractDaoSession {
 
         registerDao(FenzhiBoxBean.class, fenzhiBoxBeanDao);
         registerDao(FileBean.class, fileBeanDao);
+        registerDao(LibAssetBean.class, libAssetBeanDao);
         registerDao(LoginBean.class, loginBeanDao);
         registerDao(MeasBoxBean.class, measBoxBeanDao);
         registerDao(MeterBean.class, meterBeanDao);
@@ -85,6 +94,7 @@ public class DaoSession extends AbstractDaoSession {
     public void clear() {
         fenzhiBoxBeanDaoConfig.clearIdentityScope();
         fileBeanDaoConfig.clearIdentityScope();
+        libAssetBeanDaoConfig.clearIdentityScope();
         loginBeanDaoConfig.clearIdentityScope();
         measBoxBeanDaoConfig.clearIdentityScope();
         meterBeanDaoConfig.clearIdentityScope();
@@ -97,6 +107,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public FileBeanDao getFileBeanDao() {
         return fileBeanDao;
+    }
+
+    public LibAssetBeanDao getLibAssetBeanDao() {
+        return libAssetBeanDao;
     }
 
     public LoginBeanDao getLoginBeanDao() {
