@@ -5,6 +5,8 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
@@ -53,6 +55,9 @@ public class LibAssetBean implements Serializable {
     public LibAssetBean() {
     }
 
+    public LibAssetBean(String barCode) {
+        this.barCode = barCode;
+    }
 
     public Long getAssetId() {
         return assetId;
@@ -170,5 +175,25 @@ public class LibAssetBean implements Serializable {
                 ", stateCode='" + stateCode + '\'' +
                 ", exsit=" + exsit +
                 '}';
+    }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o == null) return false;
+//        return this.barCode.startsWith((String) o);
+//    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LibAssetBean assetBean = (LibAssetBean) o;
+        return Objects.equals(barCode, assetBean.barCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(assetId, danwei, danweiCode, kufang, kufangCode, kuqu, kuquCode, barCode, assetNo, state, stateCode, exsit);
     }
 }

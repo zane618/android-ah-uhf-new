@@ -2,13 +2,20 @@ package com.beiming.uhf_test.library;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.base.BaseActivity;
+import com.beiming.uhf_test.bean.LibAssetBean;
 import com.beiming.uhf_test.databinding.ActivityCheckBinding;
+import com.beiming.uhf_test.library.adapter.LibAssetAdapter;
 import com.beiming.uhf_test.library.adapter.SpinnerAdapter;
 import com.beiming.uhf_test.library.adapter.SpinnerData;
 import com.beiming.uhf_test.tools.rfid.IRfidListener;
@@ -21,6 +28,8 @@ import java.util.List;
 public class LibActivity extends BaseActivity {
 
     private ActivityCheckBinding binding;
+    private List<LibAssetBean> listData = new ArrayList<>();
+    private LibAssetAdapter assetAdapter;
 
 
 
@@ -39,6 +48,12 @@ public class LibActivity extends BaseActivity {
     @Override
     protected void initView() {
         binding.inTitle.tvTitleName.setText("库房盘点");
+        Drawable right = ResourcesCompat.getDrawable(getResources(), R.drawable.menu_iv_selector, null);
+        binding.inTitle.tvRight.setText("菜单");
+        right.setBounds(0, 0, right.getMinimumWidth(), right.getMinimumHeight());
+        binding.inTitle.tvRight.setCompoundDrawables(null, null, right, null);
+        binding.inTitle.tvRight.setCompoundDrawablePadding(10);
+        binding.inTitle.tvRight.setVisibility(View.VISIBLE);
         binding.inTitle.ivBack.setOnClickListener(view -> {
             finish();
         });
@@ -64,6 +79,9 @@ public class LibActivity extends BaseActivity {
                 LogPrintUtil.zhangshi("上spinner:onNothingSelected");
             }
         });
+        assetAdapter = new LibAssetAdapter(listData);
+        binding.recycleview.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recycleview.setAdapter(assetAdapter);
     }
 
     @Override
@@ -75,7 +93,16 @@ public class LibActivity extends BaseActivity {
                     @Override
                     public void onRfidResult(@Nullable String s) {
                         if (s != null) {
-                            boolean exist = false;
+                            String barCode  = s.substring(0, s.length() - 2);
+                            LibAssetBean assetBean = new LibAssetBean(barCode);
+                            boolean exit = listData.contains(assetBean);
+                            if (!exit) {
+                                String assetNo = barCode.substring(barCode.length() - 15,
+                                        barCode.length() - 1);
+                                assetBean.setAssetNo(assetNo);
+//                                listData.add(assetBean);
+                                assetAdapter.addData(0, assetBean);
+                            }
 
                         }
                     }
@@ -86,6 +113,9 @@ public class LibActivity extends BaseActivity {
                     }
                 });
             }
+        });
+        binding.inTitle.tvRight.setOnClickListener(view -> {
+
         });
     }
 
