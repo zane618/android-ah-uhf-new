@@ -60,7 +60,7 @@
         <activity
             android:name=".activity.pic.PhotoPickerActivity" />
         <activity
-            android:name=".library.CheckActivity" />
+            android:name=".library.LibActivity" />
         <activity
             android:name=".activity.pic.PreviewPhotoActivity" />
         <activity android:name=".activity.MainActivity">

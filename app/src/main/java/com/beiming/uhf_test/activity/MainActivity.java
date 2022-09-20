@@ -36,7 +36,7 @@ import com.beiming.uhf_test.greendao.gen.FenzhiBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.helper.map.LocationHelper;
-import com.beiming.uhf_test.library.CheckActivity;
+import com.beiming.uhf_test.library.LibActivity;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
@@ -45,7 +45,6 @@ import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.beiming.uhf_test.utils.ToastUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.impl.AttachListPopupView;
-import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.slidebar.ColorBar;
@@ -243,7 +242,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                                 } else if ("挂接分支箱".equals(text)) {
                                     GjFzxActivity.Companion.startActivity(activity);
                                 } else if ("库房盘点".equals(text)) {
-                                    CheckActivity.startActivity(activity);
+                                    LibActivity.startActivity(activity);
                                 } else if ("clear".equals(text)) {
                                     MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
                                     measBoxBeanDao.deleteAll();

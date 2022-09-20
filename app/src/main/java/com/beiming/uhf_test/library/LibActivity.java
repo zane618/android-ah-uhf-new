@@ -18,14 +18,14 @@ import com.beiming.uhf_test.utils.LogPrintUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckActivity extends BaseActivity {
+public class LibActivity extends BaseActivity {
 
     private ActivityCheckBinding binding;
 
 
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, CheckActivity.class);
+        Intent intent = new Intent(context, LibActivity.class);
         context.startActivity(intent);
     }
 
