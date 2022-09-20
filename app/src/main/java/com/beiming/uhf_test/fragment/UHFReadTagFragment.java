@@ -1,8 +1,12 @@
 package com.beiming.uhf_test.fragment;
 
 
+import android.app.ScansManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -10,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,7 +73,9 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     Button BtClear;
     TextView tv_count;
     Button btnSave;
-    /**开始识别**/
+    /**
+     * 开始识别
+     **/
     Button btnShibie;
 
     private MainActivity mContext;
@@ -77,6 +84,16 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     private int MY_PERMISSIONS_REQUEST_FOR_EXCLE = 0x11;
 
     private String Tag = "UHFReadTagFragment";
+
+    /*public final static int BROADCAST_INPUT_MODE = 0;//广播模式
+    public final static int INPUTTEXT_INPUT_MODE = 1;//输入框模式
+    public final static int NON_EXTRA = 0;//无
+    public final static int ENTER_EXTRA = 1;//添加回车
+    private ScansManager mScansManager = null;
+    private int inputmode = INPUTTEXT_INPUT_MODE;
+    private int addExtra = NON_EXTRA;*/
+    private MyReceiver broadcastReceiver = null;
+    private IntentFilter filter = null;
 
     @Override
     public void onClick(View v) {
@@ -273,22 +290,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         });
     }
 
-    @Override
-    public void onPause() {
-        Log.i("MY", "UHFReadTagFragment.onPause");
-        super.onPause();
-        RfidHelper.getInstance().stopScan();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (!isVisibleToUser) {
-            System.out.println("当前UHFReadTagFragment不可见");
-            RfidHelper.getInstance().stopScan();
-        }
-    }
-
     /**
      * 添加EPC到列表中（添加标签至列表中）
      *
@@ -313,51 +314,54 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         long ts = System.currentTimeMillis();
         String scanTime = TimeUtils.getTime(ts);
 
+
         //去除扫到表的后两位
         if (epc.length() == 24) {
             barCode = epc.substring(0, epc.length() - 2);
-            assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1); //第7位开始，共14位
-            ////第8、9位 箱表类型
-            //正确的是第6、7位 代表资产类型
+        } else if (epc.length() == 22) {
+            barCode = epc;
+        }
+        assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1); //第7位开始，共14位
+        ////第8、9位 箱表类型
+        //正确的是第6、7位 代表资产类型
+        if (barCode.startsWith("01", 5))//表
+            barCodeType = "1";
+        else if (barCode.startsWith("05", 5))//箱
+            barCodeType = "0";
+        else
+            barCodeType = "-1";
 
-            if (barCode.startsWith("01", 5))//表
-                barCodeType = "1";
-            else if (barCode.startsWith("05", 5))//箱
-                barCodeType = "0";
-            else
-                barCodeType = "-1";
+        BarCodeBean barCodeBean = new BarCodeBean(epc, barCode, barCodeType, 1, "无", scanTime);
+        switch (barCodeType) {
+            case "-1":
 
-            BarCodeBean barCodeBean = new BarCodeBean(epc, barCode, barCodeType, 1, "无", scanTime);
-            switch (barCodeType) {
-                case "-1":
-
-                    break;
-                case "0":
-                    MeasBoxBean measBoxBean = new MeasBoxBean();
-                    measBoxBean.setBarCode(barCode);
-                    measBoxBean.setMeasAssetNo(assetNo);
-                    measBoxBean.setScanTime(scanTime);
-                    measBoxBean.setTs(ts);
-                    //当前是否存储过这个箱
-                    // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
+                break;
+            case "0":
+                MeasBoxBean measBoxBean = new MeasBoxBean();
+                measBoxBean.setBarCode(barCode);
+                measBoxBean.setMeasAssetNo(assetNo);
+                measBoxBean.setScanTime(scanTime);
+                measBoxBean.setTs(ts);
+                //当前是否存储过这个箱
+                // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
                     /*List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
                             MeasBoxBeanDao.Properties.BarCode.eq(barCode), MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
                     if (boxBarCodelist.size() > 0) {
                         measBoxBean.setIsExsit(true);
                         barCodeBean.setExsit(true);
                     }*/
-                    measBoxBeanList.add(0, measBoxBean);
-                    barCodeBeanList.add(0, barCodeBean);
-                    break;
-                case "1":
-                    //此时的表箱条形码还未写入电表中，当用户确认时再次写入
-                    MeterBean meterBean = new MeterBean();
-                    meterBean.setBarCode(barCode);//电表条形码
-                    meterBean.setMeterAssetNo(assetNo);
-                    meterBean.setScanTime(scanTime);
-                    meterBean.setTs(ts);
-                    //当前是否存储过这个电能表
-                    // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
+                measBoxBeanList.add(0, measBoxBean);
+                barCodeBeanList.add(0, barCodeBean);
+                break;
+            case "1":
+                //此时的表箱条形码还未写入电表中，当用户确认时再次写入
+                MeterBean meterBean = new MeterBean();
+                meterBean.setBarCode(barCode);//电表条形码
+                meterBean.setMeterAssetNo(assetNo);
+                meterBean.setScanTime(scanTime);
+                meterBean.setTs(ts);
+                //当前是否存储过这个电能表
+                // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
                     /*List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
                             MeterBeanDao.Properties.BarCode.eq(barCode), MeterBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time())))
                             .build().list();
@@ -365,12 +369,11 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                         meterBean.setIsExsit(true);
                         barCodeBean.setExsit(true);
                     }*/
-                    meterBeanList.add(meterBean);
-                    barCodeBeanList.add(barCodeBean);
-                    break;
-            }
-            tv_count.setText(measBoxBeanList.size() + "个箱  " + meterBeanList.size() + "个表");
+                meterBeanList.add(meterBean);
+                barCodeBeanList.add(barCodeBean);
+                break;
         }
+        tv_count.setText(measBoxBeanList.size() + "个箱  " + meterBeanList.size() + "个表");
     }
 
     @Override
@@ -434,7 +437,8 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         BarCodeBean barCodeBean;
         for (int i = 0; i < barCodeBeanList.size(); i++) {
             barCodeBean = barCodeBeanList.get(i);
-            if (strEPC.equals(barCodeBean.getTagUii())) {
+            if (barCodeBean.getTagUii().startsWith(strEPC) ||
+                    strEPC.startsWith(barCodeBean.getTagUii())) {
                 barCodeBean.setTagCount(barCodeBean.getTagCount() + 1);
                 return true;
             }
@@ -486,6 +490,79 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         if (ConstantUtil.CLEAR_READ_TAG_DATA.equals(attachmentUpdate.getTag())) {
             //todo 本地保存成功，此处清除数据数据
             clearData();
+        }
+    }
+
+    class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+//            LogPrintUtil.zhangshi("fragment:onReceive");
+            if (intent.getAction().equals("com.safeuem.doublebird.appReadyToInstall")) {
+//                et.append("com.safeuem.doublebird.appReadyToInstall");
+            } else {
+                addEPCToList(intent.getStringExtra("barcode"));
+            }
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogPrintUtil.zhangshi("fragment:" + hidden);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogPrintUtil.zhangshi("fragment:onResume");
+        if (isVisibleToUser) {
+            initBroadcast();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        LogPrintUtil.zhangshi("fragment:onPause");
+        super.onPause();
+        RfidHelper.getInstance().stopScan();
+        destroyBroadcase();
+    }
+
+    private boolean isVisibleToUser;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        if (!isVisibleToUser) {
+            LogPrintUtil.zhangshi("fragment:当前UHFReadTagFragment不可见");
+
+            RfidHelper.getInstance().stopScan();
+            destroyBroadcase();
+        } else {
+            LogPrintUtil.zhangshi("fragment:当前UHFReadTagFragment   可见");
+            initBroadcast();
+        }
+    }
+
+    private void destroyBroadcase() {
+        if (broadcastReceiver != null) {
+            try {
+                mContext.unregisterReceiver(broadcastReceiver);
+            }catch (Exception e){}
+        }
+    }
+
+    private void initBroadcast() {
+        if (broadcastReceiver == null) {
+            filter = new IntentFilter();
+            filter.addAction("android.scanservice.action.UPLOAD_BARCODE_DATA");
+            filter.addAction("com.safeuem.doublebird.appReadyToInstall");
+            broadcastReceiver = new MyReceiver();
+        }
+        try {
+            mContext.registerReceiver(broadcastReceiver, filter);
+        } catch (Exception e) {
         }
     }
 }
