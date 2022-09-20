@@ -4,9 +4,11 @@ import android.text.TextUtils;
 import android.util.Xml;
 
 import com.beiming.uhf_test.App;
+import com.beiming.uhf_test.bean.LibAssetBean;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.bean.MeterBean;
 import com.beiming.uhf_test.bean.pic.PhotoBean;
+import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.utils.Contant;
 import com.beiming.uhf_test.utils.FileOperator;
 import com.beiming.uhf_test.utils.LogPrintUtil;
@@ -42,6 +44,83 @@ import jxl.write.biff.RowsExceededException;
 public class FileXls {
 
     private static final int DEFAULT_SHEET = 0;
+
+    //读取数据转化成LibAssetBean 集合
+    public static List<LibAssetBean> readXLSToLibAssetList(String path, int startRows) {
+        List<LibAssetBean> list = new ArrayList<>();
+        final int MAX_ROWS = 4000;
+        try {
+            Workbook workbook = Workbook.getWorkbook(new File(path));
+            Sheet sheet = workbook.getSheet(0);
+            int columnCount = sheet.getColumns();
+
+            int rowCount = sheet.getRows();
+            int exeRowCount = rowCount;
+            if (rowCount > startRows + MAX_ROWS) {
+                exeRowCount = startRows + MAX_ROWS;
+            }
+
+            Cell cell = null;
+            for (int i = startRows; i < exeRowCount; i++) {
+                LibAssetBean asset = new LibAssetBean();
+                for (int j = 0; j < columnCount; j++) {
+                    cell = sheet.getCell(j, i);
+                    String temp2 = "";
+                    if (cell.getType() == CellType.NUMBER) {
+                        temp2 = ((NumberCell) cell).getValue() + "";
+                    } else if (cell.getType() == CellType.DATE) {
+                        temp2 = "" + ((DateCell) cell).getDate();
+                    } else {
+                        temp2 = "" + cell.getContents();
+                    }
+
+                    switch (j) {
+                        case 0:
+                            LogPrintUtil.zhangshi("temp2:" + temp2);
+                            break;
+                        case 1:
+                            asset.setDanweiCode(temp2);
+                            break;
+                        case 2:
+                            asset.setDanwei(temp2);
+                            break;
+                        case 3:
+                            asset.setKufangCode(temp2);
+                            break;
+                        case 4:
+                            asset.setKufang(temp2);
+                            break;
+                        case 5:
+                            asset.setKuquCode(temp2);
+                            break;
+                        case 6:
+                            asset.setKuqu(temp2);
+                            break;
+                        case 7:
+                            asset.setAssetNo(temp2);
+                            break;
+                        case 8:
+                            asset.setStateCode(temp2);
+                            break;
+                        case 9:
+                            asset.setState(temp2);
+                            break;
+                    }
+                }
+                list.add(asset);
+            }
+            workbook.close();
+            GreenDaoManager.getInstance().getSession().getLibAssetBeanDao().insertInTx(list);
+
+            if (exeRowCount < rowCount) {
+                readXLSToLibAssetList(path, exeRowCount);
+            }
+        } catch (Exception e) {
+            return null;
+        }
+
+        return list;
+    }
 
     public static String readXLS(String path) {
         String str = "";
@@ -429,20 +508,4 @@ public class FileXls {
 
     public static final int CREATE_FAIL = -1;
     public static final int ADD_DATA_FAIL = -2;
-
-    //调试状态成功或失败的状态码
-    public static List<String> tableTitleList = new ArrayList<>();
-    {
-        tableTitleList.add("电表箱条形码编号");
-        tableTitleList.add("电表箱资产编号");
-        tableTitleList.add("scanTime");
-        tableTitleList.add("GPS经度");
-        tableTitleList.add("GPS纬度");
-        tableTitleList.add("GPS海拔");
-        tableTitleList.add("安装地址");
-        tableTitleList.add("备注");
-        tableTitleList.add("电能表条形码");
-        tableTitleList.add("电能表资产编号");
-        tableTitleList.add("计量箱图片名称");
-    }
 }

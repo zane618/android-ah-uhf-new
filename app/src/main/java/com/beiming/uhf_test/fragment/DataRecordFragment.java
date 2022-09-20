@@ -99,7 +99,6 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     private MainActivity mContext;
     private List<MeasBoxBean> boxBeanList;
     private List<MeterBean> meterBeanList;
-    private List<String> boxBarCodeList;//用来记录电表查询时遍历添加的箱，作用用于去重
     private BoxListAdapter boxListAdapter;
     private MeterListAdapter meterAdapter;
     private MeasBoxBeanDao measBoxBeanDao;
@@ -339,8 +338,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             boxBeanList = measBoxBeanDao.loadAll();
         }
         //2 去重
-        Set<MeasBoxBean> userSet = new HashSet<>(boxBeanList);
-        boxBeanList = new ArrayList<>(userSet);
+//        Set<MeasBoxBean> userSet = new HashSet<>(boxBeanList);
+//        boxBeanList = new ArrayList<>(userSet);
 
         //刷新页面数据
         changeRightData(0);

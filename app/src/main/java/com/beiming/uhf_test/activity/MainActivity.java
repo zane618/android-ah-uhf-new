@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beiming.uhf_test.R;
+import com.beiming.uhf_test.TestActivity;
 import com.beiming.uhf_test.activity.fenzhix.ReadFzxActivity;
 import com.beiming.uhf_test.activity.fenzhix.gj.GjFzxActivity;
 import com.beiming.uhf_test.adapter.MainViewPagerAdapter;
@@ -233,7 +234,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     .isCenterHorizontal(false)
                     .atView(binding.tvMenu)  // 依附于所点击的View，内部会自动判断在上方或者下方显示
                     .autoDismiss(false)
-                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "库房盘点", "clear"},
+                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "库房盘点", "clear", "test"},
                             new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher},
                             (position, text) -> attachListPopupView.dismissWith(() -> {
                                 ToastUtils.showToast(text);
@@ -250,9 +251,12 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                                     meterBeanDao.deleteAll();
                                     FenzhiBoxBeanDao fenzhiBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getFenzhiBoxBeanDao();
                                     fenzhiBoxBeanDao.deleteAll();
+                                    GreenDaoManager.getInstance().getNewSession().getLibAssetBeanDao().deleteAll();
                                     AttachmentUpdate attachmentUpdate = new AttachmentUpdate();
                                     attachmentUpdate.setTag(ConstantUtil.CLEAR_READ_TAG_DATA);
                                     EventBus.getDefault().post(attachmentUpdate);
+                                } else if ("test".equals(text)) {
+                                    startActivity(new Intent(activity, TestActivity.class));
                                 }
                             }), 0, 0, Gravity.LEFT);
             attachListPopupView.show();

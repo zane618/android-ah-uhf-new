@@ -339,30 +339,32 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                     measBoxBean.setScanTime(scanTime);
                     measBoxBean.setTs(ts);
                     //当前是否存储过这个箱
-                    List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
+                    // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
+                    /*List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
                             MeasBoxBeanDao.Properties.BarCode.eq(barCode), MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
                     if (boxBarCodelist.size() > 0) {
                         measBoxBean.setIsExsit(true);
                         barCodeBean.setExsit(true);
-                    }
+                    }*/
                     measBoxBeanList.add(0, measBoxBean);
                     barCodeBeanList.add(0, barCodeBean);
                     break;
                 case "1":
-                    //todo 注意，此时的表箱条形码还未写入电表中，当用户确认时再次写入
+                    //此时的表箱条形码还未写入电表中，当用户确认时再次写入
                     MeterBean meterBean = new MeterBean();
                     meterBean.setBarCode(barCode);//电表条形码
                     meterBean.setMeterAssetNo(assetNo);
                     meterBean.setScanTime(scanTime);
                     meterBean.setTs(ts);
                     //当前是否存储过这个电能表
-                    List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
+                    // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
+                    /*List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
                             MeterBeanDao.Properties.BarCode.eq(barCode), MeterBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time())))
                             .build().list();
                     if (meterBarCodelist.size() > 0) {
                         meterBean.setIsExsit(true);
                         barCodeBean.setExsit(true);
-                    }
+                    }*/
                     meterBeanList.add(meterBean);
                     barCodeBeanList.add(barCodeBean);
                     break;

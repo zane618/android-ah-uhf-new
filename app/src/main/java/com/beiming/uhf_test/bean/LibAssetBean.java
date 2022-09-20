@@ -153,4 +153,22 @@ public class LibAssetBean implements Serializable {
     public boolean getExsit() {
         return this.exsit;
     }
+
+    @Override
+    public String toString() {
+        return "LibAssetBean{" +
+                "assetId=" + assetId +
+                ", danwei='" + danwei + '\'' +
+                ", danweiCode='" + danweiCode + '\'' +
+                ", kufang='" + kufang + '\'' +
+                ", kufangCode='" + kufangCode + '\'' +
+                ", kuqu='" + kuqu + '\'' +
+                ", kuquCode='" + kuquCode + '\'' +
+                ", barCode='" + barCode + '\'' +
+                ", assetNo='" + assetNo + '\'' +
+                ", state='" + state + '\'' +
+                ", stateCode='" + stateCode + '\'' +
+                ", exsit=" + exsit +
+                '}';
+    }
 }
