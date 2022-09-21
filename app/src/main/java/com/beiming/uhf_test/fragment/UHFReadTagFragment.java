@@ -315,21 +315,26 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         String scanTime = TimeUtils.getTime(ts);
 
 
+        //新表老表条码标号都是22位，rfid识别多了2位0，是24位，怎么区分资产编号和类型呢
         //去除扫到表的后两位
         if (epc.length() == 24) {
             barCode = epc.substring(0, epc.length() - 2);
         } else if (epc.length() == 22) {
             barCode = epc;
         }
-        assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1); //第7位开始，共14位
-        ////第8、9位 箱表类型
+        assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1); //新表，第7位开始，共14位
+
+        // TODO: 2022/9/21 老表的资产类型 
         //正确的是第6、7位 代表资产类型
         if (barCode.startsWith("01", 5))//表
             barCodeType = "1";
         else if (barCode.startsWith("05", 5))//箱
             barCodeType = "0";
-        else
-            barCodeType = "-1";
+        else {
+//            barCodeType = "-1"; //老表资产编号是10位，编码是22位，从-1改成1 临时
+            barCodeType = "1"; //老表资产编号是10位，编码是22位，从-1改成1 临时
+            assetNo = barCode.substring(barCode.length() - 11, barCode.length() - 1); //新表，第7位开始，共14位
+        }
 
         BarCodeBean barCodeBean = new BarCodeBean(epc, barCode, barCodeType, 1, "无", scanTime);
         switch (barCodeType) {
