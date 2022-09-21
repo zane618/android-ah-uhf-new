@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="计量箱高度(cm)："
+            android:text="计量箱高度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -111,7 +111,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="计量箱宽度(cm)："
+            android:text="计量箱宽度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -148,7 +148,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="计量箱深度(cm)："
+            android:text="计量箱深度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />

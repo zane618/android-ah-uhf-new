@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="左上门    高度(cm)："
+            android:text="左上门    高度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="    宽度(cm)："
+            android:text="    宽度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -70,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="左下门    高度(cm)："
+            android:text="左下门    高度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -90,7 +90,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="    宽度(cm)："
+            android:text="    宽度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -122,7 +122,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="右上门    高度(cm)："
+            android:text="右上门    高度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -142,7 +142,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="    宽度(cm)："
+            android:text="    宽度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -174,7 +174,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="右下门    高度(cm)："
+            android:text="右下门    高度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -194,7 +194,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="    宽度(cm)："
+            android:text="    宽度(mm)："
             android:textColor="#ff333333"
             android:textSize="13sp"
             android:textStyle="bold" />
