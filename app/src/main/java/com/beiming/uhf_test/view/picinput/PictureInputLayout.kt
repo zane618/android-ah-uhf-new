@@ -320,7 +320,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
             photo.picName = item.fileName
             photobeans.add(photo)
         }
-        for (item in dataFirst) {
+        for (item in singleData) {
             if (TextUtils.isEmpty(item.realPath)) {
                 break
             }

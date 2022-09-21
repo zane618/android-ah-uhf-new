@@ -30,41 +30,6 @@
             android:textColor="@color/gray_333"
             android:textSize="11sp" />
     </LinearLayout>
-    <!--  请上传完整的箱体照片  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="8dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray_333"
-            android:text="1 请上传完整的箱体照片" />
-
-        <TextView
-            android:id="@+id/tv_shili01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:padding="5dp"
-            android:layout_gravity="right"
-            android:textSize="11sp"
-            android:textColor="@color/white"
-            android:background="@drawable/sel_01"
-            android:text="查看示例"/>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFirst"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:overScrollMode="never" />
 
     <!--  请上传表位布局照片  -->
     <LinearLayout
@@ -78,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gray_333"
-            android:text="2 请上传表位布局照片" />
+            android:text="1 请上传表位布局照片" />
 
         <TextView
             android:id="@+id/tv_shili02"
@@ -114,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gray_333"
-            android:text="3 请上传一只清晰的电表照片" />
+            android:text="2 请上传一只清晰的电表照片" />
 
         <TextView
             android:id="@+id/tv_shili03"
@@ -132,6 +97,42 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSingle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:overScrollMode="never" />
+
+    <!--  请上传完整的箱体照片  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_333"
+            android:text="3 请上传完整的箱体照片" />
+
+        <TextView
+            android:id="@+id/tv_shili01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:layout_gravity="right"
+            android:textSize="11sp"
+            android:textColor="@color/white"
+            android:background="@drawable/sel_01"
+            android:text="查看示例"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFirst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
