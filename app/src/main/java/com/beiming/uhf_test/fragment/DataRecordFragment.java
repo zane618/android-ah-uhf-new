@@ -338,8 +338,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             boxBeanList = measBoxBeanDao.loadAll();
         }
         //2 去重
-//        Set<MeasBoxBean> userSet = new HashSet<>(boxBeanList);
-//        boxBeanList = new ArrayList<>(userSet);
+        Set<MeasBoxBean> userSet = new HashSet<>(boxBeanList);
+        boxBeanList = new ArrayList<>(userSet);
 
         //刷新页面数据
         changeRightData(0);

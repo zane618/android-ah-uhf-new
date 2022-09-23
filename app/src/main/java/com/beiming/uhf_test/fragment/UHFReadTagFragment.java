@@ -80,7 +80,6 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
 
     private MainActivity mContext;
     private ContrastBarCodeDialog contrastBarCodeDialog;
-    private HintDialog hintDialog;
     private int MY_PERMISSIONS_REQUEST_FOR_EXCLE = 0x11;
 
     private String Tag = "UHFReadTagFragment";
@@ -219,12 +218,15 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                 //条形码类型 0:计量箱 ，1：电能表 -1:不能识别的条形码
                 switch (barCodeBeanList.get(position).getBarCodeType()) {
                     case "0": //箱
-                        if (hintDialog == null)
-                            showBoxHint("是否删除该箱条形码？");
-                        else
-                            hintDialog.show();
+                        showBoxHint(true, "是否删除该箱条形码？");
                         break;
                     case "1"://表
+                        if (view instanceof TextView) {
+                            if (((TextView) view).getText().equals("删除")) {
+                                showBoxHint(false, "是否删除该电能表条形码？");
+                                return;
+                            }
+                        }
                         if (contrastBarCodeDialog == null) {
                             showContrastBarCodeDialog();
                         } else {
@@ -273,13 +275,16 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         });
     }
 
-    private void showBoxHint(String content) {
-        hintDialog = DialogUtils.showHintDialog(mContext, content, "否", "是", new OnHintDialogClicklistener() {
+    private void showBoxHint(boolean isBox, String content) {
+        DialogUtils.showHintDialog(mContext, content, "否", "是", new OnHintDialogClicklistener() {
             @Override
             public void onConfirm() {
-                barCodeBeanList.remove(currentPosition);
-                measBoxBeanList.remove(currentPosition);
-                adapter.setNewData(barCodeBeanList);
+//                barCodeBeanList.remove(currentPosition);
+                if (isBox) {
+                    measBoxBeanList.remove(currentPosition);
+                }
+                adapter.remove(currentPosition);
+//                adapter.setNewData(barCodeBeanList);
                 tv_count.setText(measBoxBeanList.size() + "个箱  " + meterBeanList.size() + "个表");
             }
 
@@ -348,13 +353,12 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                 measBoxBean.setScanTime(scanTime);
                 measBoxBean.setTs(ts);
                 //当前是否存储过这个箱
-                // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
-                    /*List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
-                            MeasBoxBeanDao.Properties.BarCode.eq(barCode), MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
-                    if (boxBarCodelist.size() > 0) {
-                        measBoxBean.setIsExsit(true);
-                        barCodeBean.setExsit(true);
-                    }*/
+                List<MeasBoxBean> boxBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().queryBuilder().where(
+                        MeasBoxBeanDao.Properties.BarCode.eq(barCode), MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
+                if (boxBarCodelist.size() > 0) {
+                    measBoxBean.setIsExsit(true);
+                    barCodeBean.setExsit(true);
+                }
                 measBoxBeanList.add(0, measBoxBean);
                 barCodeBeanList.add(0, barCodeBean);
                 break;
@@ -366,14 +370,13 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                 meterBean.setScanTime(scanTime);
                 meterBean.setTs(ts);
                 //当前是否存储过这个电能表
-                // TODO: 2022/9/20 这里先写死 true，模拟贴相同的电子标签
-                    /*List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
-                            MeterBeanDao.Properties.BarCode.eq(barCode), MeterBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time())))
-                            .build().list();
-                    if (meterBarCodelist.size() > 0) {
-                        meterBean.setIsExsit(true);
-                        barCodeBean.setExsit(true);
-                    }*/
+                List<MeterBean> meterBarCodelist = GreenDaoManager.getInstance().getNewSession().getMeterBeanDao().queryBuilder().where(
+                                MeterBeanDao.Properties.BarCode.eq(barCode), MeterBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time())))
+                        .build().list();
+                if (meterBarCodelist.size() > 0) {
+                    meterBean.setIsExsit(true);
+                    barCodeBean.setExsit(true);
+                }
                 meterBeanList.add(meterBean);
                 barCodeBeanList.add(barCodeBean);
                 break;
@@ -554,7 +557,8 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         if (broadcastReceiver != null) {
             try {
                 mContext.unregisterReceiver(broadcastReceiver);
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
     }
 
