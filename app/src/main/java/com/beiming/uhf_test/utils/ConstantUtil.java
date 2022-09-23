@@ -25,4 +25,6 @@ public class ConstantUtil {
     public static final String CLEAR_READ_TAG_DATA = "CLEAR_READ_TAG_DATA";//成功保存后，清除扫描标签中的数据
     public static final String CREAT_OR_DETAILS = "CREAT_OR_DETAILS";//判断是新建还是详情界面(0:新建,1:详情)
     public static final int NULL_PERMISSIONS_REQUEST = 10001;
+
+
 }

@@ -8,9 +8,11 @@ import com.beiming.uhf_test.bean.LoginBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
 import com.beiming.uhf_test.nohttp.NetConsts;
 import com.beiming.uhf_test.utils.AppUtil;
+import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
 import com.kongzue.baseframework.BaseApp;
 import com.lxj.xpopup.XPopup;
+import com.tencent.mmkv.MMKV;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
@@ -70,7 +72,9 @@ public class App extends BaseApp<App> {
         //
         XPopup.setPrimaryColor(getResources().getColor(R.color.colorPrimary));
         XPopup.setAnimationDuration(200);
-
+        //MMKV初始化
+        String rootDir = MMKV.initialize(this);
+        LogPrintUtil.zhangshi("mmkv:rootDir:" + rootDir);
 
         //初始化 uni小程序SDK ----start----------
         MenuActionSheetItem item = new MenuActionSheetItem("关于", "gy");

@@ -48,6 +48,7 @@ public class MeasBoxBean implements Serializable {
     private String caizhi = "金属"; //金属，非金属
     private String gao = ""; //长
     private String kuan = ""; //宽
+    private String shen = ""; //深度
     private String zsGao = "";
     private String zsKuan = "";
     private String zxGao = "";
@@ -65,14 +66,14 @@ public class MeasBoxBean implements Serializable {
     @Convert(columnType = String.class, converter = PhotoBeanConverter.class)
     private List<PhotoBean> boxImages;//计量箱下图片的集合
 
-    @Generated(hash = 2071421462)
+    @Generated(hash = 46089683)
     public MeasBoxBean(Long MeasBoxId, String barCode, String measAssetNo, String scanTime,
             long ts, String gps_X, String gps_Y, String gps_Z, String instAddr,
             String instLoc, String describe, String tmnlAddr, String tgName, String boxRows,
             String boxCols, String note, boolean isExsit, String hasQx, String qxDetail,
             String fenzhixCode, String fenzhixAssetNo, String caizhi, String gao, String kuan,
-            String zsGao, String zsKuan, String zxGao, String zxKuan, String ysGao,
-            String ysKuan, String yxGao, String yxKuan, boolean checked,
+            String shen, String zsGao, String zsKuan, String zxGao, String zxKuan,
+            String ysGao, String ysKuan, String yxGao, String yxKuan, boolean checked,
             List<MeterBean> meters, List<PhotoBean> boxImages) {
         this.MeasBoxId = MeasBoxId;
         this.barCode = barCode;
@@ -98,6 +99,7 @@ public class MeasBoxBean implements Serializable {
         this.caizhi = caizhi;
         this.gao = gao;
         this.kuan = kuan;
+        this.shen = shen;
         this.zsGao = zsGao;
         this.zsKuan = zsKuan;
         this.zxGao = zxGao;
@@ -113,6 +115,14 @@ public class MeasBoxBean implements Serializable {
 
     @Generated(hash = 1045529700)
     public MeasBoxBean() {
+    }
+
+    public String getShen() {
+        return shen;
+    }
+
+    public void setShen(String shen) {
+        this.shen = shen;
     }
 
     public String getFenzhixAssetNo() {

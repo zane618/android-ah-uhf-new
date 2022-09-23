@@ -262,6 +262,11 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         } else {
             boxBean.setKuan(boxSizeInputLayout.getKuan());
         }
+        if (TextUtils.isEmpty(boxSizeInputLayout.getShen())) {
+            boxBean.setShen("未填写");
+        } else {
+            boxBean.setShen(boxSizeInputLayout.getShen());
+        }
         //保存箱
         MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
         int size = measBoxBeanDao.loadAll().size();

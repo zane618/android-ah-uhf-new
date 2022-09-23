@@ -63,7 +63,7 @@ android {
         }
     }
     greendao {
-        schemaVersion 3
+        schemaVersion 4
 
         daoPackage 'com.beiming.uhf_test.greendao.gen'
         targetGenDir 'src/main/java'
@@ -176,6 +176,8 @@ dependencies {
     implementation 'io.github.lucksiege:camerax:v3.10.6'
     //xpopu
     implementation 'com.github.li-xiaojun:XPopup:2.8.15'
+    //mmkv
+    implementation 'com.tencent:mmkv:1.2.14'
 
 }
 allprojects {

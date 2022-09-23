@@ -80,6 +80,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
     TextView tv_chang;
     @BindView(R.id.tv_kuan)
     TextView tv_kuan;
+    @BindView(R.id.tv_shen)
+    TextView tv_shen;
     @BindView(R.id.tv_caizhi)
     TextView tv_caizhi;
     @BindView(R.id.tv_row_col)
@@ -288,6 +290,7 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             tvAddr.setText(measBoxBean.getInstAddr());
             tv_chang.setText(measBoxBean.getGao());
             tv_kuan.setText(measBoxBean.getKuan());
+            tv_shen.setText(measBoxBean.getShen());
             tv_caizhi.setText(measBoxBean.getCaizhi());
             tv_row_col.setText(measBoxBean.getBoxRows() + " 行， " + measBoxBean.getBoxCols() + " 列" );
             if (!TextUtils.isEmpty(measBoxBean.getNote())) {
