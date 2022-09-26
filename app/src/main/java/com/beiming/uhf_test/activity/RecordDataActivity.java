@@ -263,6 +263,8 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
                                 }
                             }, false);
             popupView.show();
+        } else {
+            save3();
         }
 
     }

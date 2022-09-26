@@ -27,12 +27,22 @@ public class Contant {
         tableTitleList.add("材质");
         tableTitleList.add("电表箱高度");
         tableTitleList.add("电表箱宽度");
+        tableTitleList.add("电表箱深度");
         tableTitleList.add("缺陷等级");
         tableTitleList.add("缺陷详情");
         tableTitleList.add("分支箱条形码编号");
         tableTitleList.add("分支箱资产编号");
         tableTitleList.add("行");
         tableTitleList.add("列");
+
+        tableTitleList.add("左上门高度");
+        tableTitleList.add("左上门宽度");
+        tableTitleList.add("左下门高度");
+        tableTitleList.add("左下门宽度");
+        tableTitleList.add("右上门高度");
+        tableTitleList.add("右上门宽度");
+        tableTitleList.add("右下门高度");
+        tableTitleList.add("右下门宽度");
 
 
 

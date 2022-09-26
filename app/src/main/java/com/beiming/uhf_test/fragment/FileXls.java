@@ -352,40 +352,40 @@ public class FileXls {
 
                 for (int colNumber = 0; colNumber < Contant.tableTitleList.size(); colNumber++) {
                     content = "";
-                    switch (colNumber) {
-                        case 0:
+                    switch (Contant.tableTitleList.get(colNumber)) {
+                        case "电表箱条形码编号":
                             if (!TextUtils.isEmpty(measBoxBean.getBarCode()))
                                 content = measBoxBean.getBarCode();
                             break;
-                        case 1:
+                        case "电表箱资产编号":
                             if (!TextUtils.isEmpty(measBoxBean.getMeasAssetNo()))
                                 content = measBoxBean.getMeasAssetNo();
                             break;
-                        case 2:
+                        case "采集时间":
                             if (!TextUtils.isEmpty(measBoxBean.getScanTime()))
                                 content = measBoxBean.getScanTime();
                             break;
-                        case 3:
+                        case "GPS经度":
                             if (!TextUtils.isEmpty(measBoxBean.getGps_X()))
                                 content = measBoxBean.getGps_X();
                             break;
-                        case 4:
+                        case "GPS纬度":
                             if (!TextUtils.isEmpty(measBoxBean.getGps_Y()))
                                 content = measBoxBean.getGps_Y();
                             break;
-                        case 5:
+                        case "GPS海拔":
                             if (!TextUtils.isEmpty(measBoxBean.getGps_Z()))
                                 content = measBoxBean.getGps_Z();
                             break;
-                        case 6:
+                        case "安装地址":
                             if (!TextUtils.isEmpty(measBoxBean.getInstAddr()))
                                 content = measBoxBean.getInstAddr();
                             break;
-                        case 7:
+                        case "备注":
                             if (!TextUtils.isEmpty(measBoxBean.getNote()))
                                 content = measBoxBean.getNote();
                             break;
-                        case 8://表条码集
+                        case "电能表条形码"://表条码集
                             if (measBoxBean.getMeters() != null && measBoxBean.getMeters().size() > 0) {
                                 for (MeterBean meterBean : measBoxBean.getMeters()) {
                                     if (TextUtils.isEmpty(content)) {
@@ -396,7 +396,7 @@ public class FileXls {
                                 }
                             }
                             break;
-                        case 9://表资产编号集
+                        case "电能表资产编号"://表资产编号集
                             if (measBoxBean.getMeters() != null && measBoxBean.getMeters().size() > 0) {
                                 for (MeterBean meterBean : measBoxBean.getMeters()) {
                                     if (TextUtils.isEmpty(content)) {
@@ -407,7 +407,7 @@ public class FileXls {
                                 }
                             }
                             break;
-                        case 10://计量箱图片名称集
+                        case "计量箱图片名称"://计量箱图片名称集
                             if (measBoxBean.getBoxImages() != null && measBoxBean.getBoxImages().size() > 0) {
                                 for (PhotoBean photoBean : measBoxBean.getBoxImages()) {
                                     if (TextUtils.isEmpty(content)) {
@@ -420,41 +420,78 @@ public class FileXls {
                             break;
 
 
-                        case 11://材质
+                        case "材质"://材质
                             if (!TextUtils.isEmpty(measBoxBean.getCaizhi()))
                                 content = measBoxBean.getCaizhi();
                             break;
-                        case 12://电表箱高度
+                        case "电表箱高度"://电表箱高度
                             if (!TextUtils.isEmpty(measBoxBean.getGao()))
                                 content = measBoxBean.getGao();
                             break;
-                        case 13://电表箱宽度
+                        case "电表箱宽度"://电表箱宽度
                             if (!TextUtils.isEmpty(measBoxBean.getKuan()))
                                 content = measBoxBean.getKuan();
                             break;
-                        case 14://缺陷等级
+                        case "电表箱深度"://电表箱深度
+                            if (!TextUtils.isEmpty(measBoxBean.getShen()))
+                                content = measBoxBean.getShen();
+                            break;
+                        case "缺陷等级"://缺陷等级
                             if (!TextUtils.isEmpty(measBoxBean.getHasQx()))
                                 content = measBoxBean.getHasQx();
                             break;
-                        case 15://缺陷详情
+                        case "缺陷详情"://缺陷详情
                             if (!TextUtils.isEmpty(measBoxBean.getQxDetail()))
                                 content = measBoxBean.getQxDetail();
                             break;
-                        case 16://分支箱条形码编号
+                        case "分支箱条形码编号"://分支箱条形码编号
                             if (!TextUtils.isEmpty(measBoxBean.getFenzhixCode()))
                                 content = measBoxBean.getFenzhixCode();
                             break;
-                        case 17://分支箱资产编号
+                        case "分支箱资产编号"://分支箱资产编号
                             if (!TextUtils.isEmpty(measBoxBean.getFenzhixCode()))
                                 content = measBoxBean.getFenzhixAssetNo();
                             break;
-                        case 18://行数
+                        case "行"://行数
                             if (!TextUtils.isEmpty(measBoxBean.getBoxRows()))
                                 content = measBoxBean.getBoxRows();
                             break;
-                        case 19://列
+                        case "列"://列
                             if (!TextUtils.isEmpty(measBoxBean.getBoxCols()))
                                 content = measBoxBean.getBoxCols();
+                            break;
+
+                        case "左上门高度":
+                            if (!TextUtils.isEmpty(measBoxBean.getZsGao()))
+                                content = measBoxBean.getZsGao();
+                            break;
+                        case "左上门宽度":
+                            if (!TextUtils.isEmpty(measBoxBean.getZsKuan()))
+                                content = measBoxBean.getZsKuan();
+                            break;
+                        case "左下门高度":
+                            if (!TextUtils.isEmpty(measBoxBean.getZxGao()))
+                                content = measBoxBean.getZxGao();
+                            break;
+                        case "左下门宽度":
+                            if (!TextUtils.isEmpty(measBoxBean.getZxKuan()))
+                                content = measBoxBean.getZxKuan();
+                            break;
+                        case "右上门高度":
+                            if (!TextUtils.isEmpty(measBoxBean.getYsGao()))
+                                content = measBoxBean.getYsGao();
+                            break;
+                        case "右上门宽度":
+                            if (!TextUtils.isEmpty(measBoxBean.getYsKuan()))
+                                content = measBoxBean.getYsKuan();
+                            break;
+                        case "右下门高度":
+                            if (!TextUtils.isEmpty(measBoxBean.getYxGao()))
+                                content = measBoxBean.getYxGao();
+                            break;
+                        case "右下门宽度":
+                            if (!TextUtils.isEmpty(measBoxBean.getYxKuan()))
+                                content = measBoxBean.getYxKuan();
                             break;
 
 
@@ -496,8 +533,8 @@ public class FileXls {
         }
         /*
          * for (int attr = 0; attr < attrs.size(); attr++) { Label label = new
-		 * Label(attr, i, attrs.get(attr)); sheet.addCell(label); }
-		 */
+         * Label(attr, i, attrs.get(attr)); sheet.addCell(label); }
+         */
 
         book.write();
         book.close();
