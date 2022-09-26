@@ -282,6 +282,14 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
 //                barCodeBeanList.remove(currentPosition);
                 if (isBox) {
                     measBoxBeanList.remove(currentPosition);
+                } else {
+                    String delBarCode = barCodeBeanList.get(currentPosition).getBarCode();
+                    for (int i = meterBeanList.size() - 1; i >= 0; i--) {
+                        if (meterBeanList.get(i).getBarCode().equals(delBarCode)) {
+                            meterBeanList.remove(i);
+                            break;
+                        }
+                    }
                 }
                 adapter.remove(currentPosition);
 //                adapter.setNewData(barCodeBeanList);

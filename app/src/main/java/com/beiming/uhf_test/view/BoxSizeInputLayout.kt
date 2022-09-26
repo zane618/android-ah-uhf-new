@@ -8,6 +8,7 @@ import android.widget.*
 import com.beiming.uhf_test.R
 import com.beiming.uhf_test.data.ConstData
 import com.beiming.uhf_test.utils.LogPrintUtil
+import com.tencent.mmkv.MMKV
 import java.util.*
 
 /**
@@ -27,8 +28,11 @@ class BoxSizeInputLayout(context: Context, attributeSet: AttributeSet? = null) :
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_box_size_input, this)
         et_gao = findViewById(R.id.et_xiang_gao)
+        et_gao.setText(MMKV.defaultMMKV().decodeString("et_gao", ""))
         et_kuan = findViewById(R.id.et_xiang_kuan)
+        et_kuan.setText(MMKV.defaultMMKV().decodeString("et_kuan", ""))
         et_shen = findViewById(R.id.et_xiang_shen)
+        et_shen.setText(MMKV.defaultMMKV().decodeString("et_shen", ""))
 
         spinnerBoxKind = findViewById(R.id.spinnerBoxKind)
         val a = Arrays.asList(*ConstData.BOX_KIND)
@@ -138,15 +142,28 @@ class BoxSizeInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
 
     fun getGao(): String {
+        MMKV.defaultMMKV().encode("et_gao", et_gao.text.toString())
         return et_gao.text.toString()
     }
 
     fun getKuan(): String {
+        MMKV.defaultMMKV().encode("et_kuan", et_kuan.text.toString())
         return et_kuan.text.toString()
     }
 
     fun getShen(): String {
+        MMKV.defaultMMKV().encode("et_shen", et_shen.text.toString())
         return et_shen.text.toString()
+    }
+
+    fun theSame(): Boolean {
+        if (MMKV.defaultMMKV().decodeString("et_gao", "").equals(et_gao.text.toString())
+            && MMKV.defaultMMKV().decodeString("et_kuan", "").equals(et_kuan.text.toString())
+            && MMKV.defaultMMKV().decodeString("et_shen", "").equals(et_shen.text.toString())
+        ) {
+            return true
+        }
+        return false
     }
 
 }

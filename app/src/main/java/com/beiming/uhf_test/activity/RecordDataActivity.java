@@ -54,6 +54,11 @@ import com.beiming.uhf_test.view.picinput.PictureInputLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
 import com.luck.picture.lib.basic.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
+import com.lxj.xpopup.interfaces.OnCancelListener;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
+import com.tencent.mmkv.MMKV;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -113,6 +118,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
     private String caizhi = "金属";
     private BoxSizeInputLayout boxSizeInputLayout;
     private BoxRowColLayout boxRowColLayout;
+    private String hisNote = MMKV.defaultMMKV().decodeString("etNote", "");
 
     @Override
     protected void setContentView() {
@@ -141,6 +147,7 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
         });
         tv_x_luru.setOnClickListener(this);
         tvTitleName.setText("现场信息录入");
+        etNote.setText(hisNote);
     }
 
     private int creatOrDetails = 0;
@@ -229,13 +236,44 @@ public class RecordDataActivity extends BaseActivity implements View.OnClickList
      * 本地保存
      */
     private void saveData() {
-        if (null == pictureInputLayout.getPhotoBeans()) {
+        if (null == pictureInputLayout.getPhotoBeans()) { //内部已给提示
             return;
         }
+        if (boxSizeInputLayout.theSame() || doorInfoInputLayout.theSame()
+                || (hisNote.equals(etNote.getText().toString()))) {
+            BasePopupView popupView = new XPopup.Builder(activity)
+                    .isDestroyOnDismiss(true)
+//                        .isTouchThrough(true)
+//                        .dismissOnBackPressed(false)
+//                        .isViewMode(true)
+//                        .hasBlurBg(true)
+//                         .autoDismiss(false)
+//                        .popupAnimation(PopupAnimation.NoAnimation)
+                    .asConfirm("提示", "计量箱长、宽、深、箱门尺寸、备注信息是自动带入的，确认是否需要修改",
+                            "返回修改", "确定",
+                            new OnConfirmListener() {
+                                @Override
+                                public void onConfirm() {
+                                    save3();
+                                }
+                            }, new OnCancelListener() {
+                                @Override
+                                public void onCancel() {
+
+                                }
+                            }, false);
+            popupView.show();
+        }
+
+    }
+
+    private void save3() {
         photoBeanList.clear();
         photoBeanList.addAll(pictureInputLayout.getPhotoBeans());
         long ts = System.currentTimeMillis();
         boxBean.setTs(ts);
+        //保存上次的备注
+        MMKV.defaultMMKV().encode("etNote", etNote.getText().toString());
         boxBean.setNote(etNote.getText().toString());
         boxBean.setHasQx(defect.getDj());
         boxBean.setQxDetail(defect.getKindsDetail());
