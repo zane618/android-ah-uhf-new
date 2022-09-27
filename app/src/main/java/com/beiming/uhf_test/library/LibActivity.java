@@ -15,6 +15,7 @@ import com.beiming.uhf_test.R;
 import com.beiming.uhf_test.base.BaseActivity;
 import com.beiming.uhf_test.bean.LibAssetBean;
 import com.beiming.uhf_test.databinding.ActivityCheckBinding;
+import com.beiming.uhf_test.databinding.ActivityLibBinding;
 import com.beiming.uhf_test.library.adapter.LibAssetAdapter;
 import com.beiming.uhf_test.library.adapter.SpinnerAdapter;
 import com.beiming.uhf_test.library.adapter.SpinnerData;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class LibActivity extends BaseActivity {
 
-    private ActivityCheckBinding binding;
+    private ActivityLibBinding binding;
     private List<LibAssetBean> listData = new ArrayList<>();
     private LibAssetAdapter assetAdapter;
 
@@ -40,7 +41,7 @@ public class LibActivity extends BaseActivity {
 
     @Override
     protected void setContentView() {
-        binding = ActivityCheckBinding.inflate(getLayoutInflater());
+        binding = ActivityLibBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
     }
@@ -66,8 +67,8 @@ public class LibActivity extends BaseActivity {
         SpinnerData data1 = new SpinnerData(0, "1", "000");
         dataList.add(data);
         dataList.add(data1);
-        SpinnerAdapter adapter = new SpinnerAdapter(dataList, activity);
-        binding.spDanwei.setAdapter(adapter);
+//        SpinnerAdapter adapter = new SpinnerAdapter(dataList, activity);
+//        binding.spDanwei.setAdapter(adapter);
         binding.spDanwei.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {

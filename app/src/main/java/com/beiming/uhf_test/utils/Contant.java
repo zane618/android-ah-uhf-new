@@ -8,8 +8,15 @@ import java.util.List;
  */
 
 public class Contant {
-    //调试状态成功或失败的状态码
+    /**
+     * 表箱数据
+     */
     public static List<String> tableTitleList = new ArrayList<>();
+
+    /**
+     * 盘库excel表头
+     */
+    public static List<String> libTableTitleList = new ArrayList<>();
 
     static {
         tableTitleList.add("电表箱条形码编号");
@@ -52,5 +59,14 @@ public class Contant {
         tableTitleList.add("答案一");
         tableTitleList.add("答案二");
         tableTitleList.add("答案三");*/
+
+        initLib();
     }
+
+    private static void initLib() {
+        libTableTitleList.add("资产编号");
+    }
+
+
+
 }

@@ -62,6 +62,8 @@
         <activity
             android:name=".library.LibActivity" />
         <activity
+            android:name=".library.LibCheckActivity" />
+        <activity
             android:name=".activity.pic.PreviewPhotoActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>

@@ -8,16 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.beiming.uhf_test.R;
+import com.beiming.uhf_test.library.bean.LibSpnnerBean;
 
 import java.util.List;
 
 // 自定义 BaseAdapter
 public class SpinnerAdapter extends BaseAdapter {
 
-    private List<SpinnerData> _myDataList;
+    private List<LibSpnnerBean> _myDataList;
     private Context _context;
 
-    public SpinnerAdapter(List<SpinnerData> myDataList, Context context) {
+    public SpinnerAdapter(List<LibSpnnerBean> myDataList, Context context) {
         this._myDataList = myDataList;
         this._context = context;
     }
@@ -56,7 +57,7 @@ public class SpinnerAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv.setText(_myDataList.get(position).getName());
+        holder.tv.setText(_myDataList.get(position).getAssectName());
 
         return convertView;
     }

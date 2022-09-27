@@ -37,6 +37,7 @@ import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.helper.map.LocationHelper;
 import com.beiming.uhf_test.library.LibActivity;
+import com.beiming.uhf_test.library.LibCheckActivity;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
@@ -242,7 +243,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                                 } else if ("挂接分支箱".equals(text)) {
                                     GjFzxActivity.Companion.startActivity(activity);
                                 } else if ("库房盘点".equals(text)) {
-                                    LibActivity.startActivity(activity);
+                                    LibCheckActivity.startActivity(activity);
                                 } else if ("clear".equals(text)) {
                                     MeasBoxBeanDao measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
                                     measBoxBeanDao.deleteAll();
