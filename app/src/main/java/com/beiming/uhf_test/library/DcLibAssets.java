@@ -49,17 +49,15 @@ public class DcLibAssets {
                 LogPrintUtil.zhangshi("文件夹存在");
             }
             String file = absoluteFilePathString + fileName;
-            //写入表头
-            FileXls.writeXLS(file, null, true);
             //写入数据
-            return writeXLS(file, libAssetBeans, false);
+            return writeXLS(file, libAssetBeans);
         } catch (Exception ex) {
             Log.i("导出异常", ex.getMessage());
             return false;
         }
     }
 
-    private static boolean writeXLS(String path, List<LibAssetBean> libAssetBeans, boolean isTableTile) {
+    private static boolean writeXLS(String path, List<LibAssetBean> libAssetBeans) {
         File file = createXLS(path);
         if (file == null) {
             return false;
@@ -87,6 +85,7 @@ public class DcLibAssets {
                     e.printStackTrace();
                 }
             }
+            i++;
             //写内容
             for (int j = 0; j < libAssetBeans.size(); j++) {
                 rowNumber = i + j;

@@ -26,9 +26,12 @@ import com.beiming.uhf_test.tools.rfid.IRfidListener;
 import com.beiming.uhf_test.tools.rfid.RfidHelper;
 import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.TimeUtils;
+import com.beiming.uhf_test.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 public class LibCheckActivity extends BaseActivity {
 
@@ -76,8 +79,7 @@ public class LibCheckActivity extends BaseActivity {
                 checkAssetType = spnnerBean.getAssectType();
                 binding.tvAssetName.setText(spnnerBean.getAssectName());
                 RfidHelper.getInstance().stopScan();
-                assetBeanList.clear();
-                assetAdapter.notifyDataSetChanged();
+                clearRv();
             }
 
             @Override
@@ -93,6 +95,7 @@ public class LibCheckActivity extends BaseActivity {
     @Override
     protected void initListener() {
         binding.btnScan.setOnClickListener(view -> {
+            binding.llTips.setVisibility(View.GONE);
             if (!"停止盘点".equals(binding.btnScan.getText())) {
                 binding.btnScan.setText("停止盘点");
                 RfidHelper.getInstance().startScan(new IRfidListener() {
@@ -130,9 +133,24 @@ public class LibCheckActivity extends BaseActivity {
         });
         binding.btnSure.setOnClickListener(view -> {
             //导出盘点的库存
-
+            if (assetBeanList.isEmpty()) {
+                UIHelper.ToastMessage(activity, "请先开始盘点");
+                return;
+            }
+            if ("停止盘点".equals(binding.btnScan.getText().toString())) {
+                UIHelper.ToastMessage(activity, "请先停止盘点");
+                return;
+            }
             new ExportExcelTask().execute();
         });
+    }
+
+    private String xlsFileName = "";
+
+    private void clearRv() {
+        assetBeanList.clear();
+        assetAdapter.notifyDataSetChanged();
+        binding.tvCount.setText("");
     }
 
     /**
@@ -144,17 +162,21 @@ public class LibCheckActivity extends BaseActivity {
         @Override
         protected Boolean doInBackground(String... params) {
             // TODO Auto-generated method stub
-            return DcLibAssets.daochu(TimeUtils.getY_M_D_Time(), TimeUtils.getTime() + ".xls", assetBeanList);
+            xlsFileName = TimeUtils.getTime() + "-" + binding.tvAssetName.getText().toString() + ".xls";
+            return DcLibAssets.daochu(TimeUtils.getY_M_D_Time(), xlsFileName, assetBeanList);
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
 
+            clearRv();
             mypDialog.cancel();
 
             if (result) {
                 UIHelper.ToastMessage(activity, "导出成功");
+                binding.llTips.setVisibility(View.VISIBLE);
+                binding.tvFileName.setText(xlsFileName);
 //                tvFileName.setText(fileName);
             } else {
                 UIHelper.ToastMessage(activity, "导出失败");
