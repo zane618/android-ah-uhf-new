@@ -334,6 +334,8 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
             barCode = epc.substring(0, epc.length() - 2);
         } else if (epc.length() == 22) {
             barCode = epc;
+        } else {
+            return;
         }
         assetNo = barCode.substring(barCode.length() - 15, barCode.length() - 1); //新表，第7位开始，共14位
 
