@@ -1,6 +1,7 @@
 package com.beiming.uhf_test.view.picinput
 
 import android.content.Context
+import android.net.Uri
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -15,15 +16,15 @@ import com.beiming.uhf_test.utils.*
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.decoration.GridSpacingItemDecoration
+import com.luck.picture.lib.engine.CompressFileEngine
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener
+import com.luck.picture.lib.interfaces.OnKeyValueResultCallbackListener
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.luck.picture.lib.utils.DensityUtil
-import top.zibin.luban.CompressionPredicate
 import top.zibin.luban.Luban
-import top.zibin.luban.OnCompressListener
+import top.zibin.luban.OnNewCompressListener
 import java.io.File
-import java.util.*
 
 
 /**
@@ -57,6 +58,41 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
     }
 
+    /**
+     * 自定义压缩
+     */
+    private class ImageFileCompressEngine : CompressFileEngine {
+        override fun onStartCompress(
+            context: Context,
+            source: ArrayList<Uri>,
+            call: OnKeyValueResultCallbackListener
+        ) {
+            Luban.with(context).load(source).ignoreBy(100).setRenameListener { filePath ->
+                val indexOf = filePath.lastIndexOf(".")
+                val postfix = if (indexOf != -1) filePath.substring(indexOf) else ".jpg"
+
+                val file = File(filePath)
+                file.name
+//                DateUtils.getCreateFileName("CMP_") + postfix
+            }.setCompressListener(object : OnNewCompressListener {
+                override fun onStart() {}
+                override fun onSuccess(source: String, compressFile: File) {
+                    if (call != null) {
+                        LogPrintUtil.zhangshi("压缩：" + compressFile.absolutePath)
+                        call.onCallback(source, compressFile.absolutePath)
+                    }
+                }
+
+                override fun onError(source: String, e: Throwable) {
+                    if (call != null) {
+                        call.onCallback(source, null)
+                    }
+                }
+            }).setTargetDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
+                .launch()
+        }
+    }
+
     private fun initRvFirst() {
         rvFirst = findViewById(R.id.rvFirst)
         val fullyGridLayoutManager = FullyGridLayoutManager(
@@ -79,36 +115,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                 // 单独拍照
                 PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
-//                    .setCompressEngine(object : CompressFileEngine {
-//
-//                        override fun onStartCompress(
-//                            context: Context?,
-//                            source: java.util.ArrayList<Uri>?,
-//                            call: OnKeyValueResultCallbackListener?
-//                        ) {
-//                            Luban.with(context).load(source).ignoreBy(100)
-//                                .setCompressListener(object : OnNewCompressListener{
-//                                    override fun onStart() {
-//                                        LogPrintUtil.zhangshi("压缩：onStart")
-//
-//                                    }
-//
-//                                    override fun onSuccess(source: String?, compressFile: File?) {
-//                                        call?.onCallback(source, compressFile?.absolutePath)
-//
-//                                        LogPrintUtil.zhangshi("压缩：onSuccess" + compressFile?.absolutePath)
-//                                    }
-//
-//                                    override fun onError(source: String?, e: Throwable?) {
-//                                        LogPrintUtil.zhangshi("压缩：onError")
-//                                    }
-//
-//                                })
-//
-//
-//                        }
-//
-//                    })
+                    .setCompressEngine(ImageFileCompressEngine())
                     .setOutputCameraDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
 //                    .setSelectedData()
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
@@ -187,6 +194,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                 // 单独拍照
                 PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
+                    .setCompressEngine(ImageFileCompressEngine())
                     .setOutputCameraDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
 //                    .setSelectedData()
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
@@ -263,6 +271,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                 // 单独拍照
                 PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
+                    .setCompressEngine(ImageFileCompressEngine())
                     .setOutputCameraDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
 //                    .setSelectedData()
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {

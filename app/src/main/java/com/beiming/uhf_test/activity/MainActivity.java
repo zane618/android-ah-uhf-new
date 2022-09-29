@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -43,6 +44,7 @@ import com.beiming.uhf_test.utils.FastJson;
 import com.beiming.uhf_test.utils.LogPrintUtil;
 import com.beiming.uhf_test.utils.MyOnTransitionTextListener;
 import com.beiming.uhf_test.utils.SharedPreferencesUtil;
+import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.utils.ToastUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.impl.AttachListPopupView;
@@ -52,6 +54,7 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +63,9 @@ import java.util.TimerTask;
 
 import io.dcloud.common.util.RuningAcitvityUtil;
 import pub.devrel.easypermissions.EasyPermissions;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * UHF使用demo
@@ -94,6 +100,36 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
         // TODO: 2022/8/23 虚拟机屏蔽
 //        RfidHelper.getInstance();
+
+        /*List a = new ArrayList();
+        a.add("/sdcard/UHF/image/2022-09-29/IMG_20220921122557851.jpeg");
+        Luban.with(this)
+                .load(a)
+                .ignoreBy(100)
+                .setTargetDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
+                .filter(new CompressionPredicate() {
+                    @Override
+                    public boolean apply(String path) {
+                        return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                    }
+                })
+                .setCompressListener(new OnCompressListener() {
+                    @Override
+                    public void onStart() {
+                        LogPrintUtil.zhangshi("压缩onStart:");
+                    }
+
+                    @Override
+                    public void onSuccess(int index, File compressFile) {
+                        LogPrintUtil.zhangshi("压缩 onSuccess:" + compressFile.getAbsolutePath());
+                    }
+
+                    @Override
+                    public void onError(int index, Throwable e) {
+                        LogPrintUtil.zhangshi("压缩onError:");
+                    }
+
+                }).launch();*/
     }
 
     @Override
