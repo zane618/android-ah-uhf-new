@@ -19,6 +19,11 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.luck.picture.lib.utils.DensityUtil
+import top.zibin.luban.CompressionPredicate
+import top.zibin.luban.Luban
+import top.zibin.luban.OnCompressListener
+import java.io.File
+import java.util.*
 
 
 /**
@@ -54,22 +59,56 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
     private fun initRvFirst() {
         rvFirst = findViewById(R.id.rvFirst)
-        val fullyGridLayoutManager = FullyGridLayoutManager(context,
-            4, GridLayoutManager.VERTICAL, false)
+        val fullyGridLayoutManager = FullyGridLayoutManager(
+            context,
+            4, GridLayoutManager.VERTICAL, false
+        )
         rvFirst.layoutManager = fullyGridLayoutManager
         rvFirst.addItemDecoration(
-            GridSpacingItemDecoration(4,
-                DensityUtil.dip2px(context, 8F), false)
+            GridSpacingItemDecoration(
+                4,
+                DensityUtil.dip2px(context, 8F), false
+            )
         )
         dataFirst.add(LocalMedia())
         adapterFirst = PicAdapter(dataFirst)
         rvFirst.adapter = adapterFirst
 
         adapterFirst.setOnItemClickListener { adapter, view, position ->
-            if (position == (adapter.data.size-1)) {
+            if (position == (adapter.data.size - 1)) {
                 // 单独拍照
                 PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
+//                    .setCompressEngine(object : CompressFileEngine {
+//
+//                        override fun onStartCompress(
+//                            context: Context?,
+//                            source: java.util.ArrayList<Uri>?,
+//                            call: OnKeyValueResultCallbackListener?
+//                        ) {
+//                            Luban.with(context).load(source).ignoreBy(100)
+//                                .setCompressListener(object : OnNewCompressListener{
+//                                    override fun onStart() {
+//                                        LogPrintUtil.zhangshi("压缩：onStart")
+//
+//                                    }
+//
+//                                    override fun onSuccess(source: String?, compressFile: File?) {
+//                                        call?.onCallback(source, compressFile?.absolutePath)
+//
+//                                        LogPrintUtil.zhangshi("压缩：onSuccess" + compressFile?.absolutePath)
+//                                    }
+//
+//                                    override fun onError(source: String?, e: Throwable?) {
+//                                        LogPrintUtil.zhangshi("压缩：onError")
+//                                    }
+//
+//                                })
+//
+//
+//                        }
+//
+//                    })
                     .setOutputCameraDir(ConstantUtil.IMAGE_STR + TimeUtils.getY_M_D_Time())
 //                    .setSelectedData()
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
@@ -104,9 +143,9 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                         override fun onCancel() {}
                     })*/
 
-            } else{
+            } else {
                 val list = java.util.ArrayList<LocalMedia>()
-                for (i in 0 until dataFirst.size-1) {
+                for (i in 0 until dataFirst.size - 1) {
                     list.add(dataFirst[i])
                 }
                 PictureSelector.create(context)
@@ -117,7 +156,8 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                         override fun onLongPressDownload(media: LocalMedia): Boolean {
                             return false
                         }
-                    }).startActivityPreview(position, false,
+                    }).startActivityPreview(
+                        position, false,
                         list
                     )
             }
@@ -127,19 +167,23 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
     private fun initBiaoweiRv() {
         biaoweiRv = findViewById(R.id.rvBiaowei)
-        val fullyGridLayoutManager = FullyGridLayoutManager(context,
-            4, GridLayoutManager.VERTICAL, false)
+        val fullyGridLayoutManager = FullyGridLayoutManager(
+            context,
+            4, GridLayoutManager.VERTICAL, false
+        )
         biaoweiRv.layoutManager = fullyGridLayoutManager
         biaoweiRv.addItemDecoration(
-            GridSpacingItemDecoration(4,
-                DensityUtil.dip2px(context, 8F), false)
+            GridSpacingItemDecoration(
+                4,
+                DensityUtil.dip2px(context, 8F), false
+            )
         )
         biaoweiData.add(LocalMedia())
         biaoweiAdapter = PicAdapter(biaoweiData)
         biaoweiRv.adapter = biaoweiAdapter
 
         biaoweiAdapter.setOnItemClickListener { adapter, view, position ->
-            if (position == (adapter.data.size-1)) {
+            if (position == (adapter.data.size - 1)) {
                 // 单独拍照
                 PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
@@ -155,6 +199,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                                 biaoweiAdapter.notifyDataSetChanged()
                             }
                         }
+
                         override fun onCancel() {}
                     })
 
@@ -175,9 +220,9 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                         override fun onCancel() {}
                     })*/
 
-            } else{
+            } else {
                 val list = java.util.ArrayList<LocalMedia>()
-                for (i in 0 until biaoweiData.size-1) {
+                for (i in 0 until biaoweiData.size - 1) {
                     list.add(biaoweiData[i])
                 }
                 PictureSelector.create(context)
@@ -188,7 +233,8 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                         override fun onLongPressDownload(media: LocalMedia): Boolean {
                             return false
                         }
-                    }).startActivityPreview(position, false,
+                    }).startActivityPreview(
+                        position, false,
                         list
                     )
             }
@@ -197,19 +243,23 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
 
     private fun initSingleRv() {
         singleRv = findViewById(R.id.rvSingle)
-        val fullyGridLayoutManager = FullyGridLayoutManager(context,
-            4, GridLayoutManager.VERTICAL, false)
+        val fullyGridLayoutManager = FullyGridLayoutManager(
+            context,
+            4, GridLayoutManager.VERTICAL, false
+        )
         singleRv.layoutManager = fullyGridLayoutManager
         singleRv.addItemDecoration(
-            GridSpacingItemDecoration(4,
-                DensityUtil.dip2px(context, 8F), false)
+            GridSpacingItemDecoration(
+                4,
+                DensityUtil.dip2px(context, 8F), false
+            )
         )
         singleData.add(LocalMedia())
         singleAdapter = PicAdapter(singleData)
         singleRv.adapter = singleAdapter
 
         singleAdapter.setOnItemClickListener { adapter, view, position ->
-            if (position == (adapter.data.size-1)) {
+            if (position == (adapter.data.size - 1)) {
                 // 单独拍照
                 PictureSelector.create(context)
                     .openCamera(SelectMimeType.ofImage())
@@ -225,6 +275,7 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                                 singleAdapter.notifyDataSetChanged()
                             }
                         }
+
                         override fun onCancel() {}
                     })
 
@@ -245,9 +296,9 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                         override fun onCancel() {}
                     })*/
 
-            } else{
+            } else {
                 val list = java.util.ArrayList<LocalMedia>()
-                for (i in 0 until singleData.size-1) {
+                for (i in 0 until singleData.size - 1) {
                     list.add(singleData[i])
                 }
                 PictureSelector.create(context)
@@ -258,7 +309,8 @@ class PictureInputLayout(context: Context, attributeSet: AttributeSet? = null) :
                         override fun onLongPressDownload(media: LocalMedia): Boolean {
                             return false
                         }
-                    }).startActivityPreview(position, false,
+                    }).startActivityPreview(
+                        position, false,
                         list
                     )
             }

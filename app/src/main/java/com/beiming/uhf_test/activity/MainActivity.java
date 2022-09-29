@@ -234,7 +234,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     .isCenterHorizontal(false)
                     .atView(binding.tvMenu)  // 依附于所点击的View，内部会自动判断在上方或者下方显示
                     .autoDismiss(false)
-                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "库房盘点", "clear", "test"},
+                    .asAttachList(new String[]{"扫描分支箱", "挂接分支箱", "库房盘点"/*, "clear", "test"*/},
                             new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher},
                             (position, text) -> attachListPopupView.dismissWith(() -> {
                                 ToastUtils.showToast(text);
