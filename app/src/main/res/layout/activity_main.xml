@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="高频扫码"
+            android:text="计量箱数字化"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
