@@ -65,7 +65,7 @@ public class BarCodeAdpater extends BaseQuickAdapter<BarCodeBean, BaseViewHolder
                     helper.setText(R.id.tv_tag_uii, "表：" + item.getBarCode());
                     helper.setTextColor(R.id.tv_tag_uii, context.getResources().getColor(R.color.black));
                     if (item.isExsit()) {
-                        helper.setText(R.id.tv_tag_rssi, "管理");
+                        helper.setText(R.id.tv_tag_rssi, "删除");
                         helper.setText(R.id.tv_count, "已存在");
                         helper.setTextColor(R.id.tv_count, context.getResources().getColor(R.color.red));
                         helper.setVisible(R.id.tv_tag_rssi, true);

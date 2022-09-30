@@ -227,12 +227,12 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
                                 return;
                             }
                         }
-                        if (contrastBarCodeDialog == null) {
-                            showContrastBarCodeDialog();
-                        } else {
-                            contrastBarCodeDialog.updateDialogData(getExsitBarCode(), barCodeBeanList.get(position).getBarCode());
-                            contrastBarCodeDialog.show();
-                        }
+//                        if (contrastBarCodeDialog == null) {
+//                            showContrastBarCodeDialog();
+//                        } else {
+//                            contrastBarCodeDialog.updateDialogData(getExsitBarCode(), barCodeBeanList.get(position).getBarCode());
+//                            contrastBarCodeDialog.show();
+//                        }
                         break;
                     default:
                         showToast("异常条形码");
