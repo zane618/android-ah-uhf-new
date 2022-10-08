@@ -22,6 +22,7 @@ import com.beiming.uhf_test.activity.MainActivity;
 import com.beiming.uhf_test.activity.login.LoginActivity;
 import com.beiming.uhf_test.bean.MeasBoxBean;
 import com.beiming.uhf_test.db.GreenDaoManager;
+import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.tools.UIHelper;
 import com.beiming.uhf_test.utils.TimeUtils;
 
@@ -116,7 +117,9 @@ public class ExportExcelFragment extends KeyDwonFragment implements View.OnClick
 
     //导出excel表格
     private void ImportExcel() {
-        allBoxBeanList = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().loadAll();
+//        allBoxBeanList = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao().loadAll();
+        allBoxBeanList = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao()
+                .queryBuilder().where(MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
         if (allBoxBeanList.size() == 0) {
             UIHelper.ToastMessage(mContext, "本地数据为空");
             return;

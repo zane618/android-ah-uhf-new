@@ -35,6 +35,7 @@ import com.beiming.uhf_test.greendao.gen.MeasBoxBeanDao;
 import com.beiming.uhf_test.greendao.gen.MeterBeanDao;
 import com.beiming.uhf_test.utils.ConstantUtil;
 import com.beiming.uhf_test.utils.GlideEngine;
+import com.beiming.uhf_test.utils.TimeUtils;
 import com.beiming.uhf_test.view.DoorInfoShowLayout;
 import com.beiming.uhf_test.widget.ScrollGridView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -227,7 +228,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
 
     private void getData() {
         measBoxBeanDao = GreenDaoManager.getInstance().getNewSession().getMeasBoxBeanDao();
-        boxBeanList = measBoxBeanDao.loadAll();
+//        boxBeanList = measBoxBeanDao.loadAll();
+        boxBeanList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
         changeRightData(0);
     }
 
@@ -326,7 +328,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
         //当输入框为空时，则不用查询电表的箱集合
         if (!TextUtils.isEmpty(content)) {
             //查询到的所有电表
-            List<MeterBean> biaoList = biaoDao.queryBuilder().where(MeterBeanDao.Properties.BarCode.like("%" + content + "%")).build().list();
+            List<MeterBean> biaoList = biaoDao.queryBuilder().where(MeterBeanDao.Properties.BarCode.like("%" + content + "%"),
+                    MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
             //1 遍历查询到的所有电表，根据电表的箱code查询箱数据
             for (int i = 0; i < biaoList.size(); i++) {
                 List<MeasBoxBean> boxList = measBoxBeanDao.queryBuilder().where(/*MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%"),*/
@@ -338,7 +341,8 @@ public class DataRecordFragment extends KeyDwonFragment implements View.OnClickL
             boxBeanList.addAll(measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.BarCode.like("%" + content + "%")).build().list());
         } else {
             //查询箱列表数据
-            boxBeanList = measBoxBeanDao.loadAll();
+//            boxBeanList = measBoxBeanDao.loadAll();
+            boxBeanList = measBoxBeanDao.queryBuilder().where(MeasBoxBeanDao.Properties.Ts.ge(TimeUtils.toTs(TimeUtils.getY_M_D_Time()))).build().list();
         }
         //2 去重
         Set<MeasBoxBean> userSet = new HashSet<>(boxBeanList);
