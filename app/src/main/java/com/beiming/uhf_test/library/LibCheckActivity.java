@@ -57,6 +57,7 @@ public class LibCheckActivity extends BaseActivity {
     protected void initView() {
         binding.inTitle.tvTitleName.setText("库房盘点");
         Drawable right = ResourcesCompat.getDrawable(getResources(), R.drawable.menu_iv_selector, null);
+        binding.inTitle.tvRight.setVisibility(View.GONE);
         binding.inTitle.tvRight.setText("菜单");
         right.setBounds(0, 0, right.getMinimumWidth(), right.getMinimumHeight());
         binding.inTitle.tvRight.setCompoundDrawables(null, null, right, null);
