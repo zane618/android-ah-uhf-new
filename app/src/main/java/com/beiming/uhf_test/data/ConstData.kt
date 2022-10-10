@@ -90,6 +90,7 @@ object ConstData {
 //    )
 
     val LIB_ASSETS = mutableListOf(
+        LibSpnnerBean("全部资产", "00"),
         LibSpnnerBean("电能表", "01"),
         LibSpnnerBean("互感器", "02"),
         LibSpnnerBean("计量箱", "05"),
