@@ -75,6 +75,7 @@ public class LibCheckActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 LogPrintUtil.zhangshi("上spinner:" + ((LibSpnnerBean) binding.spAssetType.getAdapter().getItem(position)).getAssectType());
+                binding.llTips.setVisibility(View.GONE);
                 LibSpnnerBean spnnerBean = (LibSpnnerBean) binding.spAssetType.getAdapter().getItem(position);
                 checkAssetType = spnnerBean.getAssectType();
                 binding.tvAssetName.setText(spnnerBean.getAssectName());
@@ -174,7 +175,8 @@ public class LibCheckActivity extends BaseActivity {
             mypDialog.cancel();
 
             if (result) {
-                UIHelper.ToastMessage(activity, "导出成功");
+                ToastUtils.showToast("导出成功");
+//                UIHelper.ToastMessage(activity, "导出成功");
                 binding.llTips.setVisibility(View.VISIBLE);
                 binding.tvFileName.setText(xlsFileName);
 //                tvFileName.setText(fileName);
