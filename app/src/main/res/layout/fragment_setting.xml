@@ -129,49 +129,55 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!--    用不到的设置      -->
     <LinearLayout
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textColor="#000000"
-            android:text="@string/temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/et_temperature"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/bt_getT"
-            android:text="@string/getT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <RadioGroup
-        android:id="@+id/rg_module"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_epc"
-            android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#000000"
+                android:text="@string/temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/et_temperature"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/bt_getT"
+                android:text="@string/getT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <RadioGroup
+            android:id="@+id/rg_module"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="@string/epc_module" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rb_tid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/tid_module" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rb_epc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/epc_module" />
 
+            <RadioButton
+                android:id="@+id/rb_tid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tid_module" />
+        </RadioGroup>
+    </LinearLayout>
 
 </LinearLayout>
