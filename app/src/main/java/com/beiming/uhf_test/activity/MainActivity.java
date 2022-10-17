@@ -81,7 +81,7 @@ import top.zibin.luban.OnCompressListener;
  */
 
 public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
-
+    //layout
     private ActivityMainBinding binding;
 
     private final static String TAG = "UHFMainActivity:";
