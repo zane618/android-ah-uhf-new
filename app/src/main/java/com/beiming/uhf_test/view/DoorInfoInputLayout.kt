@@ -3,6 +3,7 @@ package com.beiming.uhf_test.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.beiming.uhf_test.R
@@ -31,28 +32,51 @@ class DoorInfoInputLayout(context: Context, attributeSet: AttributeSet? = null) 
 
         zsGao = findViewById(R.id.tv_zs_gao)
         zsGao.setText(MMKV.defaultMMKV().decodeString("zsGao", ""))
+        findViewById<View>(R.id.iv_zs_gao).setOnClickListener {
+            zsGao.setText("")
+        }
 
         zsKuan = findViewById(R.id.tv_zs_kuan)
         zsKuan.setText(MMKV.defaultMMKV().decodeString("zsKuan", ""))
+        findViewById<View>(R.id.iv_zs_kuan).setOnClickListener {
+            zsKuan.setText("")
+        }
 
         zxGao = findViewById(R.id.tv_zx_gao)
         zxGao.setText(MMKV.defaultMMKV().decodeString("zxGao", ""))
+        findViewById<View>(R.id.iv_zx_gao).setOnClickListener {
+            zxGao.setText("")
+        }
 
         zxKuan = findViewById(R.id.tv_zx_kuan)
         zxKuan.setText(MMKV.defaultMMKV().decodeString("zxKuan", ""))
-
+        findViewById<View>(R.id.iv_zx_kuan).setOnClickListener {
+            zxKuan.setText("")
+        }
 
         ysGao = findViewById(R.id.tv_ys_gao)
         ysGao.setText(MMKV.defaultMMKV().decodeString("ysGao", ""))
+        findViewById<View>(R.id.iv_ys_gao).setOnClickListener {
+            ysGao.setText("")
+        }
 
         ysKuan = findViewById(R.id.tv_ys_kuan)
         ysKuan.setText(MMKV.defaultMMKV().decodeString("ysKuan", ""))
+        findViewById<View>(R.id.iv_ys_kuan).setOnClickListener {
+            ysKuan.setText("")
+        }
 
         yxGao = findViewById(R.id.tv_yx_gao)
         yxGao.setText(MMKV.defaultMMKV().decodeString("yxGao", ""))
+        findViewById<View>(R.id.iv_yx_gao).setOnClickListener {
+            yxGao.setText("")
+        }
 
         yxKuan = findViewById(R.id.tv_yx_kuan)
         yxKuan.setText(MMKV.defaultMMKV().decodeString("yxKuan", ""))
+        findViewById<View>(R.id.iv_yx_kuan).setOnClickListener {
+            yxKuan.setText("")
+        }
     }
 
     fun getZsGao(): String {

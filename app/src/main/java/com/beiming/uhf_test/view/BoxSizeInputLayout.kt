@@ -29,10 +29,21 @@ class BoxSizeInputLayout(context: Context, attributeSet: AttributeSet? = null) :
         LayoutInflater.from(context).inflate(R.layout.layout_box_size_input, this)
         et_gao = findViewById(R.id.et_xiang_gao)
         et_gao.setText(MMKV.defaultMMKV().decodeString("et_gao", ""))
+        findViewById<View>(R.id.iv_xiang_gao).setOnClickListener {
+            et_gao.setText("")
+        }
+
         et_kuan = findViewById(R.id.et_xiang_kuan)
         et_kuan.setText(MMKV.defaultMMKV().decodeString("et_kuan", ""))
+        findViewById<View>(R.id.iv_xiang_kuan).setOnClickListener {
+            et_kuan.setText("")
+        }
+
         et_shen = findViewById(R.id.et_xiang_shen)
         et_shen.setText(MMKV.defaultMMKV().decodeString("et_shen", ""))
+        findViewById<View>(R.id.iv_xiang_shen).setOnClickListener {
+            et_shen.setText("")
+        }
 
         spinnerBoxKind = findViewById(R.id.spinnerBoxKind)
         val a = Arrays.asList(*ConstData.BOX_KIND)

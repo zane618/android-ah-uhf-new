@@ -84,7 +84,8 @@
 
         <EditText
             android:id="@+id/et_xiang_gao"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:paddingRight="10dp"
             android:background="@null"
@@ -94,6 +95,13 @@
             android:textColor="#4D4D4D"
             android:textSize="13sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_xiang_gao"
+            style="@style/img_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_cha" />
     </LinearLayout>
 
     <View
@@ -119,7 +127,8 @@
 
         <EditText
             android:id="@+id/et_xiang_kuan"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:paddingRight="10dp"
             android:gravity="right|center_vertical"
@@ -129,6 +138,12 @@
             android:textColor="#4D4D4D"
             android:textSize="13sp"
             android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/iv_xiang_kuan"
+            style="@style/img_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_cha" />
     </LinearLayout>
 
 
@@ -156,7 +171,8 @@
 
         <EditText
             android:id="@+id/et_xiang_shen"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:paddingRight="10dp"
             android:gravity="right|center_vertical"
@@ -166,6 +182,12 @@
             android:textColor="#4D4D4D"
             android:textSize="13sp"
             android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/iv_xiang_shen"
+            style="@style/img_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_cha" />
     </LinearLayout>
 
 </LinearLayout>
