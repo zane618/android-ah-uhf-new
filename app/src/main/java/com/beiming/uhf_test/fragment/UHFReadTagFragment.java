@@ -78,19 +78,18 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
      **/
     Button btnShibie;
 
-    private MainActivity mContext;
     private ContrastBarCodeDialog contrastBarCodeDialog;
     private int MY_PERMISSIONS_REQUEST_FOR_EXCLE = 0x11;
 
     private String Tag = "UHFReadTagFragment";
 
-    /*public final static int BROADCAST_INPUT_MODE = 0;//广播模式
-    public final static int INPUTTEXT_INPUT_MODE = 1;//输入框模式
+    public final static int BROADCAST_INPUT_MODE = 0;//广播模式
+//    public final static int INPUTTEXT_INPUT_MODE = 1;//输入框模式
     public final static int NON_EXTRA = 0;//无
-    public final static int ENTER_EXTRA = 1;//添加回车
+//    public final static int ENTER_EXTRA = 1;//添加回车
     private ScansManager mScansManager = null;
-    private int inputmode = INPUTTEXT_INPUT_MODE;
-    private int addExtra = NON_EXTRA;*/
+//    private int inputmode = INPUTTEXT_INPUT_MODE;
+//    private int addExtra = NON_EXTRA;
     private MyReceiver broadcastReceiver = null;
     private IntentFilter filter = null;
 
@@ -186,7 +185,7 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i("MY", "UHFReadTagFragment.onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        mContext = (MainActivity) getActivity();
+//        mContext = (MainActivity) getActivity();
         barCodeBeanList = new ArrayList<>();
         measBoxBeanList = new ArrayList<>();
         meterBeanList = new ArrayList<>();
@@ -493,7 +492,9 @@ public class UHFReadTagFragment extends KeyDwonFragment implements View.OnClickL
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         EventBus.getDefault().register(this);
-
+        mScansManager = (ScansManager) mContext.getSystemService("scans");
+        mScansManager.setInputMode(BROADCAST_INPUT_MODE);
+        mScansManager.setExtras(NON_EXTRA);
     }
 
     @Override
